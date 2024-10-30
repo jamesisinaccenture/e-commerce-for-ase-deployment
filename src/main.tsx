@@ -3,9 +3,9 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "@/pages/DashboardPage";
 import LandingPage from "@/pages/LandingPage";
 import DefaultPage from "@/pages/DefaultPage";
+import DashboardPage from "@/pages/DashboardPage";
 
 const router = createBrowserRouter([
   {
@@ -13,15 +13,13 @@ const router = createBrowserRouter([
     element: <DefaultPage />,
   },
   {
-    path: "/admin",
+    path: "/",
     element: <App />,
-    children: [
-      { path: "admin", element: <Dashboard /> },
-      { path: "store", element: <LandingPage /> },
-      // Uncomment and add more routes as needed
-
-      // { path: "login", element: <Login /> },
-    ],
+    children: [{ path: "admin", element: <DashboardPage /> }],
+  },
+  {
+    path: "/store",
+    element: <LandingPage />,
   },
 ]);
 
