@@ -1,11 +1,11 @@
 import { Input } from "../ui/input";
 import { ICustomInput } from "@/models/store.model";
 
-const CustomInput = ({ label }: ICustomInput) => {
+const CustomInput = ({ label, name }: ICustomInput) => {
   return (
     <div>
-      <label>{label}</label>
-      <Input />
+      <label htmlFor={name}>{label}</label>
+      <Input name={name} />
     </div>
   );
 };
