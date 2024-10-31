@@ -1,12 +1,11 @@
-import React from 'react'
+import CustomInput from "@/components/reusable/CustomInput";
 
 const LoginPage = () => {
   return (
-    <div>
-      LoginPage
-      <p>Layout</p>
+    <div className="bg-gray-500 text-center p-5">
+      <CustomInput />
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
