@@ -1,10 +1,13 @@
 import StoreCard from "@/components/store/StoreCard";
+import StoreLayout from "@/layouts/StoreLayout";
 
 const LandingPage = () => {
   return (
-    <div className="flex justify-center min-h-screen">
-      <StoreCard />
-    </div>
+    <StoreLayout>
+      <div className="flex justify-center min-h-screen">
+        <StoreCard />
+      </div>
+    </StoreLayout>
   );
 };
 
