@@ -7,6 +7,7 @@ import LandingPage from "@/pages/LandingPage";
 // import DefaultPage from "@/pages/DefaultPage";
 import DashboardPage from "@/pages/DashboardPage";
 import LoginPage from "@/pages/LoginPage";
+import ForgetPasswordPage from "@/pages/ForgetPasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/store",
     element: <LandingPage />,
+  },
+  {
+    path: "/forgetpassword",
+    element: <ForgetPasswordPage />,
   },
 ]);
 
