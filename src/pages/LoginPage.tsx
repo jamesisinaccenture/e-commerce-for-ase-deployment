@@ -33,7 +33,7 @@ const LoginPage = () => {
   return (
     <Form {...form}>
       <form className="container p-12 mt-16">
-        <div className="mb-">
+        <div className="mb-8">
           <FormLabel className="text-3xl font-sans font-semibold">
             Login
           </FormLabel>
@@ -41,27 +41,30 @@ const LoginPage = () => {
             Login to access your account.
           </FormDescription>
         </div>
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <CustomInput type="email" label="Email" {...field} />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <CustomInput type="password" label="Password" {...field} />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="mb-3 w-80">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <CustomInput type="email" label="Email" {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div>
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <CustomInput type="password" label="Password" {...field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <Button type="submit">Login</Button>
       </form>
     </Form>
