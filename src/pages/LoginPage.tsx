@@ -3,7 +3,14 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -25,13 +32,22 @@ const LoginPage = () => {
 
   return (
     <Form {...form}>
-      <form className="rounded border">
+      <form className="container p-12 mt-16">
+        <div className="mb-">
+          <FormLabel className="text-3xl font-sans font-semibold">
+            Login
+          </FormLabel>
+          <FormDescription className="mt-3">
+            Login to access your account.
+          </FormDescription>
+        </div>
+
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <CustomInput type="email" label="Email Address" {...field} />
+              <CustomInput type="email" label="Email" {...field} />
               <FormMessage />
             </FormItem>
           )}
