@@ -1,3 +1,5 @@
+import { HTMLInputTypeAttribute } from "react";
+
 // Define the shape of the states here, remember to export them
 export interface CountInterface {
   count: number;
@@ -8,4 +10,5 @@ export interface CountInterface {
 export interface ICustomInput {
   label?: string;
   name?: string;
+  type?: HTMLInputTypeAttribute;
 }
