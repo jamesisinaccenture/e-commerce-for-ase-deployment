@@ -1,26 +1,12 @@
-<<<<<<< HEAD
-import React from "react";
+import CustomInput from "@/components/reusable/CustomInput";
 
-const a = () => {
+const LoginPage = () => {
   return (
-    <div>
-      <p>Name</p>LoginPage
+    <div className="bg-gray-500 text-center p-5">
+      <CustomInput label="Email Address" />
+      <CustomInput label="Username" />
     </div>
   );
 };
 
-export default a;
-=======
-import React from 'react'
-
-const LoginPage = () => {
-  return (
-    <div>
-      LoginPage
-      <p>Layout</p>
-    </div>
-  )
-}
-
-export default LoginPage
->>>>>>> 093567dc517300a306eedade4c1561395d55c501
+export default LoginPage;
