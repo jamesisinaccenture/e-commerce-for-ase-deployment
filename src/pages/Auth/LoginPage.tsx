@@ -79,7 +79,7 @@ const LoginPage = () => {
             Don't have an account? <span className="text-red-500">Signup</span>
           </p>
         </div>
-        <div className="hidden lg:block mt-6 max-w-80 max-h-96 min-h-96 min-w-80">
+        <div className="hidden md:block mt-6 max-w-80 max-h-96 min-h-96 min-w-80">
           <img src={loginImage} alt="Sample Image." />
         </div>
       </form>
