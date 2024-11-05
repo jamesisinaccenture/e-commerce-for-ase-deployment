@@ -1,4 +1,3 @@
-
 export const ROUTES = {
   BASE: "/",
   LOGIN: "/login",
@@ -7,7 +6,7 @@ export const ROUTES = {
   ACCESS_DENIED: "access_denied",
   NOT_FOUND: "*",
   ADMIN: {
-    BASE: "/admin/",
+    BASE: "/admin",
     DASHBOARD: "/admin/",
     PRODUCT: "/admin/products",
     CATEGORY: "/admin/category",
@@ -16,8 +15,9 @@ export const ROUTES = {
   },
   STORE: {
     HOME: "/store",
+    PRODUCTS: "/store/products",
+    CATEGORY: "/store/category",
     ABOUT: "/about",
     CONTACT_US: "/contact-us",
-    PRODUCTS: "/store/products",
   },
 };

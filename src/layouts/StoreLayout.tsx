@@ -1,14 +1,14 @@
+import { Outlet } from "react-router-dom";
 import StoreFooter from "@/components/store/StoreFooter";
 import StoreHeader from "@/components/store/StoreHeader";
 
-const StoreLayout = ({ children }: { children?: React.ReactNode }) => {
+const StoreLayout = () => {
   return (
     <>
       <StoreHeader />
 
       {/* Main Content */}
-      <div>{children}</div>
-      {/* <Outlet /> */}
+      <Outlet />
 
       <StoreFooter />
     </>
