@@ -1,7 +1,7 @@
 import StoreFooter from "@/components/store/StoreFooter";
 import StoreHeader from "@/components/store/StoreHeader";
 
-const StoreLayout = ({ children }: { children: React.ReactNode }) => {
+const StoreLayout = ({ children }: { children?: React.ReactNode }) => {
   return (
     <>
       <StoreHeader />

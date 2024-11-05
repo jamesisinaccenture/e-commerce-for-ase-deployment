@@ -12,3 +12,19 @@ export interface ICustomInput {
   name?: string;
   type?: HTMLInputTypeAttribute;
 }
+
+// We will change this to the actual later on depending on the structure, as for now this is template only
+export interface IProduct {
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+}
+
+export interface IProductStore {
+  products: IProduct[];
+  setProducts: (products: IProduct[]) => void;
+  addProduct: (product: IProduct) => void;
+  clearProducts: () => void;
+}

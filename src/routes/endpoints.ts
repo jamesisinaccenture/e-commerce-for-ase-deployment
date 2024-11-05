@@ -1,3 +1,4 @@
+
 export const ROUTES = {
   BASE: "/",
   LOGIN: "/login",
@@ -17,5 +18,6 @@ export const ROUTES = {
     HOME: "/store",
     ABOUT: "/about",
     CONTACT_US: "/contact-us",
+    PRODUCTS: "/store/products",
   },
 };

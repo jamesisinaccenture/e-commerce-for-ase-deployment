@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { ROUTES } from "./endpoints";
-
-import DashboardPage from "@/pages/Admin/DashboardPage";
-import LandingPage from "@/pages/Store/LandingPage";
-import LoginPage from "@/pages/Auth/LoginPage";
-import ProductsPage from "@/pages/Admin/ProductsPage";
+import StoreLayout from "@/layouts/StoreLayout";
 import Category from "@/pages/Admin/Category";
-import NotFound from "@/pages/Auth/NotFound";
+import DashboardPage from "@/pages/Admin/DashboardPage";
+import ProductsPage from "@/pages/Admin/ProductsPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
+import LoginPage from "@/pages/Auth/LoginPage";
+import NotFound from "@/pages/Auth/NotFound";
+import LandingPage from "@/pages/Store/LandingPage";
+import StoreProductsPage from "@/pages/Store/StoreProductsPage";
+import { ROUTES } from "./endpoints";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,13 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.STORE.HOME,
-    element: <LandingPage />,
+    element: <StoreLayout />,
+    children: [
+      {
+        path: ROUTES.STORE.PRODUCTS,
+        element: <StoreProductsPage />,
+      },
+    ],
   },
   {
     path: ROUTES.ADMIN.BASE,
