@@ -9,6 +9,7 @@ import ProductsPage from "@/pages/Admin/ProductsPage";
 import Category from "@/pages/Admin/Category";
 import NotFound from "@/pages/Auth/NotFound";
 import AccessDenied from "@/pages/Auth/AccessDenied";
+import ForgotPassword from "@/pages/Auth/ForgetPasswordPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.LOGIN,
     element: <LoginPage />,
+  },
+  {
+    path: ROUTES.FORGOT_PASSWORD,
+    element: <ForgotPassword />,
   },
   {
     path: ROUTES.STORE.HOME,
