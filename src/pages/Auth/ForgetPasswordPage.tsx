@@ -1,11 +1,11 @@
 import React from "react";
 import CustomInput from "@/components/reusable/CustomInput";
-import { PasswordPageStore } from "../Store/PaswordPageStore";
+import { usePasswordPage } from "../../hooks/state/usePasswordPage";
 import forget from "../../assets/forget.png";
 import verify from "../../assets/verify.png";
 
 const ForgetPasswordPage: React.FC = () => {
-  const { currentPageIndex, nextPage } = PasswordPageStore();
+  const { currentPageIndex, nextPage, previousPage } = usePasswordPage();
 
   const pages = [
     {
@@ -34,10 +34,27 @@ const ForgetPasswordPage: React.FC = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 font-poppins">
       <div className="bg-white shadow-xl rounded-lg flex flex-col lg:flex-row w-3/4 max-w-5xl">
-        <div className="w-full lg:w-1/2 p-12">
-          <a href="#" className="text-blue-500 hover:underline mb-6 block">
-            &lt; Back to login
-          </a>
+        <div className="w-full lg:w-1/2 p-10">
+          {currentPageIndex === 0 && (
+            <a
+              href="/login"
+              className="text-blue-500 hover:underline mb-6 block"
+            >
+              &lt; Back to login
+            </a>
+          )}
+          {currentPageIndex > 0 && (
+            <a
+              href="#"
+              className="text-blue-500 hover:underline mb-6 block"
+              onClick={(event) => {
+                event.preventDefault();
+                previousPage();
+              }}
+            >
+              &lt; Back to {pages[currentPageIndex - 1].title}
+            </a>
+          )}
           <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
 
@@ -49,7 +66,16 @@ const ForgetPasswordPage: React.FC = () => {
               }
             }}
           >
-            <CustomInput label={currentPage.inputLabel} type="text" />
+            {/* Render input only on the first page */}
+            {currentPageIndex === 0 && (
+              <CustomInput label={currentPage.inputLabel} type="text" />
+            )}
+            {currentPageIndex === 1 && (
+              <CustomInput label={currentPage.inputLabel} type="text" />
+            )}
+            {currentPageIndex === 2 && (
+              <CustomInput label={currentPage.inputLabel} type="password" />
+            )}
 
             <button
               type="submit"
