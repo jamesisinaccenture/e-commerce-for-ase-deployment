@@ -1,14 +1,11 @@
+import { User2 } from "lucide-react";
+import { Outlet } from "react-router-dom";
+
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { User2 } from "lucide-react";
-import React from "react";
 
-interface IAdminLayout {
-  children: React.ReactNode;
-}
-
-const AdminLayout = ({ children }: IAdminLayout) => {
+const AdminLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -22,7 +19,7 @@ const AdminLayout = ({ children }: IAdminLayout) => {
             </Button>
           </div>
         </div>
-        {children}
+        <Outlet />
       </div>
     </SidebarProvider>
   );

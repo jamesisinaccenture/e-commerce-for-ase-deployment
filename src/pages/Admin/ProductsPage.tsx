@@ -1,11 +1,6 @@
-import AdminLayout from "@/layouts/AdminLayout";
 
 const ProductsPage = () => {
-  return (
-    <AdminLayout>
-      <div>ProductsPage</div>
-    </AdminLayout>
-  );
+  return <div>ProductsPage</div>;
 };
 
 export default ProductsPage;
