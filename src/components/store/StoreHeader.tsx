@@ -7,11 +7,20 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import { Avatar } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { LogOut, ShoppingCart } from "lucide-react";
+import CartDrawer from "./CartDrawer";
 
 const products = [
   {
@@ -52,7 +61,8 @@ const StoreHeader = () => {
                     <NavigationMenuLink asChild>
                       <a
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center bg-gradient-to-b from-violet-400 to-blue-400 p-6 no-underline outline-none focus:shadow-md"
-                        href={product.href}>
+                        href={product.href}
+                      >
                         <div className="mb-2 mt-4 text-lg font-medium text-white">
                           {product.title}
                         </div>
@@ -90,8 +100,17 @@ const StoreHeader = () => {
           <NavigationMenuItem>
             <NavigationMenuLink
               href="/all-products"
-              className="flex items-center justify-center hover:underline">
+              className="flex items-center justify-center hover:underline"
+            >
               All Products
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="/category"
+              className="flex items-center justify-center hover:underline"
+            >
+              Category
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
@@ -101,7 +120,8 @@ const StoreHeader = () => {
           <NavigationMenuItem>
             <NavigationMenuLink
               href="/cart"
-              className="flex flex-row items-center gap-3 hover:underline transition-colors duration-300 group">
+              className="flex flex-row items-center gap-3 hover:underline transition-colors duration-300 group"
+            >
               <ShoppingCart
                 size={16}
                 color="black"
@@ -129,12 +149,45 @@ const StoreHeader = () => {
           placeholder="Search"
           className="hidden md:block w-64" // Show on larger screens only
         />
-        <Avatar className="hover:cursor-pointer">
-          <Link to="/profile">
-            <AvatarImage src="/avatar.jpg" alt="avatar" />
-            <AvatarFallback>AV</AvatarFallback>
-          </Link>
-        </Avatar>
+
+        <CartDrawer />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar className="hover:cursor-pointer">
+              <Link to="/profile">
+                <AvatarImage src="/avatar.jpg" alt="avatar" />
+                <AvatarFallback>AV</AvatarFallback>
+              </Link>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" side="bottom" sideOffset={8}>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="hover:cursor-pointer">
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem className="hover:cursor-pointer">
+              Billing
+            </DropdownMenuItem>
+            <DropdownMenuItem className="hover:cursor-pointer">
+              Team
+            </DropdownMenuItem>
+            <DropdownMenuItem className="hover:cursor-pointer">
+              Subscription
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="hover:cursor-pointer">
+              <Link
+                to="/logout"
+                className="flex w-full items-center justify-between"
+              >
+                <span>Logout</span>
+                <LogOut size={16} color="black" />
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
