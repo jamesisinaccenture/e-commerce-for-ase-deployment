@@ -16,6 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import loginImage from "@/images/login-image.jpg";
+
 const LoginPage = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -27,8 +29,8 @@ const LoginPage = () => {
 
   return (
     <Form {...form}>
-      <form className="container p-12 ml-16 flex space-x-96 flex-wrap">
-        <div className="mt-16">
+      <form className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full">
+        <div className="mt-16 w-full lg:w-auto">
           <div className="mb-8">
             <FormLabel className="text-3xl font-sans font-semibold">
               Login
@@ -77,8 +79,8 @@ const LoginPage = () => {
             Don't have an account? <span className="text-red-500">Signup</span>
           </p>
         </div>
-        <div className="content-center">
-          <img src="sample.jpg" alt="Sample Image." />
+        <div className="hidden lg:block mt-6 max-w-80 max-h-96 min-h-96 min-w-80">
+          <img src={loginImage} alt="Sample Image." />
         </div>
       </form>
     </Form>
