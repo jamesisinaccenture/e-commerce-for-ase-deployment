@@ -1,3 +1,6 @@
+import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
+
 import {
   Drawer,
   DrawerClose,
@@ -9,8 +12,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const sampleItems = [
   {

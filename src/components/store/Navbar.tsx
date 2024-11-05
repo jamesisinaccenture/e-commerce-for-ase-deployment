@@ -1,3 +1,5 @@
+import { ShoppingCart } from "lucide-react";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -6,8 +8,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-
-import { ShoppingCart } from "lucide-react";
 
 const products = [
   {
