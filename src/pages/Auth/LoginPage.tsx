@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
-import { loginSchema } from "@/schema/authSchema";
 
 import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
@@ -15,14 +12,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import loginImage from "@/images/login-image.jpg";
+import { loginSchema } from "@/schema/authSchema";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
@@ -42,10 +41,10 @@ const LoginPage = () => {
           <div className="mb-3 w-80">
             <FormField
               control={form.control}
-              name="email"
+              name="username"
               render={({ field }) => (
                 <FormItem>
-                  <CustomInput type="email" label="Email" {...field} />
+                  <CustomInput type="text" label="Username" {...field} />
                   <FormMessage />
                 </FormItem>
               )}
