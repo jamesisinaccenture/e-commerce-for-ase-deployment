@@ -8,6 +8,7 @@ const StoreLayout = ({ children }: { children?: React.ReactNode }) => {
 
       {/* Main Content */}
       <div>{children}</div>
+      {/* <Outlet /> */}
 
       <StoreFooter />
     </>
