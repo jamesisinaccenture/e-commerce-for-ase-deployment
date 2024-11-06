@@ -8,7 +8,7 @@ export const ROUTES = {
   NOT_FOUND: "*",
   ADMIN: {
     BASE: "/admin",
-    DASHBOARD: "/admin/",
+    DASHBOARD: "/admin",
     PRODUCT: "/admin/products",
     CATEGORY: "/admin/category",
     USERS: "/admin/users",
@@ -16,8 +16,9 @@ export const ROUTES = {
   },
   STORE: {
     HOME: "/store",
-    PRODUCTS: "/store/products",
+    PRODUCTS: "/store/all-products",
     CATEGORY: "/store/category",
+    CART: "/store/cart",
     ABOUT: "/about",
     CONTACT_US: "/contact-us",
   },
