@@ -16,7 +16,10 @@ export interface SignupFormData {
   lastName: string;
   email: string;
   phoneNumber?: string;
+  address: string;
+  username: string;
   password: string;
   confirmPassword: string;
   terms: boolean;
+  dateCreated: string;
 }
