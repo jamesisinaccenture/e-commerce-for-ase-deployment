@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import loginImage from "@/assets/images/login-image.jpg";
 import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import loginImage from "@/images/login-image.jpg";
 import { loginSchema } from "@/schema/authSchema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
