@@ -9,15 +9,6 @@ export const loginSchema = z.object({
   }),
 });
 
-export const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .email("Enter a valid email address")
-    .refine((val) => val === "jeanettegbaco@gmail.com", {
-      message: "Email must be jeanettegbaco@gmail.com",
-    }),
-});
-
 export const verifyPasswordSchema = z.object({
   verificationCode: z
     .string()
