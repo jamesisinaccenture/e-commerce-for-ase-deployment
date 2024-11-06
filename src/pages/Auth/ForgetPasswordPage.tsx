@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import CustomInput from "@/components/reusable/CustomInput";
 import forget from "../../assets/forget.png";
@@ -8,6 +8,8 @@ import { usePasswordPage } from "../../hooks/state/usePasswordPage";
 
 const ForgetPasswordPage: React.FC = () => {
   const { currentPageIndex, nextPage, previousPage } = usePasswordPage();
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
 
   const pages = [
     {
@@ -32,6 +34,35 @@ const ForgetPasswordPage: React.FC = () => {
   ];
 
   const currentPage = pages[currentPageIndex];
+
+  const validateInput = () => {
+    if (currentPageIndex === 0) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(inputValue)) {
+        setError("Please enter a valid email address.");
+        return false;
+      }
+    } else if (currentPageIndex === 1) {
+      if (inputValue.trim() === "") {
+        setError("Verification code cannot be empty.");
+        return false;
+      }
+    } else if (currentPageIndex === 2) {
+      if (inputValue.length < 6) {
+        setError("Password must be at least 6 characters long.");
+        return false;
+      }
+    }
+    setError("");
+    return true;
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (validateInput()) {
+      nextPage();
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 font-poppins">
@@ -60,24 +91,33 @@ const ForgetPasswordPage: React.FC = () => {
           <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
 
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              if (currentPageIndex < pages.length - 1) {
-                nextPage();
-              }
-            }}
-          >
-            {/* Render input only on the first page */}
+          <form onSubmit={handleSubmit}>
             {currentPageIndex === 0 && (
-              <CustomInput label={currentPage.inputLabel} type="text" />
+              <CustomInput
+                label={currentPage.inputLabel}
+                type="text"
+                name="email"
+                onChange={(e) => setInputValue(e.target.value)}
+              />
             )}
             {currentPageIndex === 1 && (
-              <CustomInput label={currentPage.inputLabel} type="text" />
+              <CustomInput
+                label={currentPage.inputLabel}
+                type="text"
+                name="verificationCode"
+                onChange={(e) => setInputValue(e.target.value)}
+              />
             )}
             {currentPageIndex === 2 && (
-              <CustomInput label={currentPage.inputLabel} type="password" />
+              <CustomInput
+                label={currentPage.inputLabel}
+                type="password"
+                name="newPassword"
+                onChange={(e) => setInputValue(e.target.value)}
+              />
             )}
+
+            {error && <p className="text-red-500 mt-2">{error}</p>}
 
             <button
               type="submit"
@@ -99,14 +139,14 @@ const ForgetPasswordPage: React.FC = () => {
           {currentPage.title === "Verify your email" && (
             <img
               src={verify}
-              alt="Password Recovery Illustration"
+              alt="Verification Illustration"
               className="max-h-[450px] object-contain"
             />
           )}
           {currentPage.title === "Reset your password" && (
             <img
               src={forget}
-              alt="Password Recovery Illustration"
+              alt="Reset Password Illustration"
               className="max-h-[450px] object-contain"
             />
           )}
