@@ -9,6 +9,7 @@ import ProductsPage from "@/pages/Admin/ProductsPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
 import LoginPage from "@/pages/Auth/LoginPage";
 import NotFound from "@/pages/Auth/NotFound";
+import SignupPage from "@/pages/Auth/SignupPage";
 import LandingPage from "@/pages/Store/LandingPage";
 import Products from "@/pages/Store/Products";
 import { ROUTES } from "./endpoints";
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.LOGIN,
     element: <LoginPage />,
+  },
+  {
+    path: ROUTES.REGISTER,
+    element: <SignupPage />,
   },
   {
     path: ROUTES.BASE,
