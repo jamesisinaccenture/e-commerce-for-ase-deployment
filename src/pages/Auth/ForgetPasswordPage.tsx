@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import CustomInput from "@/components/reusable/CustomInput";
 import forget from "../../assets/forget.png";
@@ -7,6 +8,7 @@ import verify from "../../assets/verify.png";
 import { usePasswordPage } from "../../hooks/state/usePasswordPage";
 
 const ForgetPasswordPage: React.FC = () => {
+  const navigate = useNavigate();
   const { currentPageIndex, nextPage, previousPage } = usePasswordPage();
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
@@ -35,16 +37,25 @@ const ForgetPasswordPage: React.FC = () => {
 
   const currentPage = pages[currentPageIndex];
 
+  useEffect(() => {
+    setInputValue("");
+    setError("");
+  }, [currentPageIndex]);
+
   const validateInput = () => {
     if (currentPageIndex === 0) {
+      if (!inputValue.trim()) {
+        setError("Email is required.");
+        return false;
+      }
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(inputValue)) {
         setError("Please enter a valid email address.");
         return false;
       }
     } else if (currentPageIndex === 1) {
-      if (inputValue.trim() === "") {
-        setError("Verification code cannot be empty.");
+      if (!inputValue.trim()) {
+        setError("Verification code is required.");
         return false;
       }
     } else if (currentPageIndex === 2) {
@@ -53,14 +64,22 @@ const ForgetPasswordPage: React.FC = () => {
         return false;
       }
     }
+
     setError("");
     return true;
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
     if (validateInput()) {
-      nextPage();
+      if (currentPageIndex === 0) {
+        nextPage();
+      } else if (currentPageIndex === 1) {
+        nextPage();
+      } else if (currentPageIndex === 2) {
+        navigate("/login");
+      }
     }
   };
 
@@ -92,6 +111,7 @@ const ForgetPasswordPage: React.FC = () => {
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
 
           <form onSubmit={handleSubmit}>
+            {/* Render input fields conditionally */}
             {currentPageIndex === 0 && (
               <CustomInput
                 label={currentPage.inputLabel}
