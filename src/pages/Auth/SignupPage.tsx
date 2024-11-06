@@ -71,11 +71,42 @@ const SignupPage = () => {
 
           <div>
             <CustomInput
-              label="Phone Number"
+              label="Contact Number"
               type="text"
-              {...register("phoneNumber")}
+              {...register("phoneNumber", {
+                required: "Contact number is required",
+              })}
             />
+            {errors.phoneNumber && (
+              <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
+            )}
           </div>
+        </div>
+
+        <div>
+          <CustomInput
+            label="Address"
+            type="text"
+            {...register("address", {
+              required: "Address is required",
+            })}
+          />
+          {errors.address && (
+            <p className="text-sm text-red-500">{errors.address.message}</p>
+          )}
+        </div>
+
+        <div>
+          <CustomInput
+            label="Username"
+            type="text"
+            {...register("username", {
+              required: "Username is required",
+            })}
+          />
+          {errors.username && (
+            <p className="text-sm text-red-500">{errors.username.message}</p>
+          )}
         </div>
 
         <div>
@@ -111,6 +142,13 @@ const SignupPage = () => {
             </p>
           )}
         </div>
+
+        {/* Hidden Date Created Field */}
+        <input
+          type="hidden"
+          value={new Date().toISOString()}
+          {...register("dateCreated")}
+        />
 
         <div className="flex items-center">
           <input
