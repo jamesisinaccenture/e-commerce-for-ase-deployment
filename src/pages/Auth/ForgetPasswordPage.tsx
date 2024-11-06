@@ -1,8 +1,10 @@
 import React from "react";
+
 import CustomInput from "@/components/reusable/CustomInput";
-import { usePasswordPage } from "../../hooks/state/usePasswordPage";
 import forget from "../../assets/forget.png";
 import verify from "../../assets/verify.png";
+
+import { usePasswordPage } from "../../hooks/state/usePasswordPage";
 
 const ForgetPasswordPage: React.FC = () => {
   const { currentPageIndex, nextPage, previousPage } = usePasswordPage();
