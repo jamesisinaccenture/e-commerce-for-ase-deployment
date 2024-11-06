@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { ROUTES } from "./endpoints";
-
+import AdminRoutes from "@/components/reusable/AdminRoutes";
+import AdminLayout from "@/layouts/AdminLayout";
 import DashboardPage from "@/pages/Admin/DashboardPage";
-import LandingPage from "@/pages/Store/LandingPage";
-import LoginPage from "@/pages/Auth/LoginPage";
 import ProductsPage from "@/pages/Admin/ProductsPage";
-import Category from "@/pages/Admin/Category";
-import NotFound from "@/pages/Auth/NotFound";
 import AccessDenied from "@/pages/Auth/AccessDenied";
 import SignupPage from "@/pages/Auth/SignupPage";
+import LoginPage from "@/pages/Auth/LoginPage";
+import NotFound from "@/pages/Auth/NotFound";
+import LandingPage from "@/pages/Store/LandingPage";
+import { ROUTES } from "./endpoints";
 
 export const router = createBrowserRouter([
   {
@@ -30,10 +30,10 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.ADMIN.BASE,
-    element: <DashboardPage />,
+    element: <AdminRoutes component={<AdminLayout />} />,
     children: [
+      { path: ROUTES.ADMIN.BASE, element: <DashboardPage /> },
       { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
-      { path: ROUTES.ADMIN.CATEGORY, element: <Category /> },
     ],
   },
   {

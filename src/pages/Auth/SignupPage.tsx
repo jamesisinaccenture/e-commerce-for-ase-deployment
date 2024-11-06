@@ -1,17 +1,29 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from 'react-hook-form';
 import CustomInput from '@/components/reusable/CustomInput';
+
+interface SignupFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber?: string;
+  password: string;
+  confirmPassword: string;
+  terms: boolean;
+}
 
 const SignupPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    watch,
+  } = useForm<SignupFormData>();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: SignupFormData) => {
     console.log("Form submitted successfully:", data);
   };
+
+  const password = watch("password");
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -23,87 +35,91 @@ const SignupPage = () => {
           Create Account
         </h2>
 
-        {/* First Name and Last Name */}
         <div className="grid grid-cols-2 gap-4">
-          <CustomInput
-            label="First Name"
-            name="firstName"
-            type="text"
-            {...register("firstName", { required: "First name is required" })}
-          />
-          {errors.firstName && (
-            <p className="text-sm text-red-500">{errors.firstName.message}</p>
-          )}
-          
-          <CustomInput
-            label="Last Name"
-            name="lastName"
-            type="text"
-            {...register("lastName", { required: "Last name is required" })}
-          />
-          {errors.lastName && (
-            <p className="text-sm text-red-500">{errors.lastName.message}</p>
-          )}
+          <div>
+            <CustomInput
+              label="First Name"
+              type="text"
+              {...register("firstName", { required: "First name is required" })}
+            />
+            {errors.firstName && (
+              <p className="text-sm text-red-500">{errors.firstName.message}</p>
+            )}
+          </div>
+
+          <div>
+            <CustomInput
+              label="Last Name"
+              type="text"
+              {...register("lastName", { required: "Last name is required" })}
+            />
+            {errors.lastName && (
+              <p className="text-sm text-red-500">{errors.lastName.message}</p>
+            )}
+          </div>
         </div>
 
-        {/* Email and Phone Number */}
         <div className="grid grid-cols-2 gap-4">
+          <div>
+            <CustomInput
+              label="Email"
+              type="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                  message: "Enter a valid email address",
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div>
+            <CustomInput
+              label="Phone Number"
+              type="text"
+              {...register("phoneNumber")}
+            />
+          </div>
+        </div>
+
+        <div>
           <CustomInput
-            label="Email"
-            name="email"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: "Enter a valid email address",
+            label="Password"
+            type="password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters long",
               },
             })}
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
+          {errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
-
-          <CustomInput
-            label="Phone Number"
-            name="phoneNumber"
-            type="text"
-            {...register("phoneNumber")}
-          />
         </div>
 
-        {/* Password and Confirm Password */}
-        <CustomInput
-          label="Password"
-          name="password"
-          type="password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 6,
-              message: "Password must be at least 6 characters long",
-            },
-          })}
-        />
-        {errors.password && (
-          <p className="text-sm text-red-500">{errors.password.message}</p>
-        )}
+        <div>
+          <CustomInput
+            label="Confirm Password"
+            type="password"
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === password || "Passwords do not match",
+            })}
+          />
+          {errors.confirmPassword && (
+            <p className="text-sm text-red-500">
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
 
-        <CustomInput
-          label="Confirm Password"
-          name="confirmPassword"
-          type="password"
-          {...register("confirmPassword", {
-            required: "Please confirm your password",
-            validate: (value) =>
-              value === (errors.password ? null : true) || "Passwords do not match",
-          })}
-        />
-        {errors.confirmPassword && (
-          <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
-        )}
-
-        {/* Terms and Conditions */}
         <div className="flex items-center">
           <input
             {...register("terms", { required: "You must accept the terms" })}
@@ -120,7 +136,6 @@ const SignupPage = () => {
           <p className="text-sm text-red-500">{errors.terms.message}</p>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
