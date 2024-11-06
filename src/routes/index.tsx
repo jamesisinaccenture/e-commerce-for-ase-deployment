@@ -5,6 +5,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import DashboardPage from "@/pages/Admin/DashboardPage";
 import ProductsPage from "@/pages/Admin/ProductsPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
+import SignupPage from "@/pages/Auth/SignupPage";
 import LoginPage from "@/pages/Auth/LoginPage";
 import NotFound from "@/pages/Auth/NotFound";
 import LandingPage from "@/pages/Store/LandingPage";
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.LOGIN,
     element: <LoginPage />,
+  },
+  {
+    path: ROUTES.REGISTER,
+    element: <SignupPage />,
   },
   {
     path: ROUTES.STORE.HOME,
