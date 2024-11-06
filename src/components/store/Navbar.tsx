@@ -8,6 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { ROUTES } from "@/routes/endpoints";
 
 const products = [
   {
@@ -75,7 +76,7 @@ const Navbar = () => {
       <NavigationMenuList className="flex ml-6 space-x-8">
         <NavigationMenuItem>
           <NavigationMenuLink
-            href="/all-products"
+            href={ROUTES.STORE.PRODUCTS}
             className="flex items-center justify-center hover:underline"
           >
             All Products
@@ -83,7 +84,7 @@ const Navbar = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink
-            href="/category"
+            href={ROUTES.STORE.CATEGORY}
             className="flex items-center justify-center hover:underline"
           >
             Category
@@ -95,7 +96,7 @@ const Navbar = () => {
       <NavigationMenuList className="flex ml-5 space-x-8">
         <NavigationMenuItem>
           <NavigationMenuLink
-            href="/cart"
+            href={ROUTES.STORE.CART}
             className="flex flex-row items-center gap-3 hover:underline transition-colors duration-300 group"
           >
             <ShoppingCart
