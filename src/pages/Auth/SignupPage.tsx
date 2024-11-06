@@ -1,15 +1,7 @@
 import { useForm } from 'react-hook-form';
-import CustomInput from '@/components/reusable/CustomInput';
 
-interface SignupFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber?: string;
-  password: string;
-  confirmPassword: string;
-  terms: boolean;
-}
+import CustomInput from '@/components/reusable/CustomInput';
+import { SignupFormData } from '@/models/auth.model';
 
 const SignupPage = () => {
   const {
@@ -93,8 +85,8 @@ const SignupPage = () => {
             {...register("password", {
               required: "Password is required",
               minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters long",
+                value: 8,
+                message: "Password must be at least 8 characters long",
               },
             })}
           />
