@@ -8,9 +8,12 @@ export interface CountInterface {
 }
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
+  ref: React.RefObject<HTMLInputElement>;
+  value?: string;
   label?: string;
   name?: string;
   type?: HTMLInputTypeAttribute;
+  isRequired?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 

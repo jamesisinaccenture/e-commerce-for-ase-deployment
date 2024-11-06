@@ -7,27 +7,26 @@ import {
 
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/reusable/Loader";
-import useAxios from "@/hooks/useAxios";
 import { useEffect } from "react";
 import { useProductStore } from "@/hooks/state/useProduct";
 
 const StoreProductsPage = () => {
-  const productStore = useProductStore();
-  const { response, loading, error } = useAxios({
-    url: "/photos?_limit=20",
-    method: "GET",
-  });
+  // const productStore = useProductStore();
+  // const { response, loading, error } = useAxios({
+  //   url: "/photos?_limit=20",
+  //   method: "GET",
+  // });
 
-  const fetchProducts = () => {
-    productStore.setProducts(response);
-  };
+  // const fetchProducts = () => {
+  //   productStore.setProducts(response);
+  // };
 
-  useEffect(() => {
-    fetchProducts();
-  }, [response]);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, [response]);
   return (
     <>
-      {loading ? (
+      {/* {loading ? (
         <Loader />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
@@ -54,7 +53,7 @@ const StoreProductsPage = () => {
             </Card>
           ))}
         </div>
-      )}
+      )} */}
     </>
   );
 };

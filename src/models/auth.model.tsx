@@ -8,9 +8,14 @@ export interface IRoutes {
 export interface IAuthStore {
   isAdmin: boolean;
   isAuth: boolean;
+  login: (isAdmin: boolean, isAuth: boolean) => void;
+  logout: () => void;
 }
 
-
+export interface LoginFormData {
+  username: string;
+  password: string;
+}
 export interface SignupFormData {
   firstName: string;
   lastName: string;
