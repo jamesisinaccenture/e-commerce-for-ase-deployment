@@ -1,5 +1,3 @@
-import { ShoppingCart } from "lucide-react";
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -8,6 +6,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+
+import { ROUTES } from "@/routes/endpoints";
+import { ShoppingCart } from "lucide-react";
 
 const products = [
   {
@@ -37,8 +38,7 @@ const Navbar = () => {
                   <NavigationMenuLink asChild>
                     <a
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center bg-gradient-to-b from-violet-400 to-blue-400 p-6 no-underline outline-none focus:shadow-md"
-                      href={product.href}
-                    >
+                      href={product.href}>
                       <div className="mb-2 mt-4 text-lg font-medium text-white">
                         {product.title}
                       </div>
@@ -75,17 +75,15 @@ const Navbar = () => {
       <NavigationMenuList className="flex ml-6 space-x-8">
         <NavigationMenuItem>
           <NavigationMenuLink
-            href="/all-products"
-            className="flex items-center justify-center hover:underline"
-          >
+            href={ROUTES.STORE.PRODUCTS}
+            className="flex items-center justify-center hover:underline">
             All Products
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink
-            href="/category"
-            className="flex items-center justify-center hover:underline"
-          >
+            href={ROUTES.STORE.CATEGORY}
+            className="flex items-center justify-center hover:underline">
             Category
           </NavigationMenuLink>
         </NavigationMenuItem>
@@ -96,8 +94,7 @@ const Navbar = () => {
         <NavigationMenuItem>
           <NavigationMenuLink
             href="/cart"
-            className="flex flex-row items-center gap-3 hover:underline transition-colors duration-300 group"
-          >
+            className="flex flex-row items-center gap-3 hover:underline transition-colors duration-300 group">
             <ShoppingCart
               size={16}
               color="black"

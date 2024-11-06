@@ -1,4 +1,3 @@
-
 export const ROUTES = {
   BASE: "/",
   LOGIN: "/login",
