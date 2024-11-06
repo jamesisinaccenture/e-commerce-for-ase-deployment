@@ -4,7 +4,11 @@ interface PasswordPageStore {
   currentPageIndex: number;
   setCurrentPageIndex: (index: number) => void;
   nextPage: () => void;
-  previousPage: () => void; // Add a method for going to the previous page
+  previousPage: () => void;
+  setInputValue: (inputValue: string) => void;
+  setError: (error: string) => void;
+  inputValue: string;
+  error: string;
 }
 
 export const usePasswordPage = create<PasswordPageStore>((set) => ({
@@ -15,5 +19,9 @@ export const usePasswordPage = create<PasswordPageStore>((set) => ({
   previousPage: () =>
     set((state) => ({
       currentPageIndex: Math.max(state.currentPageIndex - 1, 0),
-    })), // Ensure we don't go below 0
+    })),
+  inputValue: "",
+  setInputValue: (inputValue: string) => set({ inputValue }),
+  error: "",
+  setError: (error: string) => set({ error }),
 }));

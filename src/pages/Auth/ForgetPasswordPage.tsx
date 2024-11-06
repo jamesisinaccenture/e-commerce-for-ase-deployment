@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CustomInput from "@/components/reusable/CustomInput";
@@ -9,9 +9,15 @@ import { usePasswordPage } from "../../hooks/state/usePasswordPage";
 
 const ForgetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
-  const { currentPageIndex, nextPage, previousPage } = usePasswordPage();
-  const [inputValue, setInputValue] = useState("");
-  const [error, setError] = useState("");
+  const {
+    currentPageIndex,
+    nextPage,
+    previousPage,
+    setInputValue,
+    setError,
+    inputValue,
+    error,
+  } = usePasswordPage();
 
   const pages = [
     {
