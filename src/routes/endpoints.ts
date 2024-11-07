@@ -20,5 +20,6 @@ export const ROUTES = {
     CATEGORY: "/store/category",
     ABOUT: "/about",
     CONTACT_US: "/contact-us",
+    PROFILE: "/store/profile",
   },
 };

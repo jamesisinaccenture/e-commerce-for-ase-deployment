@@ -7,6 +7,7 @@ import ProductsPage from "@/pages/Admin/ProductsPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
 import LoginPage from "@/pages/Auth/LoginPage";
 import NotFound from "@/pages/Auth/NotFound";
+import InformationSettingsPage from "@/pages/Store/InformationSettingsPage";
 import LandingPage from "@/pages/Store/LandingPage";
 import { ROUTES } from "./endpoints";
 
@@ -22,6 +23,9 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.STORE.HOME,
     element: <LandingPage />,
+    children: [
+      { path: ROUTES.STORE.PROFILE, element: <InformationSettingsPage /> },
+    ],
   },
   {
     path: ROUTES.ADMIN.BASE,
