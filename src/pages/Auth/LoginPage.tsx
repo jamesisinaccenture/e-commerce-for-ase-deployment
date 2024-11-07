@@ -1,9 +1,3 @@
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import CustomInput from "@/components/reusable/CustomInput";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormDescription,
@@ -12,23 +6,55 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import loginImage from "@/images/login-image.jpg";
-import { loginSchema } from "@/schema/authSchema";
 
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import CustomInput from "@/components/reusable/CustomInput";
+import { LoginFormData } from "@/models/auth.model";
+import { ROUTES } from "@/routes/endpoints";
+import loginImage from "@/assets/images/login-image.jpg";
+import { loginSchema } from "@/schema/authSchema";
+import { loginService } from "@/services/authService";
+import { useAuthStore } from "@/hooks/state/useAuth";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const navigate = useNavigate();
+  const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
   });
+
+  const { login } = useAuthStore();
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      // Make the API call using the login service
+      const response = await loginService(data);
+
+      if (response) {
+        localStorage.setItem("token", response.token);
+        // On success, update your state (e.g., set isAuth to true),
+        login(true, true);
+        // You can also store the user data if needed
+        console.log("Login successful:", response);
+        navigate(ROUTES.ADMIN.BASE);
+      }
+
+      // Redirect to the dashboard or home page
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Optionally show an error message to the user
+    }
+  };
 
   return (
     <Form {...form}>
-      <form className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full">
+      <form
+        className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full"
+        onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mt-16 w-full lg:w-auto">
           <div className="mb-8">
             <FormLabel className="text-3xl font-sans font-semibold">
@@ -86,4 +112,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default withAdminAuth(LoginPage);
