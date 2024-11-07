@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { ROUTES } from "@/routes/endpoints";
 import { useAuthStore } from "@/hooks/state/useAuth";
-import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/routes/endpoints";
 
 const withAdminAuth = (Component: React.ComponentType) => {
   const AdminAuthHOC = (props: any) => {
     const { isAuth, isAdmin } = useAuthStore();
-    console.log("isAuth:", isAuth, "isAdmin:", isAdmin);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    const location = useLocation();
     useEffect(() => {
-      if (!isAuth || !isAdmin) {
-        // Redirect to login if not authenticated or not an admin
+      if (isAuth && isAdmin) {
+        // Redirect to admin base if user is already authenticated as admin
+        navigate(ROUTES.ADMIN.BASE);
+      } else if (!isAuth && location.pathname !== ROUTES.LOGIN) {
+        // Redirect to login if not authenticated or not an admin and not already on the login page
         navigate(ROUTES.LOGIN);
       }
-    }, [isAuth, isAdmin, navigate]);
+    }, [isAuth, isAdmin, navigate, location.pathname]);
 
     return <Component {...props} />;
   };
