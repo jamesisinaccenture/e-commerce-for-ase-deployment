@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import CustomInput from '@/components/reusable/CustomInput';
 import { SignupFormData } from '@/models/auth.model';
 
+import { signupService } from '../../services/authService'; 
+
+// Import signupService
 const SignupPage = () => {
   const {
     register,
@@ -11,8 +14,20 @@ const SignupPage = () => {
     watch,
   } = useForm<SignupFormData>();
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log("Form submitted successfully:", data);
+  const onSubmit = async (data: SignupFormData) => {
+    try {
+      console.log("Form submitted successfully:", data);
+      
+      // Call the signupService to send data to the backend
+      const response = await signupService(data);
+      
+      // Handle the response (e.g., show a success message, redirect, etc.)
+      console.log("User created:", response);
+      // Optionally redirect to a different page or show a success message
+    } catch (error) {
+      console.error("Signup failed:", error);
+      // Handle the error (e.g., show an error message)
+    }
   };
 
   const password = watch("password");
