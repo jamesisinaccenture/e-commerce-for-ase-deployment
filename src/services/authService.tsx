@@ -1,6 +1,7 @@
-import { LoginFormData } from "@/models/auth.model";
 import axios from "axios";
+
 import { headerConfig } from "@/lib/utils";
+import { LoginFormData } from "@/models/auth.model";
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 

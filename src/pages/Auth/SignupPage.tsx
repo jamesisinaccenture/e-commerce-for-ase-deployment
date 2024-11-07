@@ -1,21 +1,52 @@
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import CustomInput from '@/components/reusable/CustomInput';
 import { SignupFormData } from '@/models/auth.model';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+
+// Zod schema for form validation
+const signupSchema = z.object({
+  firstName: z.string().nonempty("First name is required"),
+  lastName: z.string().nonempty("Last name is required"),
+  email: z
+    .string()
+    .nonempty("Email is required")
+    .email("Enter a valid email address"),
+  phoneNumber: z
+    .string()
+    .regex(/^\d{11}$/, "Contact number must be exactly 11 digits")
+    .optional(),
+  address: z.string().nonempty("Address is required"),
+  username: z.string().nonempty("Username is required"),
+  password: z
+    .string()
+    .min(10, "Password must be at least 10 characters long")
+    .regex(/\d.*\d.*\d/, "Password must contain at least 3 numbers")
+    .regex(/[A-Z]/, "Password must contain at least 1 capital letter"),
+  confirmPassword: z.string().nonempty("Please confirm your password"),
+  terms: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the terms" }),
+  }),
+  dateCreated: z.string().optional(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
+});
 
 const SignupPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-  } = useForm<SignupFormData>();
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  });
 
   const onSubmit = (data: SignupFormData) => {
     console.log("Form submitted successfully:", data);
   };
-
-  const password = watch("password");
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -32,7 +63,7 @@ const SignupPage = () => {
             <CustomInput
               label="First Name"
               type="text"
-              {...register("firstName", { required: "First name is required" })}
+              {...register("firstName")}
             />
             {errors.firstName && (
               <p className="text-sm text-red-500">{errors.firstName.message}</p>
@@ -43,7 +74,7 @@ const SignupPage = () => {
             <CustomInput
               label="Last Name"
               type="text"
-              {...register("lastName", { required: "Last name is required" })}
+              {...register("lastName")}
             />
             {errors.lastName && (
               <p className="text-sm text-red-500">{errors.lastName.message}</p>
@@ -56,13 +87,7 @@ const SignupPage = () => {
             <CustomInput
               label="Email"
               type="email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Enter a valid email address",
-                },
-              })}
+              {...register("email")}
             />
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -73,9 +98,7 @@ const SignupPage = () => {
             <CustomInput
               label="Contact Number"
               type="text"
-              {...register("phoneNumber", {
-                required: "Contact number is required",
-              })}
+              {...register("phoneNumber")}
             />
             {errors.phoneNumber && (
               <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
@@ -87,9 +110,7 @@ const SignupPage = () => {
           <CustomInput
             label="Address"
             type="text"
-            {...register("address", {
-              required: "Address is required",
-            })}
+            {...register("address")}
           />
           {errors.address && (
             <p className="text-sm text-red-500">{errors.address.message}</p>
@@ -100,9 +121,7 @@ const SignupPage = () => {
           <CustomInput
             label="Username"
             type="text"
-            {...register("username", {
-              required: "Username is required",
-            })}
+            {...register("username")}
           />
           {errors.username && (
             <p className="text-sm text-red-500">{errors.username.message}</p>
@@ -113,13 +132,7 @@ const SignupPage = () => {
           <CustomInput
             label="Password"
             type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters long",
-              },
-            })}
+            {...register("password")}
           />
           {errors.password && (
             <p className="text-sm text-red-500">{errors.password.message}</p>
@@ -130,11 +143,7 @@ const SignupPage = () => {
           <CustomInput
             label="Confirm Password"
             type="password"
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
+            {...register("confirmPassword")}
           />
           {errors.confirmPassword && (
             <p className="text-sm text-red-500">
@@ -152,14 +161,14 @@ const SignupPage = () => {
 
         <div className="flex items-center">
           <input
-            {...register("terms", { required: "You must accept the terms" })}
+            {...register("terms")}
             type="checkbox"
             className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-0"
           />
           <label className="ml-2 text-sm text-gray-600">
             I agree to all the{" "}
-            <span className="text-red-500">Terms</span> and{" "}
-            <span className="text-red-500">Privacy Policies</span>
+            <span className="text-black underline">Terms</span> and{" "}
+            <span className="text-black underline">Privacy Policies</span>
           </label>
         </div>
         {errors.terms && (

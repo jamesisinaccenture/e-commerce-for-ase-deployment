@@ -1,3 +1,11 @@
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+import loginImage from "@/assets/images/login-image.jpg";
+import CustomInput from "@/components/reusable/CustomInput";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormDescription,
@@ -6,20 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import CustomInput from "@/components/reusable/CustomInput";
+import withAdminAuth from "@/hoc/withAdminAuth";
+import { useAuthStore } from "@/hooks/state/useAuth";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
-import loginImage from "@/assets/images/login-image.jpg";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
-import { useAuthStore } from "@/hooks/state/useAuth";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import withAdminAuth from "@/hoc/withAdminAuth";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {

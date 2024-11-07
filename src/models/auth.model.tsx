@@ -26,5 +26,5 @@ export interface SignupFormData {
   password: string;
   confirmPassword: string;
   terms: boolean;
-  dateCreated: string;
+  dateCreated?: string;
 }
