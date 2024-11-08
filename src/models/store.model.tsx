@@ -15,6 +15,8 @@ export interface ICustomInput {
   type?: HTMLInputTypeAttribute;
   isRequired?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  disabled?: true;
+  className?: any;
 }
 
 // We will change this to the actual later on depending on the structure, as for now this is template only
