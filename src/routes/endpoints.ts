@@ -1,3 +1,4 @@
+
 export const ROUTES = {
   BASE: "/",
   LOGIN: "/login",
@@ -20,5 +21,7 @@ export const ROUTES = {
     CART: "/store/cart",
     ABOUT: "/about",
     CONTACT_US: "/contact-us",
+    PROFILE: "/store/profile",
+    PROFILE_SETTINGS: "/store/profile/settings",
   },
 };
