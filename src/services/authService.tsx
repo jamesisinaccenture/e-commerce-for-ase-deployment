@@ -33,3 +33,25 @@ export const loginService = async (data: LoginFormData) => {
     throw error;
   }
 };
+
+export const logoutService = async () => {
+  const token = JSON.parse(sessionStorage.getItem("token") || "{}");
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/logout`,
+      {},
+      {
+        headers: {
+          ...headerConfig,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("RESPONSE", response);
+    return response.data;
+  } catch (error) {
+    console.error("Logout failed:", error);
+    throw error;
+  }
+};

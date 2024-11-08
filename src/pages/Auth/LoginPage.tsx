@@ -36,13 +36,14 @@ const LoginPage = () => {
     try {
       // Make the API call using the login service
       const response = await loginService(data);
-
+      console.log("response", response);
       if (response) {
         // If the response is valid, store it in sessionStorage, we need to stringify the response for it not to end up being [Object Object] in the session
+        const { token } = response;
+        console.log("token", token);
         sessionStorage.setItem("session", JSON.stringify(response));
 
-        // Update the authentication state (e.g., set isAuth to true)
-        login(true, true);
+        login(true, true, token, { user: response });
 
         // Display a toast
         toast({
