@@ -28,3 +28,31 @@ export const resetPasswordSchema = z
     message: "Passwords must match",
     path: ["confirmPassword"],
   });
+
+  export const signupSchema = z.object({
+    firstName: z.string().nonempty("First name is required"),
+    lastName: z.string().nonempty("Last name is required"),
+    email: z
+      .string()
+      .nonempty("Email is required")
+      .email("Enter a valid email address"),
+    phoneNumber: z
+      .string()
+      .regex(/^\d{11}$/, "Contact number must be exactly 11 digits")
+      .optional(),
+    address: z.string().nonempty("Address is required"),
+    username: z.string().nonempty("Username is required"),
+    password: z
+      .string()
+      .min(10, "Password must be at least 10 characters long")
+      .regex(/\d.*\d.*\d/, "Password must contain at least 3 numbers")
+      .regex(/[A-Z]/, "Password must contain at least 1 capital letter"),
+    confirmPassword: z.string().nonempty("Please confirm your password"),
+    terms: z.literal(true, {
+      errorMap: () => ({ message: "You must accept the terms" }),
+    }),
+    dateCreated: z.string().optional(),
+  }).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
