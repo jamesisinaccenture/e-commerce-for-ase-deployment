@@ -29,7 +29,8 @@ export const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-  export const signupSchema = z.object({
+export const signupSchema = z
+  .object({
     firstName: z.string().nonempty("First name is required"),
     lastName: z.string().nonempty("Last name is required"),
     email: z
@@ -38,8 +39,7 @@ export const resetPasswordSchema = z
       .email("Enter a valid email address"),
     phoneNumber: z
       .string()
-      .regex(/^\d{11}$/, "Contact number must be exactly 11 digits")
-      .optional(),
+      .regex(/^\d{11}$/, "Contact number must be exactly 11 digits"),
     address: z.string().nonempty("Address is required"),
     username: z.string().nonempty("Username is required"),
     password: z
@@ -52,7 +52,8 @@ export const resetPasswordSchema = z
       errorMap: () => ({ message: "You must accept the terms" }),
     }),
     dateCreated: z.string().optional(),
-  }).refine((data) => data.password === data.confirmPassword, {
+  })
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
