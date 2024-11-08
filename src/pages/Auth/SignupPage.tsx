@@ -10,32 +10,55 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
 import { SignupFormData } from "@/models/auth.model";
 import { signupSchema } from "@/schema/authSchema";
 
+import { signupService } from "../../services/authService";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { signupService } from '../../services/authService'; 
-
-// Import signupService
 const SignupPage = () => {
+  const { toast } = useToast(); 
   const form = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
+    defaultValues: { 
+      firstName: "",
+      lastName: "",
+      // email: "",
+      phoneNumber: "",
+      address: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+      dateCreated: new Date().toISOString(),
+    },
   });
 
   const onSubmit = async (data: SignupFormData) => {
+    console.log("Form submitted with data:", data); // Debugging line
     try {
-      console.log("Form submitted successfully:", data);
-      
       // Call the signupService to send data to the backend
       const response = await signupService(data);
-      
-      // Handle the response (e.g., show a success message, redirect, etc.)
+
+      // Show success toast if registration is successful
+      toast({
+        variant: "success",
+        title: "Registered successfully!",
+        description: "Your account has been created.",
+      });
+
+      // Optionally redirect to another page after success
       console.log("User created:", response);
-      // Optionally redirect to a different page or show a success message
     } catch (error) {
       console.error("Signup failed:", error);
-      // Handle the error (e.g., show an error message)
+
+      // Show error toast if registration fails
+      toast({
+        variant: "destructive",
+        title: "Signup failed",
+        description: `Something went wrong: ${error}`,
+      });
     }
   };
 
@@ -78,30 +101,13 @@ const SignupPage = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {/* <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <CustomInput label="Email" type="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
             <FormField
               control={form.control}
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <CustomInput
-                      label="Contact Number"
-                      type="text"
-                      {...field}
-                    />
+                    <CustomInput label="Contact Number" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -121,6 +127,19 @@ const SignupPage = () => {
               )}
             />
           </div>
+
+          {/* <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <CustomInput label="Email" type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
 
           <FormField
             control={form.control}
@@ -165,7 +184,6 @@ const SignupPage = () => {
             )}
           />
 
-          {/* Hidden Date Created Field */}
           <input
             type="hidden"
             value={new Date().toISOString()}

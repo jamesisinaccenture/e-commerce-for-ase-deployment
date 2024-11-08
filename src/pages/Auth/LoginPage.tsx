@@ -1,11 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-<<<<<<< HEAD
-=======
 import { useNavigate } from "react-router-dom";
 
 import loginImage from "@/assets/images/login-image.jpg";
 import { Checkbox } from "@/components/ui/checkbox";
->>>>>>> 267e3d4580dc3d5ae55f261e6e373cc0cc02c980
 import {
   Form,
   FormDescription,
