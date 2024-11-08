@@ -6,10 +6,12 @@ export interface IRoutes {
 }
 
 export interface IAuthStore {
+  isLoading: boolean;
   isAdmin: boolean;
   isAuth: boolean;
   login: (isAdmin: boolean, isAuth: boolean) => void;
   logout: () => void;
+  setLoading: (loading: boolean) => void;
 }
 
 export interface LoginFormData {
