@@ -28,3 +28,8 @@ export interface SignupFormData {
   terms: boolean;
   dateCreated: string;
 }
+export interface ForgotPasswordFormData {
+  email: string;
+  verificationCode: string;
+  newPassword: string;
+}

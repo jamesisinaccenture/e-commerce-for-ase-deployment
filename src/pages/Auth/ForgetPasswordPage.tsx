@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import forget from "@/assets/images/forget.png";
 import verify from "@/assets/images/verify.png";
 import CustomInput from "@/components/reusable/CustomInput";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { usePasswordPage } from "@/hooks/state/usePasswordPage";
+import { resetPasswordSchema } from "@/schema/authSchema";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ForgetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
+  const form = useForm({ resolver: zodResolver(resetPasswordSchema) });
+
   const {
     currentPageIndex,
     nextPage,
@@ -42,10 +49,18 @@ const ForgetPasswordPage: React.FC = () => {
 
   const currentPage = pages[currentPageIndex];
 
+  // useEffect(() => {
+  //   setInputValue("");
+  //   setError("");
+  // }, [currentPageIndex]);
+
   useEffect(() => {
-    setInputValue("");
-    setError("");
-  }, [currentPageIndex]);
+    console.log("Current Page Index:", currentPageIndex);
+    if (currentPageIndex !== undefined && currentPageIndex >= 0) {
+      setInputValue("");
+      setError("");
+    }
+  }, [currentPageIndex, setInputValue, setError]);
 
   const validateInput = () => {
     if (currentPageIndex === 0) {
@@ -74,8 +89,13 @@ const ForgetPasswordPage: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = (data: {
+    email?: string;
+    verificationCode?: string;
+    newPassword?: string;
+  }) => {
+    //console.log("Hello World");
+    console.log("Form Data:", data);
 
     if (validateInput()) {
       if (currentPageIndex === 0) {
@@ -115,42 +135,72 @@ const ForgetPasswordPage: React.FC = () => {
           <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
 
-          <form onSubmit={handleSubmit}>
-            {/* Render input fields conditionally */}
-            {currentPageIndex === 0 && (
-              <CustomInput
-                label={currentPage.inputLabel}
-                type="text"
-                name="email"
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            )}
-            {currentPageIndex === 1 && (
-              <CustomInput
-                label={currentPage.inputLabel}
-                type="text"
-                name="verificationCode"
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            )}
-            {currentPageIndex === 2 && (
-              <CustomInput
-                label={currentPage.inputLabel}
-                type="password"
-                name="newPassword"
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            )}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
+              {/* Render input fields conditionally */}
+              {currentPageIndex === 0 && (
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <CustomInput
+                        label={currentPage.inputLabel}
+                        type="text"
+                        {...field}
+                        //onChange={(e) => setInputValue(e.target.value)}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+              {currentPageIndex === 1 && (
+                <FormField
+                  control={form.control}
+                  name="verificationCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <CustomInput
+                        label={currentPage.inputLabel}
+                        type="text"
+                        {...field}
+                        //onChange={(e) => setInputValue(e.target.value)}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+              {currentPageIndex === 2 && (
+                <FormField
+                  control={form.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <CustomInput
+                        label={currentPage.inputLabel}
+                        type="resetpassword"
+                        {...field}
+                        //onChange={(e) => setInputValue(e.target.value)}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
-            {error && <p className="text-red-500 mt-2">{error}</p>}
+              {error && <p className="text-red-500 mt-2">{error}</p>}
 
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
-            >
-              {currentPage.buttonText}
-            </button>
-          </form>
+              <button
+                onSubmit={form.handleSubmit(handleSubmit)}
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
+              >
+                {currentPage.buttonText}
+              </button>
+            </form>
+          </Form>
         </div>
 
         <div className="hidden lg:flex w-1/2 items-center justify-center bg-gray-100 rounded-r-lg">
