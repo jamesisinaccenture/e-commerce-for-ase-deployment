@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
-
 // Inspired by react-hot-toast library
 import * as React from "react"
 
@@ -17,6 +17,7 @@ type ToasterToast = ToastProps & {
   description?: React.ReactNode
   action?: ToastActionElement
 }
+
 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
@@ -158,7 +159,7 @@ function toast({ ...props }: Toast) {
       ...props,
       id,
       open: true,
-      onOpenChange: (open) => {
+      onOpenChange: (open: boolean) => {
         if (!open) dismiss()
       },
     },
