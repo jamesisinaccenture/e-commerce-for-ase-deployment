@@ -2,6 +2,7 @@ import { IAuthStore } from "@/models/auth.model";
 import { create } from "zustand";
 
 export const useAuthStore = create<IAuthStore>((set) => ({
+  isLoading: false,
   // Initialize the state from sessionStorage if available
   isAdmin: JSON.parse(sessionStorage.getItem("isAdmin") || "false"),
   isAuth: JSON.parse(sessionStorage.getItem("isAuth") || "false"),
@@ -15,4 +16,5 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     sessionStorage.removeItem("isAdmin"); // Remove 'isAdmin' from sessionStorage
     set({ isAuth: false, isAdmin: false }); // Reset state
   },
+  setLoading: (loading: boolean) => set(() => ({ isLoading: loading })), // Set loading states
 }));

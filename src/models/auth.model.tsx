@@ -6,10 +6,12 @@ export interface IRoutes {
 }
 
 export interface IAuthStore {
+  isLoading: boolean;
   isAdmin: boolean;
   isAuth: boolean;
   login: (isAdmin: boolean, isAuth: boolean) => void;
   logout: () => void;
+  setLoading: (loading: boolean) => void;
 }
 
 export interface LoginFormData {
@@ -26,7 +28,7 @@ export interface SignupFormData {
   password: string;
   confirmPassword: string;
   terms: boolean;
-  dateCreated: string;
+  dateCreated?: string;
 }
 export interface ForgotPasswordFormData {
   email: string;
