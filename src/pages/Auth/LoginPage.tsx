@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import loginImage from "@/assets/images/login-image.jpg";
@@ -14,17 +13,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import withAdminAuth from "@/hoc/withAdminAuth";
-import { useAuthStore } from "@/hooks/state/useAuth";
+
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
-
+import { useAuthStore } from "@/hooks/state/useAuth";
+import { useForm } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast";
+import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
@@ -39,15 +41,21 @@ const LoginPage = () => {
         localStorage.setItem("token", response.token);
         // On success, update your state (e.g., set isAuth to true),
         login(true, true);
-        // You can also store the user data if needed
-        console.log("Login successful:", response);
+
+        //display a toast
+        toast({
+          variant: "success",
+          title: "Login successful!",
+          description: "You will be redirected in a few seconds.",
+        });
         navigate(ROUTES.ADMIN.BASE);
       }
-
-      // Redirect to the dashboard or home page
     } catch (error) {
-      console.error("Login failed:", error);
-      // Optionally show an error message to the user
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: `Something went wrong: ${error}`,
+      });
     }
   };
 
@@ -55,7 +63,8 @@ const LoginPage = () => {
     <Form {...form}>
       <form
         className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full"
-        onSubmit={form.handleSubmit(onSubmit)}>
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="mt-16 w-full lg:w-auto">
           <div className="mb-8">
             <FormLabel className="text-3xl font-sans font-semibold">
