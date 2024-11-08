@@ -1,3 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
+import { useNavigate } from "react-router-dom";
+
+import loginImage from "@/assets/images/login-image.jpg";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormDescription,
@@ -8,17 +13,14 @@ import {
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import CustomInput from "@/components/reusable/CustomInput";
 import Loader from "@/components/reusable/Loader";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
-import loginImage from "@/assets/images/login-image.jpg";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
 import { useAuthStore } from "@/hooks/state/useAuth";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
