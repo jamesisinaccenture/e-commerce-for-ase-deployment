@@ -1,25 +1,37 @@
+import { Camera } from "lucide-react";
+
 import profileImage from "@/assets/images/profile-image.jpg";
+import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ROUTES } from "@/routes/endpoints";
 
-const InformationSettingsPage = () => {
+const UpdateInformationSettingsPage = () => {
   return (
     <form className="flex flex-wrap justify-center items-center">
       <div className="mb-8">
         <div className="container mt-5">
           <div className="container mb-8 max-w-fit">
             <h1 className="text-gray-600 text-2xl font-bold">
-              Information Settings
+              Update Information Settings
             </h1>
           </div>
-          <div className="flex justify-center h-28 w-auto">
+          <div className="relative h-28 w-auto group">
             <div className="">
               <img
                 src={profileImage}
                 alt="Profile Image"
-                className="rounded-full max-h-28"
+                className="rounded-full max-h-28 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               />
+            </div>
+            <div className="opacity-0 group-hover:opacity-100">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              >
+                <Camera />
+              </Button>
             </div>
           </div>
         </div>
@@ -30,21 +42,23 @@ const InformationSettingsPage = () => {
           <div className="flex flex-wrap gap-5">
             <div>
               <Label className="text-gray-500">Firstname</Label>
-              <p className="text-gray-800 w-80 font-bold">Dev ako</p>
+              <CustomInput type="text" label="Dev ako" className="w-80" />
             </div>
             <div>
               <Label className="text-gray-500">Lastname</Label>
-              <p className="text-gray-800 w-80 font-bold">Bossing</p>
+              <CustomInput type="text" label="Bossing" className="w-80" />
             </div>
             <div>
               <Label className="text-gray-500">Address</Label>
-              <p className="text-gray-800 w-80 font-bold">
-                taga Etivac ako boss
-              </p>
+              <CustomInput
+                type="text"
+                label="taga Etivac ako boss"
+                className="w-80"
+              />
             </div>
             <div>
               <Label className="text-gray-500">Contact Number</Label>
-              <p className="text-gray-800 w-80 font-bold">09054802865</p>
+              <CustomInput type="tel" label="09054802865" className="w-80" />
             </div>
           </div>
         </div>
@@ -58,36 +72,47 @@ const InformationSettingsPage = () => {
           <div className="flex flex-wrap gap-5">
             <div>
               <Label className="text-gray-500">Username</Label>
-              <p className="text-gray-800 w-80 font-bold">devqt123</p>
+              <CustomInput type="text" label="devqt123" className="w-80" />
             </div>
             <div>
               <Label className="text-gray-500">Email</Label>
-              <p className="text-gray-800 w-80 font-bold">devqt123@gmail.com</p>
+              <CustomInput
+                type="email"
+                label="devqt123@gmail.com"
+                className="w-80"
+              />
             </div>
             <div>
               <Label className="text-gray-500">Date Created</Label>
-              <p className="text-gray-800 w-80 font-bold">12/25/2099</p>
+              <CustomInput
+                type="text"
+                label="12/25/2099"
+                className="w-80"
+                disabled
+              />
             </div>
             <div>
               <Label className="text-gray-500">Old Password</Label>
-              <p className="text-gray-800 w-80 font-bold">karaan nga pass</p>
+              <CustomInput type="password" label="old pass" className="w-80" />
             </div>
             <div>
               <Label className="text-gray-500">New Password</Label>
-              <p className="text-gray-800 w-80 font-bold">bag o nga pass</p>
+              <CustomInput type="password" label="new pass" className="w-80" />
             </div>
             <div>
               <Label className="text-gray-500">Confirm New Password</Label>
-              <p className="text-gray-800 w-80 font-bold">
-                e confirm ang karaan na pass
-              </p>
+              <CustomInput
+                type="password"
+                label="confirm new pass"
+                className="w-80"
+              />
             </div>
           </div>
         </div>
 
         <div className="flex container mt-14">
           <Button className="bg-blue-500">
-            <a href={ROUTES.STORE.PROFILE_SETTINGS}>Edit Profile</a>
+            <a href={ROUTES.STORE.PROFILE}>Save Changes</a>
           </Button>
         </div>
       </div>
@@ -95,4 +120,4 @@ const InformationSettingsPage = () => {
   );
 };
 
-export default InformationSettingsPage;
+export default UpdateInformationSettingsPage;
