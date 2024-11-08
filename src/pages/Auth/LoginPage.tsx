@@ -16,14 +16,15 @@ import loginImage from "@/assets/images/login-image.jpg";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
 import { useAuthStore } from "@/hooks/state/useAuth";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
@@ -38,15 +39,21 @@ const LoginPage = () => {
         localStorage.setItem("token", response.token);
         // On success, update your state (e.g., set isAuth to true),
         login(true, true);
-        // You can also store the user data if needed
-        console.log("Login successful:", response);
+
+        //display a toast
+        toast({
+          variant: "success",
+          title: "Login successful!",
+          description: "You will be redirected in a few seconds.",
+        });
         navigate(ROUTES.ADMIN.BASE);
       }
-
-      // Redirect to the dashboard or home page
     } catch (error) {
-      console.error("Login failed:", error);
-      // Optionally show an error message to the user
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: `Something went wrong: ${error}`,
+      });
     }
   };
 
