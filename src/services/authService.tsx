@@ -56,7 +56,14 @@ export const signupService = async (data: SignupFormData) => {
 
     return response.data;
   } catch (error) {
-    console.error("Signup failed:", error);
-    throw error;
+    // Capture specific errors (e.g., 400 for validation issues)
+    if (axios.isAxiosError(error) && error.response) {
+      const errorMessage = error.response.data.message || "Signup failed";
+      console.error("Signup error:", errorMessage);
+      throw new Error(errorMessage); // Throw a user-friendly error
+    } else {
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred.");
+    }
   }
 };

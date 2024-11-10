@@ -33,10 +33,11 @@ export const resetPasswordSchema = z
   .object({
     firstName: z.string().nonempty("First name is required"),
     lastName: z.string().nonempty("Last name is required"),
-    email: z
-      .string()
-      .nonempty("Email is required")
-      .email("Enter a valid email address"),
+    // Keep the email validation schema commented for future use
+    // email: z
+    //   .string()
+    //   .nonempty("Email is required")
+    //   .email("Enter a valid email address"),
     phoneNumber: z
       .string()
       .regex(/^\d{11}$/, "Contact number must be exactly 11 digits"),

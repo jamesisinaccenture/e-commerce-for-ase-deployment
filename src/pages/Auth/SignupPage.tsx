@@ -18,13 +18,12 @@ import { signupService } from "../../services/authService";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignupPage = () => {
-  const { toast } = useToast(); 
+  const { toast } = useToast();
   const form = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
-    defaultValues: { 
+    defaultValues: {
       firstName: "",
       lastName: "",
-      // email: "",
       phoneNumber: "",
       address: "",
       username: "",
@@ -36,24 +35,28 @@ const SignupPage = () => {
   });
 
   const onSubmit = async (data: SignupFormData) => {
-    console.log("Form submitted with data:", data); // Debugging line
+    console.log("Form submitted with data:", data);
     try {
-      // Call the signupService to send data to the backend
       const response = await signupService(data);
 
-      // Show success toast if registration is successful
+      // Store response data in sessionStorage
+      if (response.token) {
+        sessionStorage.setItem("userToken", response.token);
+      }
+      if (response.userId) {
+        sessionStorage.setItem("userId", response.userId);
+      }
+
       toast({
         variant: "success",
         title: "Registered successfully!",
         description: "Your account has been created.",
       });
 
-      // Optionally redirect to another page after success
       console.log("User created:", response);
     } catch (error) {
       console.error("Signup failed:", error);
 
-      // Show error toast if registration fails
       toast({
         variant: "destructive",
         title: "Signup failed",
@@ -113,7 +116,6 @@ const SignupPage = () => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="address"
@@ -127,19 +129,6 @@ const SignupPage = () => {
               )}
             />
           </div>
-
-          {/* <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <CustomInput label="Email" type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
 
           <FormField
             control={form.control}
