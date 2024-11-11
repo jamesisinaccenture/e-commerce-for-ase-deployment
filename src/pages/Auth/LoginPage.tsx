@@ -1,3 +1,11 @@
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+import loginImage from "@/assets/images/login-image.jpg";
+import CustomInput from "@/components/reusable/CustomInput";
+import Loader from "@/components/reusable/Loader";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormDescription,
@@ -6,21 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import CustomInput from "@/components/reusable/CustomInput";
-import Loader from "@/components/reusable/Loader";
+import withAdminAuth from "@/hoc/withAdminAuth";
+import { useAuthStore } from "@/hooks/state/useAuth";
+import { useToast } from "@/hooks/use-toast";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
-import loginImage from "@/assets/images/login-image.jpg";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
-import { useAuthStore } from "@/hooks/state/useAuth";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import withAdminAuth from "@/hoc/withAdminAuth";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
@@ -56,11 +57,12 @@ const LoginPage = () => {
 
         setLoading(false);
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      setLoading(false);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: `Something went wrong: ${error}`,
+        title: "Oops! We've encountered an obstacle",
+        description: `Something went wrong: ${error.response.data.data.error}`,
       });
     }
   };
@@ -73,7 +75,8 @@ const LoginPage = () => {
         <Form {...form}>
           <form
             className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full"
-            onSubmit={form.handleSubmit(onSubmit)}>
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <div className="mt-16 w-full lg:w-auto">
               <div className="mb-8">
                 <FormLabel className="text-3xl font-sans font-semibold">

@@ -7,6 +7,8 @@ import {
   User2Icon,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+
+import Loader from "@/components/reusable/Loader";
 import {
   Sidebar,
   SidebarContent,
@@ -17,20 +19,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-
+import { useAuthStore } from "@/hooks/state/useAuth";
+import { toast } from "@/hooks/use-toast";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/authService";
-import { toast } from "@/hooks/use-toast";
-import { useAuthStore } from "@/hooks/state/useAuth";
 
 export function AppSidebar() {
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
+  const { logout, isLoading, setLoading } = useAuthStore();
   const handleLogout = async () => {
+    setLoading(true);
     try {
       const response = await logoutService();
 
-      console.log("response", response);
       if (response) {
         sessionStorage.removeItem("session");
         toast({
@@ -39,8 +40,11 @@ export function AppSidebar() {
           description: "You will be redirected in a few seconds.",
         });
 
+        navigate(ROUTES.BASE);
+
         logout();
-        navigate(ROUTES.LOGIN);
+
+        setLoading(false);
       }
     } catch (error) {
       toast({
@@ -112,6 +116,7 @@ export function AppSidebar() {
                     <SidebarMenuButton onClick={item.onClick}>
                       <item.icon />
                       <span>{item.title}</span>
+                      {isLoading && <Loader size="small" />}
                     </SidebarMenuButton>
                   )}
                 </SidebarMenuItem>
