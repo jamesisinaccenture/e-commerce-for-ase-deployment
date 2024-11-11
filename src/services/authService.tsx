@@ -67,21 +67,15 @@ export const signupService = async (data: SignupFormData) => {
         address: data.address,
         username: data.username,
         password: data.password,
-        date_created: data.dateCreated, 
+        date_created: data.dateCreated,
       },
       {
-        headers: headerConfig, 
+        headers: headerConfig,
       }
     );
 
     return response.data;
   } catch (error) {
-<<<<<<< HEAD
-    console.error("Logout failed:", error);
-    throw error;
-  }
-};
-=======
     // Capture specific errors (e.g., 400 for validation issues)
     if (axios.isAxiosError(error) && error.response) {
       const errorMessage = error.response.data.message || "Signup failed";
@@ -93,4 +87,3 @@ export const signupService = async (data: SignupFormData) => {
     }
   }
 };
->>>>>>> 347183e6a38f27106f4c1aa8ff0369936eb6200a
