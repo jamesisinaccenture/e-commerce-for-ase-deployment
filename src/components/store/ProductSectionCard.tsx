@@ -1,6 +1,6 @@
 import productImage from "@/assets/images/product-image.jpg";
 
-const ProductSectionList = (products: any) => {
+const ProductSectionCard = (products: any) => {
   return (
     <>
       <div className="flex flex-col justify-center border-2 rounded-xl hover:border-blue-500 shadowx-xl">
@@ -26,4 +26,4 @@ const ProductSectionList = (products: any) => {
   );
 };
 
-export default ProductSectionList;
+export default ProductSectionCard;

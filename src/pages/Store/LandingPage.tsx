@@ -1,5 +1,5 @@
 import ProductSection from "@/components/store/ProductSection";
-import { store_products } from "@/components/reusable/SampleProductsData";
+import { store_products } from "@/lib/constants";
 
 const LandingPage = () => {
   return (
