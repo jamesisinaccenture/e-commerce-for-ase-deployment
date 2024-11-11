@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import loginImage from "@/assets/images/login-image.jpg";
 import CustomInput from "@/components/reusable/CustomInput";
-import Loader from "@/components/reusable/Loader";
 import { Button } from "@/components/ui/button";
+/* eslint-disable react-refresh/only-export-components */
+
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -14,14 +15,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import withAdminAuth from "@/hoc/withAdminAuth";
-import { useAuthStore } from "@/hooks/state/useAuth";
-import { useToast } from "@/hooks/use-toast";
+
+import Loader from "@/components/reusable/Loader";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
 
+import { useAuthStore } from "@/hooks/state/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
@@ -37,11 +40,9 @@ const LoginPage = () => {
     try {
       // Make the API call using the login service
       const response = await loginService(data);
-      console.log("response", response);
       if (response) {
         // If the response is valid, store it in sessionStorage, we need to stringify the response for it not to end up being [Object Object] in the session
         const { token } = response;
-        console.log("token", token);
         sessionStorage.setItem("session", JSON.stringify(response));
 
         login(true, true, token, { user: response });

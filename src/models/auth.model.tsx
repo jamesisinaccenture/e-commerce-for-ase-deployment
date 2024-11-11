@@ -23,12 +23,12 @@ export interface LoginFormData {
 export interface SignupFormData {
   firstName: string;
   lastName: string;
-  email: string;
+  // email: string;
   phoneNumber?: string;
   address: string;
   username: string;
   password: string;
   confirmPassword: string;
   terms: boolean;
-  dateCreated: string;
+  dateCreated?: string;
 }

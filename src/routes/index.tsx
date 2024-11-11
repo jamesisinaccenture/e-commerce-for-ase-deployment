@@ -11,8 +11,10 @@ import ForgotPassword from "@/pages/Auth/ForgetPasswordPage";
 import LoginPage from "@/pages/Auth/LoginPage";
 import NotFound from "@/pages/Auth/NotFound";
 import SignupPage from "@/pages/Auth/SignupPage";
+import InformationSettingsPage from "@/pages/Store/InformationSettingsPage";
 import LandingPage from "@/pages/Store/LandingPage";
 import StoreProductsPage from "@/pages/Store/StoreProductsPage";
+import UpdateInformationSettingsPage from "@/pages/Store/UpdateInformationSettingsPage";
 import { ROUTES } from "./endpoints";
 
 export const router = createBrowserRouter([
@@ -34,6 +36,14 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.BASE, element: <LandingPage /> },
       { path: ROUTES.STORE.PRODUCTS, element: <StoreProductsPage /> },
+      {
+        path: ROUTES.STORE.PROFILE,
+        element: <InformationSettingsPage />,
+      },
+      {
+        path: ROUTES.STORE.PROFILE_SETTINGS,
+        element: <UpdateInformationSettingsPage />,
+      },
     ],
   },
   {
