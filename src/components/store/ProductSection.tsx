@@ -1,5 +1,6 @@
 import { ISampleProductData } from "@/models/store.model";
-import ProductSectionList from "./ProductSectionList";
+
+import ProductSectionList from "./ProductSectionCard";
 
 const ProductSection = ({ store_products }: ISampleProductData) => {
   return (

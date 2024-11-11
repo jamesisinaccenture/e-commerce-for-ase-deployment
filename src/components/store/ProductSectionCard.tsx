@@ -1,3 +1,4 @@
+import productImage from "@/assets/images/product-image.jpg";
 
 const ProductSectionList = (products: any) => {
   return (
@@ -6,7 +7,7 @@ const ProductSectionList = (products: any) => {
         <div className="container">
           <div className="h-48 w-44">
             <img
-              src={products.products.product_img} //sample image.
+              src={productImage} // src={products.products.product_img}
               alt={products.products.product_name}
               className="rounded-t-lg"
             />

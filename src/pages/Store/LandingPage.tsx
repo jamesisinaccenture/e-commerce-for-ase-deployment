@@ -1,4 +1,4 @@
-import ProductSection from "@/components/reusable/ProductSection";
+import ProductSection from "@/components/store/ProductSection";
 import { store_products } from "@/components/reusable/SampleProductsData";
 
 const LandingPage = () => {
