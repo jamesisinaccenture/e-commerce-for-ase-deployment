@@ -1,9 +1,9 @@
-import StoreCard from "@/components/store/StoreCard";
+import ProductSection from "@/components/reusable/ProductSection";
 
 const LandingPage = () => {
   return (
     <div className="flex justify-center min-h-screen">
-      <StoreCard />
+      <ProductSection />
     </div>
   );
 };
