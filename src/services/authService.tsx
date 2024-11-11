@@ -35,6 +35,26 @@ export const loginService = async (data: LoginFormData) => {
   }
 };
 
+export const logoutService = async () => {
+  const token = JSON.parse(sessionStorage.getItem("token") || "{}");
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/logout`,
+      {},
+      {
+        headers: {
+          ...headerConfig,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Logout failed:", error);
+    throw error;
+  }
+};
 export const signupService = async (data: SignupFormData) => {
   try {
     const response = await axios.post(
@@ -47,10 +67,10 @@ export const signupService = async (data: SignupFormData) => {
         address: data.address,
         username: data.username,
         password: data.password,
-        date_created: data.dateCreated, 
+        date_created: data.dateCreated,
       },
       {
-        headers: headerConfig, 
+        headers: headerConfig,
       }
     );
 
