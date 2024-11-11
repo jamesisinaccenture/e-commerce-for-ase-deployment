@@ -2,7 +2,6 @@ import React from "react";
 
 import sampleImage from "@/assets/images/wireless airpods.jpg";
 
-// Sample product data
 const products = [
   {
     product_id: "P001",
