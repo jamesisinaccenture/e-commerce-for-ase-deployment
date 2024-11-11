@@ -9,7 +9,7 @@ const ProductList = () => {
           return (
             <li className="flex flex-col justify-center border-2 rounded-xl hover:border-blue-500 shadowx-xl">
               <div className="container">
-                <div className="h-52 w-48">
+                <div className="h-48 w-44">
                   <img
                     src={productImage} //sample image.
                     alt={products.product_name}
