@@ -1,28 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 
-interface Category {
-  product_id: string;
-  product_name: string;
-  product_img: string;
-  product_description: string;
-  category: string;
-}
+import sampleImage from "@/assets/images/wireless airpods.jpg";
 
-const categories: Category[] = [
+// Sample product data
+const products = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",
     product_img: "https://example.com/images/earbuds.jpg",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
-    category: "Electronics",
+    category: "Mobile",
+    price: 59.99,
+    currency: "USD",
+    sold: 120,
+    date_created: "2024-01-15",
+    created_by: "JohnDoe",
   },
   {
     product_id: "P002",
     product_name: "Gaming Laptop",
     product_img: "https://example.com/images/gaming-laptop.jpg",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
-    category: "Computers",
+    category: "Cosmetics",
+    price: 1299.99,
+    currency: "USD",
+    sold: 45,
+    date_created: "2024-02-20",
+    created_by: "JaneSmith",
   },
   {
     product_id: "P003",
@@ -30,7 +35,12 @@ const categories: Category[] = [
     product_img: "https://example.com/images/smart-watch.jpg",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
-    category: "Wearables",
+    category: "Electronics",
+    price: 199.99,
+    currency: "USD",
+    sold: 350,
+    date_created: "2024-03-01",
+    created_by: "EmilyBrown",
   },
   {
     product_id: "P004",
@@ -38,72 +48,75 @@ const categories: Category[] = [
     product_img: "https://example.com/images/toothbrush.jpg",
     product_description:
       "Rechargeable toothbrush with multiple cleaning modes.",
-    category: "Personal Care",
+    category: "Furniture",
+    price: 49.99,
+    currency: "USD",
+    sold: 230,
+    date_created: "2024-03-15",
+    created_by: "ChrisJohnson",
   },
   {
     product_id: "P005",
     product_name: "4K TV",
     product_img: "https://example.com/images/4k-tv.jpg",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
-    category: "Home Entertainment",
+    category: "Watches",
+    price: 599.99,
+    currency: "USD",
+    sold: 110,
+    date_created: "2024-04-05",
+    created_by: "AlexLee",
   },
   {
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
     product_img: "https://example.com/images/speaker.jpg",
     product_description: "Waterproof portable speaker with deep bass.",
-    category: "Audio",
+    category: "Decor",
+    price: 39.99,
+    currency: "USD",
+    sold: 275,
+    date_created: "2024-04-10",
+    created_by: "SophiaDavis",
   },
   {
     product_id: "P007",
     product_name: "Digital Camera",
     product_img: "https://example.com/images/camera.jpg",
     product_description: "Compact digital camera with 20x zoom.",
-    category: "Photography",
+    category: "Accesories",
+    price: 349.99,
+    currency: "USD",
+    sold: 60,
+    date_created: "2024-04-22",
+    created_by: "LiamMartinez",
   },
 ];
 
 const CategorySection: React.FC = () => {
-  const [expanded, setExpanded] = useState(false);
-
-  const handleToggleExpand = () => {
-    setExpanded(!expanded);
-  };
+  // Get unique categories from the products data
+  const categories = [...new Set(products.map((product) => product.category))];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-2xl font-semibold mb-4">Categories</h2>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        {categories
-          .slice(0, expanded ? categories.length : 4)
-          .map((category) => (
-            <div
-              key={category.product_id}
-              className="bg-white p-4 rounded-lg shadow-md text-center"
-            >
-              <img
-                src={category.product_img}
-                alt={category.product_name}
-                className="w-full h-32 object-cover rounded-md mb-2"
-              />
-              <h3 className="text-lg font-medium">{category.product_name}</h3>
-              <p className="text-sm text-gray-600">
-                {category.product_description}
-              </p>
-            </div>
-          ))}
-      </div>
-
-      {/* Expand/Collapse Button */}
-      <div className="mt-4 text-center">
-        <button
-          onClick={handleToggleExpand}
-          className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
-        >
-          {expanded ? "Collapse" : "Expand"}
-        </button>
-      </div>
+    <div className="flex flex-wrap justify-center ">
+      {categories.map((category, index) => (
+        <div key={index}>
+          <div>
+            {products
+              .filter((product) => product.category === category)
+              .map((product) => (
+                <div key={product.product_id} className="container p-2">
+                  <img
+                    src={sampleImage} // src={product.product_img}
+                    alt={product.product_name}
+                    className="rounded-full w-20 h-20 hover:border-blue-500 border-2"
+                  />
+                  <p className="text-center">{category}</p>
+                </div>
+              ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
