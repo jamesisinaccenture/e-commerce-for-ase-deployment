@@ -4,7 +4,7 @@ import { store_products } from "./DummyProductsData";
 const ProductList = () => {
   return (
     <>
-      <ul className="flex flex-wrap justify-center gap-20 mt-10 mb-10">
+      <ul className="flex flex-wrap justify-center gap-10 mt-10 mb-10">
         {store_products.map((products) => {
           return (
             <li className="flex flex-col justify-center border-2 rounded-xl hover:border-blue-500 shadowx-xl">
