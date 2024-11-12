@@ -29,7 +29,7 @@ export const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-  export const signupSchema = z
+export const signupSchema = z
   .object({
     firstName: z.string().nonempty("First name is required"),
     lastName: z.string().nonempty("Last name is required"),
@@ -48,9 +48,7 @@ export const resetPasswordSchema = z
       .min(10, "Password must be at least 10 characters long")
       .regex(/\d.*\d.*\d/, "Password must contain at least 3 numbers")
       .regex(/[A-Z]/, "Password must contain at least 1 capital letter"),
-    confirmPassword: z
-      .string()
-      .nonempty("Please confirm your password"),
+    confirmPassword: z.string().nonempty("Please confirm your password"),
     terms: z.literal(true, {
       errorMap: () => ({ message: "You must accept the terms" }),
     }),
@@ -59,4 +57,29 @@ export const resetPasswordSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
+  });
+
+export const updateInformationSchema = z
+  .object({
+    first_name: z.string().optional(),
+    last_name: z.string().optional(),
+    address: z.string().optional(),
+    contact_number: z
+      .string()
+      .regex(/^\d{11}$/, "Contact number must be exactly 11 digits")
+      .optional(),
+    user_name: z.string().optional(),
+    email: z.string().optional(),
+    date: z.string(),
+    old_password: z.string().nonempty("Please enter your old password"),
+    new_password: z
+      .string()
+      .min(10, "Password must be at least 10 characters long")
+      .regex(/\d.*\d.*\d/, "Password must contain at least 3 numbers")
+      .regex(/[A-Z]/, "Password must contain at least 1 capital letter"),
+    confirm_new_password: z.string().nonempty("Please confirm your password"),
+  })
+  .refine((data) => data.new_password === data.confirm_new_password, {
+    message: "Password do not match",
+    path: ["confirm_new_password"],
   });

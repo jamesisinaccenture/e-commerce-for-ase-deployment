@@ -32,3 +32,27 @@ export interface SignupFormData {
   terms: boolean;
   dateCreated?: string;
 }
+
+export interface InformationFormData {
+  first_name: string;
+  last_name: string;
+  contact_number: string;
+  address: string;
+  date_created: string;
+  username: string;
+  access_level: string;
+  user_img: string;
+}
+
+export interface UpdateInformationFormData {
+  first_name?: string;
+  last_name?: string;
+  address?: string;
+  contact_number?: string;
+  user_name?: string;
+  email?: string;
+  date?: string;
+  old_password: string;
+  new_password: string;
+  confirm_new_password: string;
+}

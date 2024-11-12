@@ -1,7 +1,11 @@
 import axios from "axios";
 
-import { headerConfig } from "@/lib/utils";
-import { LoginFormData, SignupFormData } from "@/models/auth.model";
+import { getUserSession, headerConfig } from "@/lib/utils";
+import {
+  LoginFormData,
+  SignupFormData,
+  UpdateInformationFormData,
+} from "@/models/auth.model";
 
 const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 
@@ -55,6 +59,7 @@ export const logoutService = async () => {
     throw error;
   }
 };
+
 export const signupService = async (data: SignupFormData) => {
   try {
     const response = await axios.post(
@@ -81,6 +86,71 @@ export const signupService = async (data: SignupFormData) => {
       const errorMessage = error.response.data.message || "Signup failed";
       console.error("Signup error:", errorMessage);
       throw new Error(errorMessage); // Throw a user-friendly error
+    } else {
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred.");
+    }
+  }
+};
+
+// export const informationService = async () => {
+//   try { response = await axios.get(
+//     `${API_URL}/`,
+//     {
+//       first_name: ,
+//       last_name: ,
+//       contact_number: ,
+//       address: ,
+//       date_created: ,
+//       username: ,
+//       access_level: ,
+//       user_img: ,
+//       position: ,
+//       department: ,
+//       branch: ,
+//     },
+//     {
+//       headers: {
+//   ...headerConfig,
+//   Authorization: `Bearer ${token}`,
+// },
+//     }
+//   )}
+// };
+
+export const updateInformationService = async (
+  data: UpdateInformationFormData
+) => {
+  try {
+    const token = getUserSession;
+    const response = await axios.put(
+      `${API_URL}/`,
+      {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        address: data.address,
+        contact_number: data.contact_number,
+        username: data.user_name,
+        email: data.email,
+        date_created: data.date,
+        password: data.old_password,
+        new_password: data.new_password,
+      },
+      {
+        headers: {
+          ...headerConfig,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const errorMessage =
+        error.response.data.message || "Editing profile failed.";
+      console.error("Edit profile error:", errorMessage);
+      throw new Error(errorMessage);
     } else {
       console.error("Unexpected error:", error);
       throw new Error("An unexpected error occurred.");
