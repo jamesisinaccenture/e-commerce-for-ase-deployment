@@ -79,7 +79,7 @@ const products: Product[] = [
   },
   {
     id: 7,
-    image: "https://via.placeholder.com/150",
+    image: "src/assets/images 2/images.jpg",
     name: "Beauty Product A",
     originalPrice: 999,
     discountedPrice: 799,
