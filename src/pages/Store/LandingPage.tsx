@@ -1,9 +1,10 @@
 import StoreCard from "@/components/store/StoreCard";
 
+// import CartPage from "./CartPage";
 const LandingPage = () => {
   return (
-    <div className="flex justify-center min-h-screen">
-      <StoreCard />
+    <div>
+      <StoreCard/>
     </div>
   );
 };
