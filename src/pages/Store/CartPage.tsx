@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ShoppingCart, XSquare } from "lucide-react";
 
-import { QuantityControl } from "@/components/reusable/QualityControl";
+import { QuantityControl } from "@/components/reusable/QuantityControl";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/models/auth.model";
 

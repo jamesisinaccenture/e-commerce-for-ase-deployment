@@ -3,7 +3,6 @@ import { MinusCircle, PlusCircle} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-// Component for quantity control with increase, decrease, and manual input options
 export const QuantityControl: React.FC<{
     quantity: number;
     onDecrease: () => void;
@@ -12,7 +11,6 @@ export const QuantityControl: React.FC<{
   }> = ({ quantity, onDecrease, onIncrease, onManualChange }) => (
     <div className="flex items-center justify-center space-x-2">
 
-      {/* Button to decrease quantity */}
       <Button
         variant="outline"
         size="icon"
@@ -29,7 +27,6 @@ export const QuantityControl: React.FC<{
         className="w-16 text-center h-10"
         min="1"
       />
-      {/* Button to increase quantity */}
       <Button
         variant="outline"
         size="icon"
