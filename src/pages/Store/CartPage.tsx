@@ -1,51 +1,15 @@
 import React, { useState } from "react";
-import { MinusCircle, PlusCircle, ShoppingCart, XSquare } from "lucide-react";
+import { ShoppingCart, XSquare } from "lucide-react";
 
+import { QuantityControl } from "@/components/reusable/QualityControl";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Product } from "@/models/auth.model";
 
-// Extend the Product interface to include a quantity field for cart items
 interface CartItem extends Product {
   quantity: number;
 }
 
-// Component for quantity control with increase, decrease, and manual input options
-const QuantityControl: React.FC<{
-  quantity: number;
-  onDecrease: () => void;
-  onIncrease: () => void;
-  onManualChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ quantity, onDecrease, onIncrease, onManualChange }) => (
-  <div className="flex items-center justify-center space-x-2">
-    {/* Button to decrease quantity */}
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={onDecrease}
-      className="h-10 w-10 bg-blue-500 text-white"
-    >
-      <MinusCircle className="h-5 w-5" />
-    </Button>
-    {/* Input field to manually set quantity */}
-    <Input
-      type="number"
-      value={quantity}
-      onChange={onManualChange}
-      className="w-16 text-center h-10"
-      min="1"
-    />
-    {/* Button to increase quantity */}
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={onIncrease}
-      className="h-10 w-10 bg-blue-500 text-white"
-    >
-      <PlusCircle className="h-5 w-5" />
-    </Button>
-  </div>
-);
+
 
 // Main Cart Page component
 const CartPage: React.FC = () => {
@@ -53,6 +17,8 @@ const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       product_id: "P001",
+
+
       product_name: "Wireless Earbuds",
       product_img: "https://example.com/images/earbuds.jpg",
       price: 59.99,
