@@ -63,7 +63,7 @@ const LoginPage = () => {
       toast({
         variant: "destructive",
         title: "Oops! We've encountered an obstacle",
-        description: `Something went wrong: ${error.response.data.data.error}`,
+        description: `Something went wrong: ${error}`,
       });
     }
   };
