@@ -9,7 +9,9 @@ export interface IAuthStore {
   isLoading: boolean;
   isAdmin: boolean;
   isAuth: boolean;
-  login: (isAdmin: boolean, isAuth: boolean) => void;
+  token: string;
+  user: any;
+  login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => void;
   logout: () => void;
   setLoading: (loading: boolean) => void;
 }

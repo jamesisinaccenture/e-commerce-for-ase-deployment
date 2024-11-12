@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuthStore } from "@/hooks/state/useAuth";
+import { isUserAdmin } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
 
 const withAdminAuth = (Component: React.ComponentType) => {
@@ -10,8 +11,9 @@ const withAdminAuth = (Component: React.ComponentType) => {
 
     const navigate = useNavigate();
     const location = useLocation();
+
     useEffect(() => {
-      if (isAuth && isAdmin) {
+      if (isAuth && isAdmin && isUserAdmin()) {
         // Redirect to admin base if user is already authenticated as admin
         navigate(ROUTES.ADMIN.BASE);
       } else if (!isAuth && location.pathname !== ROUTES.LOGIN) {

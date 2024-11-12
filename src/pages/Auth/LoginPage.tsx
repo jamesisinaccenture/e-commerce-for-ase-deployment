@@ -1,7 +1,11 @@
-/* eslint-disable react-refresh/only-export-components */
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import loginImage from "@/assets/images/login-image.jpg";
+import CustomInput from "@/components/reusable/CustomInput";
+import { Button } from "@/components/ui/button";
+/* eslint-disable react-refresh/only-export-components */
+
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -12,15 +16,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { Button } from "@/components/ui/button";
-import CustomInput from "@/components/reusable/CustomInput";
 import Loader from "@/components/reusable/Loader";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/authService";
+
 import { useAuthStore } from "@/hooks/state/useAuth";
-import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,13 +40,12 @@ const LoginPage = () => {
     try {
       // Make the API call using the login service
       const response = await loginService(data);
-
       if (response) {
         // If the response is valid, store it in sessionStorage, we need to stringify the response for it not to end up being [Object Object] in the session
+        const { token } = response;
         sessionStorage.setItem("session", JSON.stringify(response));
 
-        // Update the authentication state (e.g., set isAuth to true)
-        login(true, true);
+        login(true, true, token, { user: response });
 
         // Display a toast
         toast({
@@ -58,10 +59,11 @@ const LoginPage = () => {
         setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: `Something went wrong: ${error}`,
+        title: "Oops! We've encountered an obstacle",
+        description: `Something went wrong: ${error.response.data.data.error}`,
       });
     }
   };
@@ -74,7 +76,8 @@ const LoginPage = () => {
         <Form {...form}>
           <form
             className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full"
-            onSubmit={form.handleSubmit(onSubmit)}>
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <div className="mt-16 w-full lg:w-auto">
               <div className="mb-8">
                 <FormLabel className="text-3xl font-sans font-semibold">
