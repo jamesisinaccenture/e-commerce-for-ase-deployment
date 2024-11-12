@@ -1,11 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import forget from "@/assets/images/forget.png";
+import verify from "@/assets/images/verify.png";
 import CustomInput from "@/components/reusable/CustomInput";
-import forget from "../../assets/forget.png";
-import verify from "../../assets/verify.png";
-
-import { usePasswordPage } from "../../hooks/state/usePasswordPage";
+import { usePasswordPage } from "@/hooks/state/usePasswordPage";
 
 const ForgetPasswordPage: React.FC = () => {
   const navigate = useNavigate();

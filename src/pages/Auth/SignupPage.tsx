@@ -1,178 +1,213 @@
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
-import CustomInput from '@/components/reusable/CustomInput';
-import { SignupFormData } from '@/models/auth.model';
+import CustomInput from "@/components/reusable/CustomInput";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
+import { SignupFormData } from "@/models/auth.model";
+import { signupSchema } from "@/schema/authSchema";
+
+import { signupService } from "../../services/authService";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignupPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<SignupFormData>();
+  const { toast } = useToast();
+  const form = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      address: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+      dateCreated: new Date().toISOString(),
+    },
+  });
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log("Form submitted successfully:", data);
+  const onSubmit = async (data: SignupFormData) => {
+    console.log("Form submitted with data:", data);
+    try {
+      const response = await signupService(data);
+
+      // Store response data in sessionStorage
+      if (response.token) {
+        sessionStorage.setItem("userToken", response.token);
+      }
+      if (response.userId) {
+        sessionStorage.setItem("userId", response.userId);
+      }
+
+      toast({
+        variant: "success",
+        title: "Registered successfully!",
+        description: "Your account has been created.",
+      });
+
+      console.log("User created:", response);
+    } catch (error) {
+      console.error("Signup failed:", error);
+
+      toast({
+        variant: "destructive",
+        title: "Signup failed",
+        description: `Something went wrong: ${error}`,
+      });
+    }
   };
-
-  const password = watch("password");
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md"
-      >
-        <h2 className="text-2xl font-bold text-center text-gray-800">
-          Create Account
-        </h2>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <CustomInput
-              label="First Name"
-              type="text"
-              {...register("firstName", { required: "First name is required" })}
-            />
-            {errors.firstName && (
-              <p className="text-sm text-red-500">{errors.firstName.message}</p>
-            )}
-          </div>
-
-          <div>
-            <CustomInput
-              label="Last Name"
-              type="text"
-              {...register("lastName", { required: "Last name is required" })}
-            />
-            {errors.lastName && (
-              <p className="text-sm text-red-500">{errors.lastName.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <CustomInput
-              label="Email"
-              type="email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Enter a valid email address",
-                },
-              })}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
-            )}
-          </div>
-
-          <div>
-            <CustomInput
-              label="Contact Number"
-              type="text"
-              {...register("phoneNumber", {
-                required: "Contact number is required",
-              })}
-            />
-            {errors.phoneNumber && (
-              <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <CustomInput
-            label="Address"
-            type="text"
-            {...register("address", {
-              required: "Address is required",
-            })}
-          />
-          {errors.address && (
-            <p className="text-sm text-red-500">{errors.address.message}</p>
-          )}
-        </div>
-
-        <div>
-          <CustomInput
-            label="Username"
-            type="text"
-            {...register("username", {
-              required: "Username is required",
-            })}
-          />
-          {errors.username && (
-            <p className="text-sm text-red-500">{errors.username.message}</p>
-          )}
-        </div>
-
-        <div>
-          <CustomInput
-            label="Password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters long",
-              },
-            })}
-          />
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-
-        <div>
-          <CustomInput
-            label="Confirm Password"
-            type="password"
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-          />
-          {errors.confirmPassword && (
-            <p className="text-sm text-red-500">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
-
-        {/* Hidden Date Created Field */}
-        <input
-          type="hidden"
-          value={new Date().toISOString()}
-          {...register("dateCreated")}
-        />
-
-        <div className="flex items-center">
-          <input
-            {...register("terms", { required: "You must accept the terms" })}
-            type="checkbox"
-            className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-0"
-          />
-          <label className="ml-2 text-sm text-gray-600">
-            I agree to all the{" "}
-            <span className="text-red-500">Terms</span> and{" "}
-            <span className="text-red-500">Privacy Policies</span>
-          </label>
-        </div>
-        {errors.terms && (
-          <p className="text-sm text-red-500">{errors.terms.message}</p>
-        )}
-
-        <button
-          type="submit"
-          className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md"
         >
-          Create account
-        </button>
-      </form>
+          <h2 className="text-2xl font-bold text-center text-gray-800">
+            Create Account
+          </h2>
+
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <CustomInput label="First Name" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <CustomInput label="Last Name" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <CustomInput label="Contact Number" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <CustomInput label="Address" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <CustomInput label="Username" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <CustomInput label="Password" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <CustomInput
+                    label="Confirm Password"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <input
+            type="hidden"
+            value={new Date().toISOString()}
+            {...form.register("dateCreated")}
+          />
+
+          <FormField
+            control={form.control}
+            name="terms"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <span className="text-gray-600">
+                  I agree to all the{" "}
+                  <span className="underline text-black">Terms</span> and{" "}
+                  <span className="underline text-black">Privacy Policies</span>
+                </span>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+          >
+            Create account
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };
