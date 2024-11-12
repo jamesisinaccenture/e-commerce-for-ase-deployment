@@ -58,7 +58,7 @@ const LoginPage = () => {
 
         setLoading(false);
       }
-    } catch (error: unknown) {
+    } catch (error) {
       setLoading(false);
       toast({
         variant: "destructive",
