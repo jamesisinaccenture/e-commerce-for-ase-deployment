@@ -1,18 +1,19 @@
-import { ICustomInput } from "@/models/store.model";
-import { Input } from "../ui/input";
 import { forwardRef } from "react";
 
+import { ICustomInput } from "@/models/store.model";
+import { Input } from "../ui/input";
+
 const CustomInput = forwardRef<HTMLInputElement, ICustomInput>(
-  ({ label, name, type, onChange, isRequired, value = "", ...props }, ref) => {
+  ({ label, name, type, onChange, isRequired, value, ...props }, ref) => {
     return (
       <div>
         <Input
-          ref={ref}
+          ref={ref} 
           name={name}
           type={type}
-          value={value}
-          placeholder={label}
           onChange={onChange}
+          value={value} 
+          placeholder={label}
           required={isRequired}
           {...props}
         />
@@ -20,5 +21,6 @@ const CustomInput = forwardRef<HTMLInputElement, ICustomInput>(
     );
   }
 );
+
 
 export default CustomInput;

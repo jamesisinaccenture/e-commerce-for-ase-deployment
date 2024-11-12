@@ -3,18 +3,23 @@ import { create } from "zustand";
 
 export const useAuthStore = create<IAuthStore>((set) => ({
   isLoading: false,
-  // Initialize the state from sessionStorage if available
   isAdmin: JSON.parse(sessionStorage.getItem("isAdmin") || "false"),
   isAuth: JSON.parse(sessionStorage.getItem("isAuth") || "false"),
-  login: (isAdmin: boolean, isAuth: boolean) => {
-    sessionStorage.setItem("isAdmin", JSON.stringify(isAdmin)); // Store 'isAdmin' in sessionStorage
-    sessionStorage.setItem("isAuth", JSON.stringify(isAuth)); // Store 'isAuth' in sessionStorage
-    set({ isAuth, isAdmin });
+  token: JSON.parse(sessionStorage.getItem("token") || "{}"),
+  user: {},
+  login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => {
+    sessionStorage.setItem("isAdmin", JSON.stringify(isAdmin));
+    sessionStorage.setItem("isAuth", JSON.stringify(isAuth));
+    sessionStorage.setItem("token", JSON.stringify(token));
+    sessionStorage.setItem("session", JSON.stringify(user));
+    set({ isAuth, isAdmin, token, user: user });
   },
   logout: () => {
-    sessionStorage.removeItem("isAuth"); // Remove 'isAuth' from sessionStorage
-    sessionStorage.removeItem("isAdmin"); // Remove 'isAdmin' from sessionStorage
-    set({ isAuth: false, isAdmin: false }); // Reset state
+    sessionStorage.removeItem("isAuth");
+    sessionStorage.removeItem("isAdmin");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("session");
+    set({ isAuth: false, isAdmin: false });
   },
-  setLoading: (loading: boolean) => set(() => ({ isLoading: loading })), // Set loading states
+  setLoading: (loading: boolean) => set(() => ({ isLoading: loading })),
 }));
