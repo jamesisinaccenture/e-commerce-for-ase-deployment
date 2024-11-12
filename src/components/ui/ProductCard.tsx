@@ -1,36 +1,34 @@
-// src/components/ui/ProductCard.tsx
+// components/ProductCard.tsx
 import React from "react";
 
 interface ProductCardProps {
-  className?: string;
-  children: React.ReactNode;
+  image: string;
+  name: string;
+  originalPrice: number;
+  discountedPrice: number;
+  discount: number;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({
-  className = "",
-  children,
-}) => (
-  <div className={`bg-white shadow-md rounded-lg overflow-hidden ${className}`}>
-    {children}
-  </div>
-);
+const ProductCard: React.FC<ProductCardProps> = ({
+  image,
+  name,
+  originalPrice,
+  discountedPrice,
+  discount,
+}) => {
+  return (
+    <div className="border rounded-lg p-4 shadow-md hover:shadow-lg">
+      <img
+        src={image}
+        alt={name}
+        className="h-48 w-full object-cover rounded-lg mb-4"
+      />
+      <h3 className="text-lg font-semibold">{name}</h3>
+      <div className="text-sm text-gray-500 line-through">₹{originalPrice}</div>
+      <div className="text-lg font-bold text-green-500">₹{discountedPrice}</div>
+      <div className="text-xs font-semibold text-blue-500">{discount}% OFF</div>
+    </div>
+  );
+};
 
-interface CardHeaderProps {
-  children: React.ReactNode;
-}
-
-export const CardHeader: React.FC<CardHeaderProps> = ({ children }) => (
-  <div className="p-4 border-b border-gray-200">{children}</div>
-);
-
-interface CardFooterProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-export const CardFooter: React.FC<CardFooterProps> = ({
-  children,
-  className = "",
-}) => (
-  <div className={`p-4 border-t border-gray-200 ${className}`}>{children}</div>
-);
+export default ProductCard;
