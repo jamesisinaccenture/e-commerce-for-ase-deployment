@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { MinusCircle, PlusCircle, ShoppingCart, XSquare } from 'lucide-react';
+import React, { useState } from "react";
+import { MinusCircle, PlusCircle, ShoppingCart, XSquare } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Product } from '@/models/auth.model';
+import { Product } from "@/models/auth.model";
 
+// Extend the Product interface to include a quantity field for cart items
 interface CartItem extends Product {
   quantity: number;
 }
 
+// Component for quantity control with increase, decrease, and manual input options
 const QuantityControl: React.FC<{
   quantity: number;
   onDecrease: () => void;
@@ -16,14 +18,16 @@ const QuantityControl: React.FC<{
   onManualChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ quantity, onDecrease, onIncrease, onManualChange }) => (
   <div className="flex items-center justify-center space-x-2">
-    <Button 
-      variant="outline" 
+    {/* Button to decrease quantity */}
+    <Button
+      variant="outline"
       size="icon"
       onClick={onDecrease}
       className="h-10 w-10 bg-blue-500 text-white"
     >
       <MinusCircle className="h-5 w-5" />
     </Button>
+    {/* Input field to manually set quantity */}
     <Input
       type="number"
       value={quantity}
@@ -31,8 +35,9 @@ const QuantityControl: React.FC<{
       className="w-16 text-center h-10"
       min="1"
     />
-    <Button 
-      variant="outline" 
+    {/* Button to increase quantity */}
+    <Button
+      variant="outline"
       size="icon"
       onClick={onIncrease}
       className="h-10 w-10 bg-blue-500 text-white"
@@ -42,7 +47,9 @@ const QuantityControl: React.FC<{
   </div>
 );
 
+// Main Cart Page component
 const CartPage: React.FC = () => {
+  // State to manage items in the cart
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       product_id: "P001",
@@ -52,7 +59,8 @@ const CartPage: React.FC = () => {
       quantity: 2,
       currency: "USD",
       category: "",
-      product_description: "High-quality wireless earbuds with noise cancellation.",
+      product_description:
+        "High-quality wireless earbuds with noise cancellation.",
       date_created: "",
       created_by: "TechBrand",
     },
@@ -64,42 +72,77 @@ const CartPage: React.FC = () => {
       quantity: 1,
       currency: "USD",
       category: "",
-      product_description: "Smartwatch with heart-rate monitoring and fitness tracking.",
+      product_description:
+        "Smartwatch with heart-rate monitoring and fitness tracking.",
       date_created: "",
       created_by: "SmartTech",
     },
   ]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<CartItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Controls modal visibility
+  const [selectedProduct, setSelectedProduct] = useState<CartItem | null>(null); // Selected product for modal
 
+  // Opens modal with product details
   const openProductModal = (product: CartItem) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
+  // Closes modal
   const closeProductModal = () => {
     setIsModalOpen(false);
   };
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Calculate total price for all items in the cart
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  // Count total number of unique products
   const totalProducts = cartItems.length;
 
+  // Updates quantity of a specific product, prompting for confirmation if quantity reaches 0
   const handleQuantityChange = (product_id: string, newQuantity: number) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.product_id === product_id ? { ...item, quantity: Math.max(newQuantity, 1) } : item
-      )
-    );
+    if (newQuantity === 0) {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this item?"
+      );
+      if (!confirmDelete) {
+        return; // User canceled, do not update to 0
+      }
+    }
+
+    setCartItems((items) => {
+      const updatedItems = items
+        .map((item) =>
+          item.product_id === product_id
+            ? { ...item, quantity: Math.max(newQuantity, 0) }
+            : item
+        )
+        .filter((item) => item.quantity > 0); // Remove items with quantity 0 if confirmed
+
+      // If the modal is open for this product, update selectedProduct as well
+      if (selectedProduct && selectedProduct.product_id === product_id) {
+        setSelectedProduct(
+          updatedItems.find((item) => item.product_id === product_id) || null
+        );
+      }
+
+      return updatedItems;
+    });
   };
 
-  const handleManualQuantityChange = (product_id: string, event: React.ChangeEvent<HTMLInputElement>) => {
+  // Updates quantity based on manual input from user
+  const handleManualQuantityChange = (
+    product_id: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = parseInt(event.target.value, 10) || 1;
     handleQuantityChange(product_id, value);
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="py-8">
       <h1 className="text-4xl font-medium mb-8">Cart</h1>
       <div className="mb-8">
         <div className="grid grid-cols-12 gap-4 mb-4 px-4 text-gray-600">
@@ -113,9 +156,14 @@ const CartPage: React.FC = () => {
             <h2>Price</h2>
           </div>
         </div>
+
+        {/* Cart items listing */}
         <div className="space-y-4">
           {cartItems.map((item) => (
-            <div key={item.product_id} className="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg">
+            <div
+              key={item.product_id}
+              className="grid grid-cols-12 gap-4 items-center bg-white p-4 rounded-lg"
+            >
               <div className="col-span-6">
                 <div className="flex items-center space-x-4">
                   <img
@@ -124,23 +172,34 @@ const CartPage: React.FC = () => {
                     className="w-20 h-20 rounded-md object-cover"
                   />
                   <div>
-                    <h3 
+                    <h3
                       className="font-medium cursor-pointer text-blue-500"
                       onClick={() => openProductModal(item)}
                     >
                       {item.product_name}
                     </h3>
-                    <p className="text-sm text-gray-500">Category: {item.category}</p>
-                    <p className="text-sm text-gray-500">Created by: {item.created_by}</p>
+                    <p className="text-sm text-gray-500">
+                      Category: {item.category}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Created by: {item.created_by}
+                    </p>
                   </div>
                 </div>
               </div>
               <div className="col-span-4">
+                {/* Quantity control for each item */}
                 <QuantityControl
                   quantity={item.quantity}
-                  onDecrease={() => handleQuantityChange(item.product_id, item.quantity - 1)}
-                  onIncrease={() => handleQuantityChange(item.product_id, item.quantity + 1)}
-                  onManualChange={(e) => handleManualQuantityChange(item.product_id, e)}
+                  onDecrease={() =>
+                    handleQuantityChange(item.product_id, item.quantity - 1)
+                  }
+                  onIncrease={() =>
+                    handleQuantityChange(item.product_id, item.quantity + 1)
+                  }
+                  onManualChange={(e) =>
+                    handleManualQuantityChange(item.product_id, e)
+                  }
                 />
               </div>
               <div className="col-span-2 text-right">
@@ -152,37 +211,56 @@ const CartPage: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Cart summary and checkout button */}
       <div className="flex justify-between items-center border-t pt-4">
         <div className="text-gray-600">
-          Total of <span className="text-blue-500 font-medium">{totalProducts}</span> Products
-          <p className="font-medium">Total Price: <span className="text-blue-500">{cartItems[0].currency} ${totalPrice.toFixed(2)}</span></p>
+          Total of{" "}
+          <span className="text-blue-500 font-medium">{totalProducts}</span>{" "}
+          Products
+          <p className="font-medium">
+            Total Price:{" "}
+            <span className="text-blue-500">
+              {cartItems[0].currency} ${totalPrice.toFixed(2)}
+            </span>
+          </p>
         </div>
-        <Button 
+        {/* Checkout button (functionality to be implemented) */}
+        <Button
           size="lg"
           className="bg-blue-500 hover:bg-blue-600"
-          onClick={() => {/* Implement checkout functionality */}}
+          onClick={() => {
+            /* Implement checkout functionality */
+          }}
         >
           <ShoppingCart className="mr-2 h-5 w-5" />
           Check out
         </Button>
       </div>
 
+      {/* Modal for selected product details */}
       {isModalOpen && selectedProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-lg w-full relative">
-            <button 
+            {/* Close modal button */}
+            <button
               onClick={closeProductModal}
               className="absolute top-2 right-2 p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full"
             >
               <XSquare className="h-6 w-6" />
             </button>
-            <h2 className="text-2xl font-medium">{selectedProduct.product_name}</h2>
+            <h2 className="text-2xl font-medium">
+              {selectedProduct.product_name}
+            </h2>
             <img
               src={selectedProduct.product_img}
               alt={selectedProduct.product_name}
               className="w-32 h-32 object-cover my-4"
             />
-            <p>{selectedProduct.product_description || "No description available."}</p>
+            <p>
+              {selectedProduct.product_description ||
+                "No description available."}
+            </p>
             <p className="font-medium text-lg">
               {selectedProduct.currency} ${selectedProduct.price.toFixed(2)}
             </p>
@@ -191,9 +269,21 @@ const CartPage: React.FC = () => {
             <div className="flex justify-center mt-6">
               <QuantityControl
                 quantity={selectedProduct.quantity}
-                onDecrease={() => handleQuantityChange(selectedProduct.product_id, selectedProduct.quantity - 1)}
-                onIncrease={() => handleQuantityChange(selectedProduct.product_id, selectedProduct.quantity + 1)}
-                onManualChange={(e) => handleManualQuantityChange(selectedProduct.product_id, e)}
+                onDecrease={() =>
+                  handleQuantityChange(
+                    selectedProduct.product_id,
+                    selectedProduct.quantity - 1
+                  )
+                }
+                onIncrease={() =>
+                  handleQuantityChange(
+                    selectedProduct.product_id,
+                    selectedProduct.quantity + 1
+                  )
+                }
+                onManualChange={(e) =>
+                  handleManualQuantityChange(selectedProduct.product_id, e)
+                }
               />
             </div>
           </div>
