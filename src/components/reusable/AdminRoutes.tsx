@@ -1,16 +1,17 @@
 import { Navigate } from "react-router-dom";
 
 import { useAuthStore } from "@/hooks/state/useAuth";
+import { isUserAdmin } from "@/lib/utils";
 import { IRoutes } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 
 const AdminRoutes = ({ component: AdminPage }: IRoutes) => {
   const { isAdmin, isAuth } = useAuthStore();
 
-  return isAuth && isAdmin ? (
+  return isAuth && isAdmin && isUserAdmin() ? (
     <AdminPage />
   ) : (
-    <Navigate to={ROUTES.ACCESS_DENIED} />
+    <Navigate to={ROUTES.LOGIN} />
   );
 };
 
