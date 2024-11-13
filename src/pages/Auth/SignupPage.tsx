@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
 import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { SignupFormData } from "@/models/auth.model";
+import { ROUTES } from "@/routes/endpoints";
 import { signupSchema } from "@/schema/authSchema";
 
 import { signupService } from "../../services/authService";
@@ -19,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignupPage = () => {
   const { toast } = useToast();
+  const navigate = useNavigate(); // Initialize the navigate function
   const form = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -33,12 +36,12 @@ const SignupPage = () => {
       dateCreated: new Date().toISOString(),
     },
   });
-
+ 
   const onSubmit = async (data: SignupFormData) => {
     console.log("Form submitted with data:", data);
     try {
       const response = await signupService(data);
-
+ 
       // Store response data in sessionStorage
       if (response.token) {
         sessionStorage.setItem("userToken", response.token);
@@ -46,17 +49,20 @@ const SignupPage = () => {
       if (response.userId) {
         sessionStorage.setItem("userId", response.userId);
       }
-
+ 
       toast({
         variant: "success",
         title: "Registered successfully!",
         description: "Your account has been created.",
       });
-
+ 
       console.log("User created:", response);
+ 
+      navigate("/login");
+ 
     } catch (error) {
       console.error("Signup failed:", error);
-
+ 
       toast({
         variant: "destructive",
         title: "Signup failed",
@@ -64,7 +70,7 @@ const SignupPage = () => {
       });
     }
   };
-
+ 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Form {...form}>
@@ -75,7 +81,7 @@ const SignupPage = () => {
           <h2 className="text-2xl font-bold text-center text-gray-800">
             Create Account
           </h2>
-
+ 
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -102,7 +108,7 @@ const SignupPage = () => {
               )}
             />
           </div>
-
+ 
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -110,11 +116,7 @@ const SignupPage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <CustomInput
-                      label="Contact Number"
-                      type="text"
-                      {...field}
-                    />
+                    <CustomInput label="Contact Number" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,7 +135,7 @@ const SignupPage = () => {
               )}
             />
           </div>
-
+ 
           <FormField
             control={form.control}
             name="username"
@@ -146,7 +148,7 @@ const SignupPage = () => {
               </FormItem>
             )}
           />
-
+ 
           <FormField
             control={form.control}
             name="password"
@@ -159,7 +161,7 @@ const SignupPage = () => {
               </FormItem>
             )}
           />
-
+ 
           <FormField
             control={form.control}
             name="confirmPassword"
@@ -176,13 +178,13 @@ const SignupPage = () => {
               </FormItem>
             )}
           />
-
+ 
           <input
             type="hidden"
             value={new Date().toISOString()}
             {...form.register("dateCreated")}
           />
-
+ 
           <FormField
             control={form.control}
             name="terms"
@@ -203,17 +205,30 @@ const SignupPage = () => {
               </FormItem>
             )}
           />
-
+ 
           <Button
             type="submit"
             className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
           >
             Create account
           </Button>
+ 
+          {/* Link to Login Page */}
+          <div className="mt-4 text-center">
+            <span className="text-gray-600">
+              Already have an account?{" "}
+              <button
+                onClick={() => navigate(ROUTES.LOGIN)}
+                className="text-blue-600 hover:underline"
+              >
+                Login
+              </button>
+            </span>
+          </div>
         </form>
       </Form>
     </div>
   );
 };
-
+ 
 export default SignupPage;
