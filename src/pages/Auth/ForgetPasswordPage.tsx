@@ -11,7 +11,6 @@ import { usePasswordPage } from "@/hooks/state/usePasswordPage";
 import { resetPasswordSchema } from "@/schema/authSchema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ForgotPasswordFormData } from "@/models/auth.model";
 
 const ForgetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
@@ -93,8 +92,8 @@ const ForgetPasswordPage: React.FC = () => {
     return true;
   };
 
-  const onSubmit = (data: ForgotPasswordFormData) => {
-    console.log("Form Data:", data);
+  const onSubmit = (e: any) => {
+    e.preventDefault();
 
     if (validateInput()) {
       if (currentPageIndex === 0) {
@@ -106,7 +105,7 @@ const ForgetPasswordPage: React.FC = () => {
       }
     }
   };
-
+  console.log("Form Data:", form.formState.errors);
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 font-poppins">
       <div className="bg-white shadow-xl rounded-lg flex flex-col lg:flex-row w-3/4 max-w-5xl">
@@ -134,66 +133,63 @@ const ForgetPasswordPage: React.FC = () => {
           <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              {currentPageIndex === 0 && (
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <CustomInput
-                        label={currentPage.inputLabel}
-                        type="text"
-                        {...field}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
-              {currentPageIndex === 1 && (
-                <FormField
-                  control={form.control}
-                  name="verificationCode"
-                  render={({ field }) => (
-                    <FormItem>
-                      <CustomInput
-                        label={currentPage.inputLabel}
-                        type="text"
-                        {...field}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
-              {currentPageIndex === 2 && (
-                <FormField
-                  control={form.control}
-                  name="newPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <CustomInput
-                        label={currentPage.inputLabel}
-                        type="resetpassword"
-                        {...field}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
+            {currentPageIndex === 0 && (
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <CustomInput
+                      label={currentPage.inputLabel}
+                      type="text"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+            {currentPageIndex === 1 && (
+              <FormField
+                control={form.control}
+                name="verificationCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <CustomInput
+                      label={currentPage.inputLabel}
+                      type="text"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+            {currentPageIndex === 2 && (
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <CustomInput
+                      label={currentPage.inputLabel}
+                      type="resetpassword"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
-              {error && <p className="text-red-500 mt-2">{error}</p>}
+            {error && <p className="text-red-500 mt-2">{error}</p>}
 
-              <button
-                onSubmit={form.handleSubmit(onSubmit)}
-                type="submit"
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
-              >
-                {currentPage.buttonText}
-              </button>
-            </form>
+            <button
+              onSubmit={onSubmit}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
+            >
+              {currentPage.buttonText}
+            </button>
           </Form>
         </div>
 
