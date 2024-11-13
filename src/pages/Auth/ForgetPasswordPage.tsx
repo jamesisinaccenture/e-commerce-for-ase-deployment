@@ -6,15 +6,23 @@ import { useNavigate } from "react-router-dom";
 import forget from "@/assets/images/forget.png";
 import verify from "@/assets/images/verify.png";
 import CustomInput from "@/components/reusable/CustomInput";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { FormField, FormItem, FormMessage, Form } from "@/components/ui/form";
 import { usePasswordPage } from "@/hooks/state/usePasswordPage";
 import { resetPasswordSchema } from "@/schema/authSchema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ForgotPasswordFormData } from "@/models/auth.model";
 
 const ForgetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
-  const form = useForm({ resolver: zodResolver(resetPasswordSchema) });
+  const form = useForm({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      email: "",
+      verificationCode: "",
+      newPassword: "",
+    },
+  });
 
   const {
     currentPageIndex,
@@ -49,11 +57,6 @@ const ForgetPasswordPage: React.FC = () => {
   ];
 
   const currentPage = pages[currentPageIndex];
-
-  // useEffect(() => {
-  //   setInputValue("");
-  //   setError("");
-  // }, [currentPageIndex]);
 
   useEffect(() => {
     console.log("Current Page Index:", currentPageIndex);
@@ -90,12 +93,7 @@ const ForgetPasswordPage: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = (data: {
-    email?: string;
-    verificationCode?: string;
-    newPassword?: string;
-  }) => {
-    //console.log("Hello World");
+  const onSubmit = (data: ForgotPasswordFormData) => {
     console.log("Form Data:", data);
 
     if (validateInput()) {
@@ -135,10 +133,8 @@ const ForgetPasswordPage: React.FC = () => {
           )}
           <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
-
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
-              {/* Render input fields conditionally */}
+            <form onSubmit={form.handleSubmit(onSubmit)}>
               {currentPageIndex === 0 && (
                 <FormField
                   control={form.control}
@@ -149,7 +145,6 @@ const ForgetPasswordPage: React.FC = () => {
                         label={currentPage.inputLabel}
                         type="text"
                         {...field}
-                        //onChange={(e) => setInputValue(e.target.value)}
                       />
                       <FormMessage />
                     </FormItem>
@@ -166,7 +161,6 @@ const ForgetPasswordPage: React.FC = () => {
                         label={currentPage.inputLabel}
                         type="text"
                         {...field}
-                        //onChange={(e) => setInputValue(e.target.value)}
                       />
                       <FormMessage />
                     </FormItem>
@@ -183,7 +177,6 @@ const ForgetPasswordPage: React.FC = () => {
                         label={currentPage.inputLabel}
                         type="resetpassword"
                         {...field}
-                        //onChange={(e) => setInputValue(e.target.value)}
                       />
                       <FormMessage />
                     </FormItem>
@@ -194,7 +187,7 @@ const ForgetPasswordPage: React.FC = () => {
               {error && <p className="text-red-500 mt-2">{error}</p>}
 
               <button
-                onSubmit={form.handleSubmit(handleSubmit)}
+                onSubmit={form.handleSubmit(onSubmit)}
                 type="submit"
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
               >

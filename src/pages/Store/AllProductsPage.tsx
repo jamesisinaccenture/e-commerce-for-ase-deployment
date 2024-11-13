@@ -1,15 +1,8 @@
-// src/pages/AllProductsPage.tsx
 import React, { useState } from "react";
 
-interface Product {
-  id: number;
-  image: string;
-  name: string;
-  originalPrice: number;
-  discountedPrice: number;
-  discount: number;
-  category: string;
-}
+import ProductSectionCard from "@/components/store/ProductSectionCard";
+import { store_products } from "@/lib/constants";
+import { IProductData } from "@/models/store.model";
 
 const categories = [
   "All",
@@ -21,122 +14,15 @@ const categories = [
   "Beauty",
 ];
 
-// Sample products with categories for filtering
-const products: Product[] = [
-  {
-    id: 1,
-    image: "src/assets/phone images/image 3.png",
-    name: "Galaxy S22 Ultra",
-    originalPrice: 42999,
-    discountedPrice: 18040,
-    discount: 56,
-    category: "Electronics",
-  },
-  {
-    id: 2,
-    image: "src/assets/phone images/image 3.png",
-    name: "Galaxy M13 (4GB | 64 GB)",
-    originalPrice: 14999,
-    discountedPrice: 6599.56,
-    discount: 56,
-    category: "Electronics",
-  },
-  {
-    id: 3,
-    image: "src/assets/phone images/image 3.png",
-    name: "Samsung Galaxy",
-    originalPrice: 24999,
-    discountedPrice: 16999,
-    discount: 56,
-    category: "Electronics",
-  },
-  {
-    id: 4,
-    image: "src/assets/phone images/image 3.png",
-    name: "Samsung Galaxy",
-    originalPrice: 24999,
-    discountedPrice: 16999,
-    discount: 56,
-    category: "Home & Kitchen",
-  },
-  {
-    id: 5,
-    image: "https://via.placeholder.com/150",
-    name: "Fashionable Shirt",
-    originalPrice: 2999,
-    discountedPrice: 1999,
-    discount: 56,
-    category: "Fashion",
-  },
-  {
-    id: 6,
-    image: "https://via.placeholder.com/150",
-    name: "Premium Fruit Pack",
-    originalPrice: 2999,
-    discountedPrice: 2499,
-    discount: 20,
-    category: "Premium Fruits",
-  },
-  {
-    id: 7,
-    image: "src/assets/images 2/images.jpg",
-    name: "Beauty Product A",
-    originalPrice: 999,
-    discountedPrice: 799,
-    discount: 20,
-    category: "Beauty",
-  },
-  {
-    id: 8,
-    image: "https://via.placeholder.com/150",
-    name: "Toys",
-    originalPrice: 1999,
-    discountedPrice: 1119.44,
-    discount: 56,
-    category: "Sports,Toys & Luggage",
-  },
-  {
-    id: 9,
-    image: "https://via.placeholder.com/150",
-    name: "Milk",
-    originalPrice: 2999,
-    discountedPrice: 1679.44,
-    discount: 56,
-    category: "Groceries",
-  },
-];
-
-const ProductCard: React.FC<Product> = ({
-  image,
-  name,
-  originalPrice,
-  discountedPrice,
-  discount,
-}) => {
-  return (
-    <div className="relative border rounded-lg p-4 shadow-md hover:shadow-lg transition duration-200 w-[241px]">
-      <span className="absolute top-[11px] left-[184px] w-[35px] h-[32px] bg-blue-600 text-white text-[14px] font-HKGrotesk font-semibold leading-[16px] flex items-center justify-center rounded-md">
-        {discount}% OFF
-      </span>
-      <img
-        src={image}
-        alt={name}
-        className="w-[241px] h-[241px] object-cover rounded-lg mb-4"
-      />
-      <h3 className="text-lg font-semibold">{name}</h3>
-      <div className="text-sm text-gray-500 line-through">₹{originalPrice}</div>
-      <div className="text-lg font-bold text-green-500">₹{discountedPrice}</div>
-    </div>
-  );
-};
-
 const AllProductsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const filteredProducts =
     selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+      ? store_products
+      : store_products.filter(
+          (product: IProductData) => product.category === selectedCategory
+        );
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -167,17 +53,8 @@ const AllProductsPage: React.FC = () => {
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            name={product.name}
-            originalPrice={product.originalPrice}
-            discountedPrice={product.discountedPrice}
-            discount={product.discount}
-            category={product.category}
-          />
+        {filteredProducts.map((product: IProductData) => (
+          <ProductSectionCard key={product.product_id} product={product} />
         ))}
       </div>
     </div>

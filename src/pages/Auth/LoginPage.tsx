@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import loginImage from "@/assets/images/login-image.jpg";
 import CustomInput from "@/components/reusable/CustomInput";
@@ -122,14 +122,18 @@ const LoginPage = () => {
                     Remember me
                   </label>
                 </div>
-                <p className="text-red-500">Forgot Password</p>
+                <Link to={ROUTES.FORGOT_PASSWORD} className="text-red-500">
+                  Forgot Password
+                </Link>
               </div>
               <Button type="submit" className="w-80 bg-blue-600">
                 Login
               </Button>
               <p className="text-sm mt-2">
                 Don't have an account?{" "}
-                <span className="text-red-500">Signup</span>
+                <span className="text-red-500">
+                  <Link to={ROUTES.REGISTER}>Signup</Link>
+                </span>
               </p>
             </div>
             <div className="hidden md:block mt-6 max-w-80 max-h-96 min-h-96 min-w-80">
