@@ -110,7 +110,11 @@ const SignupPage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <CustomInput label="Contact Number" type="text" {...field} />
+                    <CustomInput
+                      label="Contact Number"
+                      type="text"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

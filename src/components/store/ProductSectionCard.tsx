@@ -8,14 +8,14 @@ const ProductSectionCard = (products: any) => {
           <div className="h-48 w-44">
             <img
               src={productImage} // src={products.products.product_img}
-              alt={products.products.product_name}
+              alt={products.product_name}
               className="rounded-t-lg"
             />
           </div>
           <div className="flex flex-col text-sm pl-2 pr-2 pb-2 font-semibold font-sans">
-            <p>{products.products.product_name}</p>
+            <p>{products.product_name}</p>
             <p>
-              "{products.products.currency} {products.products.price}"
+              "{products.currency} {products.price}"
             </p>
             <hr />
             <p className="text-green-600">Save</p>
