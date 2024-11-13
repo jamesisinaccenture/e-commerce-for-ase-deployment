@@ -11,10 +11,10 @@ const AdminLayout = () => {
       <AppSidebar />
       <div className="flex flex-col w-full">
         {/* Navbar */}
-        <div className="p-2 bg-gray-300 flex justify-between items-center">
+        <div className="p-2 border-b flex justify-between items-center">
           <SidebarTrigger />
           <div>
-            <Button className="bg-transparent rounded-full w-10 h-10">
+            <Button className=" rounded-full w-10 h-10">
               <User2 />
             </Button>
           </div>
