@@ -46,14 +46,14 @@ export interface InformationFormData {
 
 export interface UpdateInformationFormData {
   id: string;
-  first_name?: string;
-  last_name?: string;
-  address?: string;
-  contact_number?: string;
-  user_name?: string;
-  email?: string;
-  date?: string;
-  old_password: string;
-  new_password: string;
-  confirm_new_password: string;
+  first_name: string;
+  last_name: string;
+  address: string;
+  contact_number: string;
+  user_name: string;
+  email: string;
+  date: string;
+  // old_password?: string;
+  // new_password?: string;
+  // confirm_new_password?: string;
 }

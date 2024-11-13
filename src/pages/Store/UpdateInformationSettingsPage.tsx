@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Camera } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getUserSession } from "@/lib/utils";
+import { getToken, getUserSession } from "@/lib/utils";
 import { UpdateInformationFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { updateInformationSchema } from "@/schema/authSchema";
@@ -22,19 +22,20 @@ import { updateInformationSchema } from "@/schema/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const UpdateInformationSettingsPage = () => {
+  const [settingsData, setSettingsData] = useState<UpdateInformationFormData>();
   const form = useForm<UpdateInformationFormData>({
     resolver: zodResolver(updateInformationSchema),
     defaultValues: {
-      first_name: "",
+      first_name: settingsData?.first_name ? settingsData?.first_name : "",
       last_name: "",
       address: "",
       contact_number: "",
       user_name: "",
       email: "",
       date: "",
-      old_password: "",
-      new_password: "",
-      confirm_new_password: "",
+      // old_password: "",
+      // new_password: "",
+      // confirm_new_password: "",
     },
   });
 
@@ -45,8 +46,13 @@ const UpdateInformationSettingsPage = () => {
   useEffect(() => {
     const data = getUserSession();
     console.log("Use Effect", data);
+    setSettingsData(data);
+    console.log(getToken());
   }, []);
 
+  useEffect(() => {
+    console.log(settingsData);
+  }, [settingsData]);
   return (
     <>
       <Form {...form}>
@@ -228,7 +234,7 @@ const UpdateInformationSettingsPage = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="old_password"
                   render={({ field }) => (
@@ -287,7 +293,7 @@ const UpdateInformationSettingsPage = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
               </div>
             </div>
             <div className="flex container mt-14">
