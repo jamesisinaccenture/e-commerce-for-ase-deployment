@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { getUserSession, headerConfig } from "@/lib/utils";
+import { getToken, getUserSession, headerConfig } from "@/lib/utils";
 import {
   LoginFormData,
   SignupFormData,
@@ -94,8 +94,10 @@ export const signupService = async (data: SignupFormData) => {
 };
 
 // export const informationService = async () => {
-//   try { response = await axios.get(
-//     `${API_URL}/`,
+//   try {
+//     // const token = getUserSession();
+//     const response = await axios.get(
+//     `${API_URL}/user`,
 //     {
 //       first_name: ,
 //       last_name: ,
@@ -109,22 +111,26 @@ export const signupService = async (data: SignupFormData) => {
 //       department: ,
 //       branch: ,
 //     },
-//     {
-//       headers: {
-//   ...headerConfig,
-//   Authorization: `Bearer ${token}`,
-// },
+//   )} catch (error) {
+//     if (axios.isAxiosError(error) && error.response) {
+//       const errorMessage =
+//         error.response.data.message || "Editing profile failed.";
+//       console.error("Edit profile error:", errorMessage);
+//       throw new Error(errorMessage);
+//     } else {
+//       console.error("Unexpected error:", error);
+//       throw new Error("An unexpected error occurred.");
 //     }
-//   )}
+//   }
 // };
 
 export const updateInformationService = async (
   data: UpdateInformationFormData
 ) => {
   try {
-    const token = getUserSession;
+    const token = getToken();
     const response = await axios.put(
-      `${API_URL}/`,
+      `${API_URL}/user/${data.id}`,
       {
         first_name: data.first_name,
         last_name: data.last_name,

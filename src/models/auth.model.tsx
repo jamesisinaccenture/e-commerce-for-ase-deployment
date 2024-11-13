@@ -45,6 +45,7 @@ export interface InformationFormData {
 }
 
 export interface UpdateInformationFormData {
+  id: string;
   first_name?: string;
   last_name?: string;
   address?: string;

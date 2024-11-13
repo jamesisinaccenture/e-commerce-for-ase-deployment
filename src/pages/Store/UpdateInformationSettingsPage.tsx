@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Camera } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getUserSession } from "@/lib/utils";
 import { UpdateInformationFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { updateInformationSchema } from "@/schema/authSchema";
@@ -39,6 +41,11 @@ const UpdateInformationSettingsPage = () => {
   const onSubmit = async (data: UpdateInformationFormData) => {
     console.log("Form updated with data:", data);
   };
+
+  useEffect(() => {
+    const data = getUserSession();
+    console.log("Use Effect", data);
+  }, []);
 
   return (
     <>
