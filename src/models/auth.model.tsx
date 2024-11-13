@@ -50,10 +50,15 @@ export interface UpdateInformationFormData {
   last_name: string;
   address: string;
   contact_number: string;
-  user_name: string;
+  username: string;
   email: string;
-  date: string;
+  date_created: string;
   // old_password?: string;
   // new_password?: string;
   // confirm_new_password?: string;
+}
+
+export interface UpdateInformationFormDataForStore {
+  data: UpdateInformationFormData;
+  setData: (data: UpdateInformationFormData) => void;
 }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
+import { format } from "date-fns";
 import { Camera } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -14,7 +15,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getToken, getUserSession } from "@/lib/utils";
+import { useSettings } from "@/hooks/state/useSettings";
+import { getUserSession } from "@/lib/utils";
 import { UpdateInformationFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { updateInformationSchema } from "@/schema/authSchema";
@@ -22,21 +24,31 @@ import { updateInformationSchema } from "@/schema/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const UpdateInformationSettingsPage = () => {
-  const [settingsData, setSettingsData] = useState<UpdateInformationFormData>();
+  const settings = useSettings();
+
+  const formValues = useMemo(
+    () => ({
+      first_name: settings.data?.first_name || "",
+      last_name: settings.data?.last_name || "",
+      address: settings.data?.address || "",
+      contact_number: settings.data?.contact_number || "",
+      username: settings.data?.username || "",
+      email: settings.data?.email || "",
+      date_created: settings.data?.date_created || "",
+    }),
+    [settings.data]
+  );
+
+  useEffect(() => {
+    // Fetch and set the session data to Zustand store
+    const data = getUserSession();
+    console.log("data", data);
+    settings.setData(data);
+  }, []);
+
   const form = useForm<UpdateInformationFormData>({
     resolver: zodResolver(updateInformationSchema),
-    defaultValues: {
-      first_name: settingsData?.first_name ? settingsData?.first_name : "",
-      last_name: "",
-      address: "",
-      contact_number: "",
-      user_name: "",
-      email: "",
-      date: "",
-      // old_password: "",
-      // new_password: "",
-      // confirm_new_password: "",
-    },
+    defaultValues: formValues,
   });
 
   const onSubmit = async (data: UpdateInformationFormData) => {
@@ -44,15 +56,9 @@ const UpdateInformationSettingsPage = () => {
   };
 
   useEffect(() => {
-    const data = getUserSession();
-    console.log("Use Effect", data);
-    setSettingsData(data);
-    console.log(getToken());
-  }, []);
+    form.reset(formValues);
+  }, [formValues, form]);
 
-  useEffect(() => {
-    console.log(settingsData);
-  }, [settingsData]);
   return (
     <>
       <Form {...form}>
@@ -179,7 +185,7 @@ const UpdateInformationSettingsPage = () => {
               <div className="flex flex-wrap gap-5">
                 <FormField
                   control={form.control}
-                  name="user_name"
+                  name="username"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-500">Username</FormLabel>
@@ -215,7 +221,7 @@ const UpdateInformationSettingsPage = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="date"
+                  name="date_created"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-500">
