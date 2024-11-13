@@ -4,6 +4,7 @@ import ProductSection from "@/components/store/ProductSection";
 import { store_products } from "@/lib/constants";
 import AllProductsPage from "./AllProductsPage";
 
+// import CartPage from "./CartPage";
 const LandingPage = () => {
   return (
     <>
