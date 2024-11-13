@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { format } from "date-fns";
 import { Camera } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -33,7 +32,7 @@ const UpdateInformationSettingsPage = () => {
       address: settings.data?.address || "",
       contact_number: settings.data?.contact_number || "",
       username: settings.data?.username || "",
-      email: settings.data?.email || "",
+      // email: settings.data?.email || "",
       date_created: settings.data?.date_created || "",
     }),
     [settings.data]
@@ -201,7 +200,7 @@ const UpdateInformationSettingsPage = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
@@ -218,7 +217,7 @@ const UpdateInformationSettingsPage = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   control={form.control}
                   name="date_created"

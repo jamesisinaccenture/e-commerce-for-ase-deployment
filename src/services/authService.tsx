@@ -136,11 +136,11 @@ export const updateInformationService = async (
         last_name: data.last_name,
         address: data.address,
         contact_number: data.contact_number,
-        username: data.user_name,
-        email: data.email,
-        date_created: data.date,
-        password: data.old_password,
-        new_password: data.new_password,
+        username: data.username,
+        // email: data.email,
+        date_created: data.date_created,
+        // password: data.old_password,
+        // new_password: data.new_password,
       },
       {
         headers: {

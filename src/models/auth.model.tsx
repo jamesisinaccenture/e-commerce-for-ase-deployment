@@ -51,7 +51,7 @@ export interface UpdateInformationFormData {
   address: string;
   contact_number: string;
   username: string;
-  email: string;
+  // email: string;
   date_created: string;
   // old_password?: string;
   // new_password?: string;
