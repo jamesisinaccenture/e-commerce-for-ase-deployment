@@ -1,67 +1,71 @@
-import { MessageCircle, Phone } from "lucide-react";
-
-import mask from "@/assets/images/mask.png";
-import playStore from "@/assets/images/playStore.png";
-import { categories, services } from "@/lib/constants";
 import {
   ContactInfoProps,
   EndFooterSectionProps,
   FooterSectionProps,
 } from "@/models/store.model";
+import { MessageCircle, Phone } from "lucide-react";
+import { categories, services } from "@/lib/constants";
+
+import mask from "@/assets/images/mask.png";
+import playStore from "@/assets/images/playStore.png";
 
 const StoreFooter = () => {
   return (
-    <footer className="relative grid grid-cols-1 md:grid-cols-3 bg-[#008ECC] py-8 px-8 md:py-20 md:px-32">
-      <div className="z-10">
-        <h1 className="text-white text-4xl font-bold">Mobile Center</h1>
+    <footer className="relative bg-[#008ECC] ">
+      <div className="grid grid-cols-1 md:grid-cols-3 py-8 px-8 md:py-20 md:px-32">
+        <div className="z-10">
+          <h1 className="text-white text-4xl font-bold">Mobile Center</h1>
 
-        <div className="mt-10">
-          <h3 className="text-white font-semibold mb-2 border-b-2 border-white w-[100px]">
-            Contact Us
-          </h3>
-          <div className="flex flex-row md:flex-col gap-5 mt-5">
-            <ContactInfo
-              icon={<MessageCircle size={20} color="white" />}
-              label="Whats App"
-              contact="+1 202-918-2132"
-            />
-            <ContactInfo
-              icon={<Phone size={20} color="white" />}
-              label="Call Us"
-              contact="+1 202-918-2132"
-            />
-
-            {/* Download Section */}
-            <div className="z-10">
-              <h3 className="text-white font-semibold mb-2 border-b-2 border-white w-max mt-5">
-                Download App
-              </h3>
-              <img
-                src={playStore}
-                alt="Play Store"
-                className="object-contain mt-5 w-5/6 hover:cursor-pointer"
+          <div className="mt-10">
+            <h3 className="text-white font-semibold mb-2 border-b-2 border-white w-[100px]">
+              Contact Us
+            </h3>
+            <div className="flex flex-row md:flex-col gap-5 mt-5">
+              <ContactInfo
+                icon={<MessageCircle size={20} color="white" />}
+                label="Whats App"
+                contact="+1 202-918-2132"
               />
+              <ContactInfo
+                icon={<Phone size={20} color="white" />}
+                label="Call Us"
+                contact="+1 202-918-2132"
+              />
+
+              {/* Download Section */}
+              <div className="z-10">
+                <h3 className="text-white font-semibold mb-2 border-b-2 border-white w-max mt-5">
+                  Download App
+                </h3>
+                <img
+                  src={playStore}
+                  alt="Play Store"
+                  className="object-contain mt-5 w-5/6 hover:cursor-pointer"
+                />
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Categories Section */}
+        <FooterSection
+          title="Most Popular Categories"
+          items={categories.slice(0, 8)}
+        />
+
+        {/* Services Section */}
+        <FooterSection title="Customer Services" items={services} />
+
+        {/* Background Mask Image */}
+        <img
+          src={mask}
+          alt="Mask Image"
+          className="absolute top-0 right-0 z-0 sm:block w-[321px] h-[401px]"
+        />
       </div>
-
-      {/* Categories Section */}
-      <FooterSection
-        title="Most Popular Categories"
-        items={categories.slice(0, 8)}
-      />
-
-      {/* Services Section */}
-      <FooterSection title="Customer Services" items={services} />
-
-      <EndFooterSection version="v.0.1.0" />
-      {/* Background Mask Image */}
-      <img
-        src={mask}
-        alt="Mask Image"
-        className="absolute top-0 right-0 z-0 sm:block w-[321px] h-[401px]"
-      />
+      <div className="w-full h-auto">
+        <EndFooterSection version="v.0.1.0" />
+      </div>
     </footer>
   );
 };

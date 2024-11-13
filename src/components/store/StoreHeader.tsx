@@ -1,38 +1,73 @@
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { BadgePercent, MapPinned, Search, Truck } from "lucide-react";
 
-import { Avatar } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 import CartDrawer from "@/components/store/CartDrawer";
 import DropdownAvatar from "@/components/store/DropdownAvatar";
+import { Input } from "@/components/ui/input";
 import Navbar from "@/components/store/Navbar";
+import apple from "@/assets/images/apple-logo.png";
 
 const StoreHeader = () => {
   return (
-    <header className="flex items-center justify-between px-6 py-4 shadow-md">
-      <div className="flex items-center space-x-4">
-        <Avatar>
-          <AvatarImage src="/apple-logo.png" alt="apple" />
-          <AvatarFallback>Apple</AvatarFallback>
-        </Avatar>
-        <span className="text-xl font-semibold">iStore</span>{" "}
+    <header className="flex flex-col">
+      {/* Top Most Section */}
+      <div className="flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-2 shadow-md bg-[#f5f5f5]">
+        <span className="text-xs font-regular mb-2 md:mb-0">
+          Welcome to worldwide Megamart!
+        </span>
+
+        <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+          <div className="flex items-center gap-2">
+            <MapPinned size={16} color="#008ECC" />
+            <span className="text-xs font-regular">
+              Deliver to <strong>423651</strong>
+            </span>
+          </div>
+
+          <span className="hidden md:block text-muted-foreground">|</span>
+
+          <div className="flex items-center gap-2">
+            <Truck size={16} color="#008ECC" />
+            <span className="text-xs font-regular">Track your order</span>
+          </div>
+
+          <span className="hidden md:block text-muted-foreground">|</span>
+
+          <div className="flex items-center gap-2">
+            <BadgePercent size={16} color="#008ECC" />
+            <span className="text-xs font-regular">All Offers</span>
+          </div>
+        </div>
       </div>
 
-      {/* This is what we see dun sa very middle nung header, this is the actual navigational bar */}
-      <Navbar />
+      {/* Middle Section */}
+      <div className="flex flex-row items-start justify-between px-4 md:items-center md:px-6 py-2 shadow-md space-y-2 md:space-y-0">
+        {/* Logo Section */}
+        <div className="flex flex-row items-center gap-2">
+          <div className="w-6 h-6 md:w-12 md:h-12">
+            <Avatar>
+              <AvatarImage src={apple} alt="Logo" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </div>
+          <h1 className="text-sm md:text-3xl font-bold text-[#008ECC]">
+            Mobile Center
+          </h1>
+        </div>
 
-      {/* Right side of the navigation bar */}
-      <div className="flex items-center space-x-4">
-        <Input
-          type="search"
-          placeholder="Search"
-          className="hidden md:block w-64" // Show on larger screens only
-        />
-
-        {/* This will pull out the cart drawer */}
-        <CartDrawer />
-
-        {/* TThis is for the avatar that has a dropdown */}
-        <DropdownAvatar />
+        {/* Search and Cart Section */}
+        <div className="flex flex-row items-center gap-4 justify-end w-full md:w-auto ">
+          <Input
+            type="search"
+            icon={<Search size={20} color="#008ECC" />}
+            isSearch
+            placeholder="Search mobile, accessories, and more..."
+            className="w-2/3 md:w-96" // Full width on mobile, fixed width on larger screens
+          />
+          <DropdownAvatar />
+          <span className="hidden md:block text-muted-foreground">|</span>
+          <CartDrawer />
+        </div>
       </div>
     </header>
   );
