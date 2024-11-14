@@ -19,7 +19,6 @@ const StoreHeader = () => {
   const { logout, isLoading, setLoading } = useAuthStore();
   const session = getUserSession();
   const navigate = useNavigate();
-  console.log("session", session);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -27,7 +26,7 @@ const StoreHeader = () => {
       const response = await logoutService();
 
       if (response) {
-        sessionStorage.removeItem("session");
+        localStorage.removeItem("session");
         toast({
           variant: "success",
           title: "Logout successful!",
