@@ -1,5 +1,6 @@
-import { IAuthStore } from "@/models/auth.model";
 import { create } from "zustand";
+
+import { IAuthStore } from "@/models/auth.model";
 
 export const useAuthStore = create<IAuthStore>((set) => ({
   isLoading: false,
@@ -7,6 +8,9 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   isAuth: JSON.parse(sessionStorage.getItem("isAuth") || "false"),
   token: JSON.parse(sessionStorage.getItem("token") || "{}"),
   user: {},
+  updateUserInfo: (user: any) => {
+    sessionStorage.setItem("session", JSON.stringify(user));
+  },
   login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => {
     sessionStorage.setItem("isAdmin", JSON.stringify(isAdmin));
     sessionStorage.setItem("isAuth", JSON.stringify(isAuth));

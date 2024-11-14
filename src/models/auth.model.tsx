@@ -11,6 +11,7 @@ export interface IAuthStore {
   isAuth: boolean;
   token: string;
   user: any;
+  updateUserInfo: (user: any) => void;
   login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => void;
   logout: () => void;
   setLoading: (loading: boolean) => void;
@@ -45,14 +46,15 @@ export interface InformationFormData {
 }
 
 export interface UpdateInformationFormData {
-  id: string;
+  user_id: string;
   first_name: string;
   last_name: string;
   address: string;
   contact_number: string;
   username: string;
   // email: string;
-  date_created: string;
+  // user_img: string;
+  // date_created: string;
   // old_password?: string;
   // new_password?: string;
   // confirm_new_password?: string;

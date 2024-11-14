@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { useAuthStore } from "@/hooks/state/useAuth";
 import { getToken, getUserSession, headerConfig } from "@/lib/utils";
 import {
   LoginFormData,
@@ -93,36 +94,28 @@ export const signupService = async (data: SignupFormData) => {
   }
 };
 
-// export const informationService = async () => {
-//   try {
-//     // const token = getUserSession();
-//     const response = await axios.get(
-//     `${API_URL}/user`,
-//     {
-//       first_name: ,
-//       last_name: ,
-//       contact_number: ,
-//       address: ,
-//       date_created: ,
-//       username: ,
-//       access_level: ,
-//       user_img: ,
-//       position: ,
-//       department: ,
-//       branch: ,
-//     },
-//   )} catch (error) {
-//     if (axios.isAxiosError(error) && error.response) {
-//       const errorMessage =
-//         error.response.data.message || "Editing profile failed.";
-//       console.error("Edit profile error:", errorMessage);
-//       throw new Error(errorMessage);
-//     } else {
-//       console.error("Unexpected error:", error);
-//       throw new Error("An unexpected error occurred.");
-//     }
-//   }
-// };
+export const getUserInformation = async () => {
+  try {
+    const token = getToken();
+    const userResponse = await axios.get(`${API_URL}/user`, {
+      headers: {
+        ...headerConfig,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log("Noreen wag mo galawin", userResponse);
+
+    if (userResponse) {
+      const user = userResponse.data.data;
+      sessionStorage.setItem("session", JSON.stringify(user));
+    }
+
+    return userResponse;
+  } catch (error) {
+    console.error("Unexpected error in get information:", error);
+    throw new Error("An unexpected error occurred.");
+  }
+};
 
 export const updateInformationService = async (
   data: UpdateInformationFormData
@@ -130,7 +123,7 @@ export const updateInformationService = async (
   try {
     const token = getToken();
     const response = await axios.put(
-      `${API_URL}/user/${data.id}`,
+      `${API_URL}/user/${data.user_id}`,
       {
         first_name: data.first_name,
         last_name: data.last_name,
@@ -138,7 +131,7 @@ export const updateInformationService = async (
         contact_number: data.contact_number,
         username: data.username,
         // email: data.email,
-        date_created: data.date_created,
+        // date_created: data.date_created,
         // password: data.old_password,
         // new_password: data.new_password,
       },
