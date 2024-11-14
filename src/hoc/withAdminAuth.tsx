@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuthStore } from "@/hooks/state/useAuth";
-import { getUserSession, isUserAdmin } from "@/lib/utils";
+import { isUserAdmin } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
 
 const withAdminAuth = (Component: React.ComponentType) => {
