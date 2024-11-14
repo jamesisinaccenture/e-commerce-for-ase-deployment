@@ -1,9 +1,10 @@
 import Carousel from "@/components/reusable/Carousel";
-//import StoreCard from "@/components/store/StoreCard";
 import CategorySection from "@/components/store/CategorySection";
 import ProductSection from "@/components/store/ProductSection";
 import { store_products } from "@/lib/constants";
+import AllProductsPage from "./AllProductsPage";
 
+// import CartPage from "./CartPage";
 const LandingPage = () => {
   return (
     <>
@@ -11,6 +12,7 @@ const LandingPage = () => {
         <Carousel />
         <CategorySection />
         <ProductSection store_products={store_products} />
+        <AllProductsPage />
       </div>
     </>
   );

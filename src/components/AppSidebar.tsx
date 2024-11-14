@@ -50,7 +50,7 @@ export function AppSidebar() {
       const response = await logoutService();
 
       if (response) {
-        sessionStorage.removeItem("session");
+        localStorage.removeItem("session");
         toast({
           variant: "success",
           title: "Logout successful!",

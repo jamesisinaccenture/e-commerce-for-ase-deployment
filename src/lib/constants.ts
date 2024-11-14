@@ -187,3 +187,28 @@ export const store_products = [
     created_by: "JamesAllen",
   },
 ];
+
+//delete this later when categories API fetching is established
+export const categories = [
+  "Mobile",
+  "Cosmetics",
+  "Watches",
+  "Furniture",
+  "Photography",
+  "Kitchen Appliance",
+  "Home Decor",
+  "Fitness",
+  "Home Appliance",
+  "Electronics",
+  "Home Automation",
+];
+
+export const services = [
+  "About Us",
+  "Terms & Conditions",
+  "Contact Us",
+  "FAQs",
+  "Privacy Policy",
+  "E-waste Policy",
+  "Cancellation & Return Policy",
+];

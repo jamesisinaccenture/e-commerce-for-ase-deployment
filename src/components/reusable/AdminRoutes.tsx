@@ -1,18 +1,13 @@
 import { Navigate } from "react-router-dom";
 
 import { useAuthStore } from "@/hooks/state/useAuth";
-import { isUserAdmin } from "@/lib/utils";
 import { IRoutes } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 
 const AdminRoutes = ({ component: AdminPage }: IRoutes) => {
   const { isAdmin, isAuth } = useAuthStore();
 
-  return isAuth && isAdmin && isUserAdmin() ? (
-    <AdminPage />
-  ) : (
-    <Navigate to={ROUTES.LOGIN} />
-  );
+  return isAuth && isAdmin ? <AdminPage /> : <Navigate to={ROUTES.LOGIN} />;
 };
 
 export default AdminRoutes;

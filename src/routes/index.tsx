@@ -5,12 +5,14 @@ import StoreRoutes from "@/components/reusable/StoreRoutes";
 import AdminLayout from "@/layouts/AdminLayout";
 import StoreLayout from "@/layouts/StoreLayout";
 import DashboardPage from "@/pages/Admin/DashboardPage";
-import ProductsPage from "@/pages/Admin/ProductsPage";
+// import ProductsPage from "@/pages/Admin/ProductsPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
 import ForgotPassword from "@/pages/Auth/ForgetPasswordPage";
 import LoginPage from "@/pages/Auth/LoginPage";
 import NotFound from "@/pages/Auth/NotFound";
 import SignupPage from "@/pages/Auth/SignupPage";
+import AllProductsPage from "@/pages/Store/AllProductsPage";
+import CartPage from "@/pages/Store/CartPage";
 import InformationSettingsPage from "@/pages/Store/InformationSettingsPage";
 import LandingPage from "@/pages/Store/LandingPage";
 import StoreProductsPage from "@/pages/Store/StoreProductsPage";
@@ -36,6 +38,7 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.BASE, element: <LandingPage /> },
       { path: ROUTES.STORE.PRODUCTS, element: <StoreProductsPage /> },
+      { path: ROUTES.STORE.CART, element: <CartPage /> },
       {
         path: ROUTES.STORE.PROFILE,
         element: <InformationSettingsPage />,
@@ -51,7 +54,7 @@ export const router = createBrowserRouter([
     element: <AdminRoutes component={AdminLayout} />,
     children: [
       { path: ROUTES.ADMIN.BASE, element: <DashboardPage /> },
-      { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
+      { path: ROUTES.ADMIN.PRODUCT, element: <AllProductsPage /> },
     ],
   },
   {
