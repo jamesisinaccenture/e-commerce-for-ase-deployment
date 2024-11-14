@@ -39,12 +39,12 @@ const SignupPage = () => {
     try {
       const response = await signupService(data);
 
-      // Store response data in sessionStorage
+      // Store response data in localStorage
       if (response.token) {
-        sessionStorage.setItem("userToken", response.token);
+        localStorage.setItem("userToken", response.token);
       }
       if (response.userId) {
-        sessionStorage.setItem("userId", response.userId);
+        localStorage.setItem("userId", response.userId);
       }
 
       toast({
