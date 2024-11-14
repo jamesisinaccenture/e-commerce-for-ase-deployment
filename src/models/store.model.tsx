@@ -67,3 +67,7 @@ export interface EndFooterSectionProps {
   version: string;
 }
 /*End of footer props*/
+
+export interface DropdownAvatarProps {
+  handleLogout: () => void;
+}

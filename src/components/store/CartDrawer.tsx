@@ -1,3 +1,7 @@
+import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -8,10 +12,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
 
 const sampleItems = [
   {
@@ -34,13 +34,13 @@ const CartDrawer = () => {
     <Drawer>
       {/* Trigger Icon */}
       <DrawerTrigger asChild>
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-2 hover:cursor-pointer">
           <ShoppingCart
             size={18}
             color="#008ECC"
             className="hover:cursor-pointer "
           />
-          <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold ">
+          <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold">
             Cart
           </h4>
         </div>

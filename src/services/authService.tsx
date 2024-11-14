@@ -27,6 +27,8 @@ export const loginService = async (data: LoginFormData) => {
         },
       });
 
+      sessionStorage.setItem("token", JSON.stringify(token));
+      sessionStorage.setItem("session", JSON.stringify(userResponse.data));
       return { ...userResponse.data, token };
     }
   } catch (error) {
