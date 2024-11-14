@@ -23,5 +23,5 @@ export const getUserSession = () => {
 
 export const isUserAdmin = () => {
   const session = JSON.parse(sessionStorage.getItem("session") || "{}");
-  return session?.user?.data?.access_level === "admin" ? true : false;
+  return session?.user?.data?.access_level == "admin" ? true : false;
 };
