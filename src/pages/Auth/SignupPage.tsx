@@ -41,13 +41,8 @@ const SignupPage = () => {
     console.log("Form submitted with data:", data);
     try {
       const response = await signupService(data);
-<<<<<<< HEAD
- 
-      // Store response data in sessionStorage
-=======
 
       // Store response data in localStorage
->>>>>>> 6e730e5a9e9881f2630ebf3ade6d7358f2a10228
       if (response.token) {
         localStorage.setItem("userToken", response.token);
       }
