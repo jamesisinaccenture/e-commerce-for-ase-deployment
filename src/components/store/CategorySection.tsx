@@ -57,7 +57,7 @@ const products = [
   {
     product_id: "P005",
     product_name: "4K TV",
-    product_img: "https://example.com/images/4k-tv.jpg",
+    product_img: "src/assets/images/image w..png",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Watches",
     price: 599.99,
@@ -93,7 +93,6 @@ const products = [
 ];
 
 const CategorySection: React.FC = () => {
-  // Get unique categories from the products data
   const categories = [...new Set(products.map((product) => product.category))];
 
   return (
