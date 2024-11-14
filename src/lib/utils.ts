@@ -11,17 +11,16 @@ export const headerConfig = {
 };
 
 export const getToken = () => {
-  const session = JSON.parse(sessionStorage.getItem("session") || "{}");
-  console.log("session", session);
+  const session = JSON.parse(localStorage.getItem("session") || "{}");
   return session?.user?.token;
 };
 
 export const getUserSession = () => {
-  const session = JSON.parse(sessionStorage.getItem("session") || "{}");
+  const session = JSON.parse(localStorage.getItem("session") || "{}");
   return session?.user?.data;
 };
 
 export const isUserAdmin = () => {
-  const session = JSON.parse(sessionStorage.getItem("session") || "{}");
-  return session?.user?.data?.access_level === "admin" ? true : false;
+  const session = JSON.parse(localStorage.getItem("session") || "{}");
+  return session?.user?.data?.access_level == "admin" ? true : false;
 };

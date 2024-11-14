@@ -40,12 +40,18 @@ const LoginPage = () => {
     try {
       // Make the API call using the login service
       const response = await loginService(data);
+      const session = JSON.parse(localStorage.getItem("session") || "{}");
       if (response) {
-        // If the response is valid, store it in sessionStorage, we need to stringify the response for it not to end up being [Object Object] in the session
+        // If the response is valid, store it in localStorage, we need to stringify the response for it not to end up being [Object Object] in the session
         const { token } = response;
-        sessionStorage.setItem("session", JSON.stringify(response));
 
-        login(true, true, token, { user: response });
+        if (session?.data?.access_level === "admin") {
+          login(true, true, token, { user: response });
+          navigate(ROUTES.ADMIN.BASE);
+        } else {
+          login(false, true, token, { user: response });
+          navigate(ROUTES.BASE);
+        }
 
         // Display a toast
         toast({
@@ -53,8 +59,6 @@ const LoginPage = () => {
           title: "Login successful!",
           description: "You will be redirected in a few seconds.",
         });
-
-        navigate(ROUTES.ADMIN.BASE);
 
         setLoading(false);
       }
