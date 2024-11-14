@@ -1,6 +1,7 @@
 import {
   Calendar,
   ChevronsUpDown,
+  GlobeLockIcon,
   Inbox,
   LayoutDashboardIcon,
   LogOut,
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/hooks/state/useAuth";
 import { toast } from "@/hooks/use-toast";
+import { getUserSession } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/authService";
 import {
@@ -39,9 +41,8 @@ import { DropdownMenuShortcut } from "./ui/dropdown-menu";
 
 export function AppSidebar() {
   const navigate = useNavigate();
-  const { logout, isLoading, setLoading, user } = useAuthStore();
-
-  console.log(user);
+  const { logout, isLoading, setLoading } = useAuthStore();
+  const user = getUserSession();
 
   const handleLogout = async () => {
     setLoading(true);
@@ -104,12 +105,6 @@ export function AppSidebar() {
       url: ROUTES.ADMIN.TRANSACTIONS,
       icon: Inbox,
     },
-    {
-      type: "button",
-      title: "Logout",
-      onClick: handleLogout,
-      icon: LogOut,
-    },
   ];
 
   return (
@@ -120,13 +115,12 @@ export function AppSidebar() {
             <DropdownMenu>
               <SidebarMenuButton size="lg" className="cursor-default">
                 <div className="flex bg-black p-2 aspect-square items-center justify-center rounded-lg text-white">
-                  <User className="stroke-white bg-black" />
+                  <GlobeLockIcon className="stroke-white bg-black" size={15} />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {user.first_name} {user.last_name}
+                    Mobile Center Admin
                   </span>
-                  <span className="truncate text-xs">{user.username}</span>
                 </div>
               </SidebarMenuButton>
             </DropdownMenu>
@@ -139,28 +133,18 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  {item.type === "link" ? (
-                    <SidebarMenuButton
-                      className="hover:bg-admin-bg-primary hover:text-admin-text-secondary p-4 rounded-lg"
-                      asChild
+                  <SidebarMenuButton
+                    className="hover:bg-black hover:text-admin-text-secondary p-4 rounded-lg"
+                    asChild
+                  >
+                    <Link
+                      to={item.url || "/"}
+                      className="flex gap-2 items-center h-fit"
                     >
-                      <Link to={item.url || "/"} className="flex gap-2 h-fit">
-                        <item.icon className="size-6" />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  ) : (
-                    <SidebarMenuButton
-                      className="hover:bg-admin-bg-primary hover:text-admin-text-secondary p-4 rounded-lg"
-                      onClick={item.onClick}
-                    >
-                      <div className="flex gap-2 h-fit">
-                        <item.icon />
-                        <span>{item.title}</span>
-                        {isLoading && <Loader size="small" />}
-                      </div>
-                    </SidebarMenuButton>
-                  )}
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

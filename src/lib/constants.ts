@@ -1,4 +1,6 @@
 
+export const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
+
 export const store_products = [
   {
     product_id: "P001",

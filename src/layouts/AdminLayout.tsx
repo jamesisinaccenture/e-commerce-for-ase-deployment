@@ -1,6 +1,7 @@
 import { User2 } from "lucide-react";
 import { Outlet } from "react-router-dom";
 
+import { UserDropdown } from "@/components/admin/UserDropdown";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -14,9 +15,7 @@ const AdminLayout = () => {
         <div className="p-2 border-b flex justify-between items-center">
           <SidebarTrigger />
           <div>
-            <Button className=" rounded-full w-10 h-10">
-              <User2 />
-            </Button>
+            <UserDropdown />
           </div>
         </div>
         <Outlet />

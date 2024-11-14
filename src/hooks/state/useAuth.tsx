@@ -1,5 +1,6 @@
-import { IAuthStore } from "@/models/auth.model";
 import { create } from "zustand";
+
+import { IAuthStore } from "@/models/auth.model";
 
 export const useAuthStore = create<IAuthStore>((set) => ({
   isLoading: false,

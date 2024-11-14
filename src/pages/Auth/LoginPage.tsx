@@ -44,6 +44,7 @@ const LoginPage = () => {
         // If the response is valid, store it in sessionStorage, we need to stringify the response for it not to end up being [Object Object] in the session
         const { token } = response;
         sessionStorage.setItem("session", JSON.stringify(response));
+        console.log(response);
 
         login(true, true, token, { user: response });
 
@@ -67,6 +68,8 @@ const LoginPage = () => {
       });
     }
   };
+
+  console.log(form.formState.errors);
 
   return (
     <>
