@@ -15,7 +15,7 @@ const AdminLayout = () => {
           <UserDropdown />
         </div>
         <div className="flex justify-center w-full">
-          <div className="w-full max-w-[1100px] overflow-auto max-sm:w-full">
+          <div className="w-full max-w-[1100px] max-h-[calc(100vh-53px)] overflow-auto max-sm:w-full">
             <Outlet />
           </div>
         </div>
