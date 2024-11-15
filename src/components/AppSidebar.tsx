@@ -6,7 +6,7 @@ import {
   ShoppingBasket,
   User2Icon,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   Sidebar,
@@ -22,6 +22,9 @@ import { ROUTES } from "@/routes/endpoints";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 
 export function AppSidebar() {
+  const location = useLocation();
+  console.log(location);
+
   // Menu items
   const items = [
     {
@@ -58,13 +61,13 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="p-4 h-fit flex flex-row items-center">
+      <SidebarHeader className="p-4 bg-white h-fit flex flex-row items-center">
         <SidebarMenu>
           <SidebarMenuItem className="">
             <DropdownMenu>
               <SidebarMenuButton size="lg" className="cursor-default">
                 <div className="flex bg-black p-2 aspect-square items-center justify-center rounded-lg text-white">
-                  <GlobeLockIcon className="stroke-white bg-black" size={15} />
+                  <GlobeLockIcon className="stroke-white" size={15} />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
@@ -83,7 +86,12 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    className="hover:bg-black hover:text-admin-text-secondary p-4 rounded-lg"
+                    className={`${
+                      location.pathname === item.url
+                        ? "bg-black text-admin-text-secondary hover:bg-black hover:text-admin-text-secondary cursor-default"
+                        : "hover:bg-black hover:text-admin-text-secondary"
+                    } p-4 rounded-lg`}
+                    disabled={location.pathname === item.url}
                     asChild
                   >
                     <Link
