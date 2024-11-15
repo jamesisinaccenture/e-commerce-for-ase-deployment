@@ -1,23 +1,19 @@
 import { BadgePercent, MapPinned, Search, Truck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-// import apple from "@/assets/images/apple-logo.png";
 import logo from "@/assets/images/logo.png";
 import Loader from "@/components/reusable/Loader";
 import CartDrawer from "@/components/store/CartDrawer";
 import DropdownAvatar from "@/components/store/DropdownAvatar";
-// import Navbar from "@/components/store/Navbar";
 import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/hooks/state/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { getUserSession } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/authService";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 const StoreHeader = () => {
   const { logout, isLoading, setLoading } = useAuthStore();
-  const session = getUserSession();
   const navigate = useNavigate();
 
   const handleLogout = async () => {

@@ -40,10 +40,10 @@ const AllProductsPage: React.FC = () => {
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
   
-  const displayedProducts = filteredProducts.slice(
-    (currentPage - 1) * PRODUCTS_PER_PAGE,
-    currentPage * PRODUCTS_PER_PAGE
-  );
+  // const displayedProducts = filteredProducts.slice(
+  //   (currentPage - 1) * PRODUCTS_PER_PAGE,
+  //   currentPage * PRODUCTS_PER_PAGE
+  // );
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -95,16 +95,17 @@ const AllProductsPage: React.FC = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <header className="flex flex-col md:flex-row justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">
-          All <span className="text-blue-600">Products</span>
-        </h1>
-
-        <div className="flex flex-wrap space-x-4 mt-4 md:mt-0">
+        <div>
+          <h1 className="text-2xl font-bold">
+            All <span className="text-blue-600">Products</span>
+          </h1>
+        </div>
+        <div className="flex flex-wrap gap-3 mt-4 md:mt-0 flex-col sm:flex-row">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => handleCategoryChange(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
+              className={`w-30 px-4 py-2 rounded-lg font-medium transition ${
                 selectedCategory === category
                   ? "bg-blue-600 text-white"
                   : "bg-gray-200 text-gray-700"
@@ -116,8 +117,8 @@ const AllProductsPage: React.FC = () => {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {displayedProducts.map((product: IProductData) => (
+      <div className="flex justify-center gap-10 flex-wrap">
+        {filteredProducts.map((product: IProductData) => (
           <ProductSectionCard key={product.product_id} product={product} />
         ))}
       </div>
