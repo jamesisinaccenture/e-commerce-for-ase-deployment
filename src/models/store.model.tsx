@@ -48,6 +48,7 @@ export interface IProductData {
   sold?: number;
   date_created: string;
   created_by: string;
+  variants?: string[];
 }
 export interface ISampleProductData {
   store_products: IProductData[];

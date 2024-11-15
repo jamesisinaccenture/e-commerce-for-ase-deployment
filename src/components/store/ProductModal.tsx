@@ -1,17 +1,13 @@
+import { useState } from "react";
+
 import {
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-import { Button } from "@/components/ui/button";
 import { IProductData } from "@/models/store.model";
-import { useState } from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ProductModal = ({ product }: { product: IProductData }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -21,65 +17,75 @@ const ProductModal = ({ product }: { product: IProductData }) => {
   };
 
   return (
-    <DialogContent className="max-w-lg p-6 ">
-      <div className="flex justify-center mb-6">
+    <DialogContent className="max-w-3xl p-8 bg-white rounded-lg shadow-lg h-fit">
+      <div className="flex justify-between items-start">
+        {/* Product Image */}
         <img
-          src={product.product_img || "/default-image.jpg"} // Fallback to a default image
+          src={product.product_img || "src/assets/images/wireless airpods.jpg"}
           alt={product.product_name || "Product"}
-          className="w-40 h-40 object-cover"
+          className="w-52 h-52 object-cover rounded-md"
         />
-      </div>
-      <DialogHeader>
-        <DialogTitle className="text-2xl font-bold">
-          {product.product_name || "Unnamed Product"}
-        </DialogTitle>
-        <DialogDescription className="text-gray-600 mb-4">
-          {product.currency} {product.price}
-        </DialogDescription>
-      </DialogHeader>
-      <div className="mb-4">
-        <p className="font-semibold">Variants:</p>
-        <div className="flex space-x-2">
-          {/* {product?.variants?.map((variant: string, index: number) => (
-            <span
-              key={index}
-              className={`px-2 py-1 text-white rounded-full ${
-                variant.toLowerCase() === "red" ? "bg-red-500" : "bg-gray-500"
-              }`}>
-              {variant}
-            </span>
-          ))} */}
+
+        {/* Product Details */}
+        <div className="flex-1 pl-8">
+          <DialogHeader>
+            <DialogTitle className="text-3xl font-bold mb-2">
+              {product.product_name || "Unnamed Product"}
+            </DialogTitle>
+            <DialogDescription className="text-lg text-gray-700 mb-4">
+              {product.currency} {product.price}
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Variants Section */}
+          <div className="mb-4">
+            <p className="font-semibold text-lg">Variants:</p>
+            <div className="flex space-x-2 mt-2">
+              {product.variants?.map((variant: string, index: number) => (
+                <span
+                  key={index}
+                  className={`px-3 py-1 text-white rounded-full ${
+                    variant.toLowerCase() === "red"
+                      ? "bg-red-500"
+                      : variant.toLowerCase() === "blue"
+                      ? "bg-blue-500"
+                      : variant.toLowerCase() === "green"
+                      ? "bg-green-500"
+                      : "bg-gray-500"
+                  }`}
+                >
+                  {variant}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Description Section */}
+          <div className="mb-6">
+            <p className="font-semibold text-lg">Product Description:</p>
+            <p className="text-gray-700 mt-2">
+              {product.product_description || "No description available."}
+            </p>
+          </div>
+
+          {/* Quantity Control */}
+          <div className="flex items-center space-x-4 mb-6">
+            <button
+              onClick={handleDecrease}
+              className="px-3 py-1 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded"
+            >
+              -
+            </button>
+            <span className="px-3 text-lg font-medium">{quantity}</span>
+            <button
+              onClick={handleIncrease}
+              className="px-3 py-1 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
-      <div className="mb-4">
-        <p className="font-semibold">Product Description:</p>
-        <p className="text-gray-700">
-          {product.product_description || "No description available."}
-        </p>
-      </div>
-      <div className="flex items-center mb-4">
-        <button
-          onClick={handleDecrease}
-          className="px-3 py-1 border bg-gray-200 hover:bg-gray-300">
-          -
-        </button>
-        <span className="px-3">{quantity}</span>
-        <button
-          onClick={handleIncrease}
-          className="px-3 py-1 border bg-gray-200 hover:bg-gray-300">
-          +
-        </button>
-      </div>
-      <DialogFooter className="flex justify-start space-x-2">
-        <Button type="button" variant="default">
-          Add to Cart
-        </Button>
-        <DialogClose asChild>
-          <Button type="button" variant="secondary">
-            Close
-          </Button>
-        </DialogClose>
-      </DialogFooter>
     </DialogContent>
   );
 };

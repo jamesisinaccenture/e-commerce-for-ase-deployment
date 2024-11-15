@@ -17,7 +17,6 @@ export const ROUTES = {
   STORE: {
     HOME: "/store",
     PRODUCTS: "/store/all-products",
-    PRODUCTS_MODAL: "/store/all_products/modal",
     CATEGORY: "/store/category",
     CART: "/store/cart",
     ABOUT: "/about",

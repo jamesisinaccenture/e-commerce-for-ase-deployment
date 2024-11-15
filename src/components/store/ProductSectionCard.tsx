@@ -1,5 +1,4 @@
 import { IProductData } from "@/models/store.model";
-import productImage from "@/assets/images/product-image.jpg";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ProductSectionCard = (products: IProductData) => {
@@ -9,7 +8,7 @@ const ProductSectionCard = (products: IProductData) => {
         <div className="container">
           <div className="h-48 w-44">
             <img
-              src={productImage} // src={products.products.product_img}
+              src={products.product_img}
               alt={products.product_name}
               className="rounded-t-lg"
             />
