@@ -1,88 +1,86 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import ProductModalProps from "@/components/store/ProductModal";
+import { Button } from "@/components/ui/button";
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  brand: string;
-  battery: string;
-  ram: string;
-  variants: string[];
-  description: string;
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ProductModal = ({ product }: { product: any }) => {
+  const [quantity, setQuantity] = useState(1);
 
-interface ProductModalProps {
-  product: Product;
-  onClose: () => void;
-}
+  const handleIncrease = () => setQuantity(quantity + 1);
+  const handleDecrease = () => {
+    if (quantity > 1) setQuantity(quantity - 1);
+  };
 
-const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button onClick={onClose} className="close-button">
-          X
-        </button>
-        <h2>{product.name}</h2>
-        <img src={product.image} alt={product.name} className="product-image" />
-        <p>
-          <strong>Brand:</strong> {product.brand}
-        </p>
-        <p>
-          <strong>Battery:</strong> {product.battery}
-        </p>
-        <p>
-          <strong>RAM:</strong> {product.ram}
-        </p>
-        <p>
-          <strong>Variants:</strong> {product.variants.join(", ")}
-        </p>
-        <p className="product-description">{product.description}</p>
-        <button className="add-to-cart">Add to Cart</button>
+    <DialogContent className="max-w-lg p-6 relative">
+      <div className="flex justify-center mb-6">
+        <img
+          src={product.image}
+          alt={product.product_name}
+          className="w-40 h-40 object-cover"
+        />
       </div>
-    </div>
-  );
-};
-
-interface AllProductsProps {
-  products: Product[];
-}
-
-const AllProducts: React.FC<AllProductsProps> = ({ products }) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-  const handleProductClick = (product: Product) => {
-    setSelectedProduct(product);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedProduct(null);
-  };
-
-  return (
-    <div className="all-products">
-      {products.map((product) => (
-        <div
-          key={product.id}
-          onClick={() => handleProductClick(product)}
-          className="product-card"
-        >
-          <img
-            src={product.image}
-            alt={product.name}
-            className="product-image"
-          />
-          <h3 className="product-name">{product.name}</h3>
+      <DialogHeader>
+        <DialogTitle className="text-2xl font-bold">
+          {product.product_name}
+        </DialogTitle>
+        <DialogDescription className="text-gray-600 mb-4">
+          <p>Brand: {product.brand}</p>
+          <p>Battery: {product.battery}</p>
+          <p>
+            Wireless Powershare: {product.wireless_powershare ? "Yes" : "No"}
+          </p>
+          <p>Storage: {product.storage}</p>
+          <p>Processor: {product.processor}</p>
+          <p>RAM: {product.ram}</p>
+        </DialogDescription>
+      </DialogHeader>
+      <div className="mb-4">
+        <p className="font-semibold">Variants:</p>
+        <div className="flex space-x-2">
+          {product.variants.map((variant: string, index: number) => (
+            <span
+              key={index}
+              className={`px-2 py-1 text-white rounded-full bg-${variant.toLowerCase()}`}
+            >
+              {variant}
+            </span>
+          ))}
         </div>
-      ))}
-
-      {selectedProduct && (
-        <ProductModal product={selectedProduct} onClose={handleCloseModal} />
-      )}
-    </div>
+      </div>
+      <div className="mb-4">
+        <p className="font-semibold">Product Description:</p>
+        <p className="text-gray-700">{product.description}</p>
+      </div>
+      <div className="flex items-center mb-4">
+        <button onClick={handleDecrease} className="px-3 py-1 border">
+          -
+        </button>
+        <span className="px-3">{quantity}</span>
+        <button onClick={handleIncrease} className="px-3 py-1 border">
+          +
+        </button>
+      </div>
+      <DialogFooter className="flex justify-start space-x-2">
+        <Button type="button" defaultValue="primary">
+          Add to Cart
+        </Button>
+        <DialogClose asChild>
+          <Button type="button" variant="secondary">
+            Close
+          </Button>
+        </DialogClose>
+      </DialogFooter>
+    </DialogContent>
   );
 };
 
-export default AllProducts;
+export default ProductModal;

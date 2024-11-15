@@ -15,7 +15,9 @@ export interface ICustomInput {
   type?: HTMLInputTypeAttribute;
   isRequired?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   disabled?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   className?: any;
 }
 

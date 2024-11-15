@@ -1,5 +1,6 @@
 import productImage from "@/assets/images/product-image.jpg";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ProductSectionCard = (products: any) => {
   return (
     <>
