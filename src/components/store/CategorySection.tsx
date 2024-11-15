@@ -1,12 +1,11 @@
 import React from "react";
 
-import sampleImage from "@/assets/images/wireless airpods.jpg";
-
+//import sampleImage from "@/assets/images/wireless airpods.jpg";
 const products = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",
-    product_img: "https://example.com/images/earbuds.jpg",
+    product_img: "src/assets/images/image 3 (1).png",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
     category: "Mobile",
@@ -19,7 +18,7 @@ const products = [
   {
     product_id: "P002",
     product_name: "Gaming Laptop",
-    product_img: "https://example.com/images/gaming-laptop.jpg",
+    product_img: "src/assets/images/image b..png",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Cosmetics",
     price: 1299.99,
@@ -31,7 +30,7 @@ const products = [
   {
     product_id: "P003",
     product_name: "Smart Watch",
-    product_img: "https://example.com/images/smart-watch.jpg",
+    product_img: "src/assets/images/image e..png",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
     category: "Electronics",
@@ -44,7 +43,7 @@ const products = [
   {
     product_id: "P004",
     product_name: "Electric Toothbrush",
-    product_img: "https://example.com/images/toothbrush.jpg",
+    product_img: "src/assets/images/image c..png",
     product_description:
       "Rechargeable toothbrush with multiple cleaning modes.",
     category: "Furniture",
@@ -57,7 +56,7 @@ const products = [
   {
     product_id: "P005",
     product_name: "4K TV",
-    product_img: "https://example.com/images/4k-tv.jpg",
+    product_img: "src/assets/images/image w..png",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Watches",
     price: 599.99,
@@ -69,7 +68,7 @@ const products = [
   {
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
-    product_img: "https://example.com/images/speaker.jpg",
+    product_img: "src/assets/images/image d..png",
     product_description: "Waterproof portable speaker with deep bass.",
     category: "Decor",
     price: 39.99,
@@ -81,7 +80,7 @@ const products = [
   {
     product_id: "P007",
     product_name: "Digital Camera",
-    product_img: "https://example.com/images/camera.jpg",
+    product_img: "src/assets/images/image a..png",
     product_description: "Compact digital camera with 20x zoom.",
     category: "Accesories",
     price: 349.99,
@@ -93,11 +92,10 @@ const products = [
 ];
 
 const CategorySection: React.FC = () => {
-  // Get unique categories from the products data
   const categories = [...new Set(products.map((product) => product.category))];
 
   return (
-    <div className="flex flex-wrap justify-center ">
+    <div className="flex flex-wrap justify-center gap-16">
       {categories.map((category, index) => (
         <div key={index}>
           <div>
@@ -106,7 +104,8 @@ const CategorySection: React.FC = () => {
               .map((product) => (
                 <div key={product.product_id} className="container p-2">
                   <img
-                    src={sampleImage} // src={product.product_img}
+                    //src={sampleImage}
+                    src={product.product_img}
                     alt={product.product_name}
                     className="rounded-full w-20 h-20 hover:border-blue-500 border-2"
                   />
