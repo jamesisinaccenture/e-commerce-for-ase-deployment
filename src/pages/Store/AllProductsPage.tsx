@@ -9,8 +9,9 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from "@/components/ui/pagination"; 
+} from "@/components/ui/pagination";
 import { store_products } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { IProductData } from "@/models/store.model";
 
 const categories = [
@@ -23,7 +24,7 @@ const categories = [
   "Beauty",
 ];
 
-// Limit to 40 products per page to show 10 rows with 4 products each
+// Limit to 40 products per page (10 rows with 4 products each)
 const PRODUCTS_PER_PAGE = 40;
 
 const AllProductsPage: React.FC = () => {
@@ -39,11 +40,12 @@ const AllProductsPage: React.FC = () => {
         );
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
-  
-  // const displayedProducts = filteredProducts.slice(
-  //   (currentPage - 1) * PRODUCTS_PER_PAGE,
-  //   currentPage * PRODUCTS_PER_PAGE
-  // );
+
+  // Display products for the current page only
+  const displayedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -105,11 +107,12 @@ const AllProductsPage: React.FC = () => {
             <button
               key={category}
               onClick={() => handleCategoryChange(category)}
-              className={`w-30 px-4 py-2 rounded-lg font-medium transition ${
+              className={cn(
+                "w-30 px-4 py-2 rounded-lg font-medium transition",
                 selectedCategory === category
                   ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-700"
-              } hover:bg-blue-500 hover:text-white`}
+                  : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white"
+              )}
             >
               {category}
             </button>
@@ -117,23 +120,41 @@ const AllProductsPage: React.FC = () => {
         </div>
       </header>
 
+      {/* Display products in 10 rows, each with 4 products */}
       <div className="flex justify-center gap-10 flex-wrap">
-        {filteredProducts.map((product: IProductData) => (
-          <ProductSectionCard key={product.product_id} product={product} />
+        {displayedProducts.map((product: IProductData) => (
+          <div
+            key={product.product_id}
+            className="w-1/4 p-2" // Adjust the width per product card
+          >
+            <ProductSectionCard product={product} />
+          </div>
         ))}
       </div>
 
       <Pagination className="mt-6">
         <PaginationContent>
-          <PaginationPrevious
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          />
+          <PaginationItem>
+            <PaginationPrevious 
+              onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+              aria-disabled={currentPage === 1}
+              className={cn(
+                "cursor-pointer",
+                currentPage === 1 && "pointer-events-none opacity-50"
+              )}
+            />
+          </PaginationItem>
           {renderPaginationItems()}
-          <PaginationNext
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          />
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+              aria-disabled={currentPage === totalPages}
+              className={cn(
+                "cursor-pointer",
+                currentPage === totalPages && "pointer-events-none opacity-50"
+              )}
+            />
+          </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>
