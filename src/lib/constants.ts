@@ -1,5 +1,8 @@
+import { IProduct } from "@/models/admin.model";
 
-export const store_products = [
+export const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
+
+export const store_products: IProduct[] = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",

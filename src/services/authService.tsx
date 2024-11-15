@@ -1,14 +1,13 @@
 import axios from "axios";
 
 import { useAuthStore } from "@/hooks/state/useAuth";
+import { API_URL } from "@/lib/constants";
 import { getToken, getUserSession, headerConfig } from "@/lib/utils";
 import {
   LoginFormData,
   SignupFormData,
   UpdateInformationFormData,
 } from "@/models/auth.model";
-
-const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 
 export const loginService = async (data: LoginFormData) => {
   try {

@@ -8,11 +8,11 @@ const CustomInput = forwardRef<HTMLInputElement, ICustomInput>(
     return (
       <div>
         <Input
-          ref={ref} 
+          ref={ref}
           name={name}
           type={type}
           onChange={onChange}
-          value={value} 
+          value={value}
           placeholder={label}
           required={isRequired}
           {...props}
@@ -21,6 +21,5 @@ const CustomInput = forwardRef<HTMLInputElement, ICustomInput>(
     );
   }
 );
-
 
 export default CustomInput;

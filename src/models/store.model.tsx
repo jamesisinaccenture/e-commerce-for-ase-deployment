@@ -9,7 +9,7 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
-  value?: string;
+  value?: any;
   label?: string;
   name?: string;
   type?: HTMLInputTypeAttribute;
@@ -36,7 +36,7 @@ export interface IProductStore {
 }
 
 export interface IProductData {
-  product_id: string;
+  product_id?: string;
   product_name?: string;
   product_img?: string;
   product_description?: string;
@@ -44,8 +44,8 @@ export interface IProductData {
   price?: number;
   currency?: string;
   sold?: number;
-  date_created: string;
-  created_by: string;
+  date_created?: string;
+  created_by?: string;
 }
 export interface ISampleProductData {
   store_products: IProductData[];
