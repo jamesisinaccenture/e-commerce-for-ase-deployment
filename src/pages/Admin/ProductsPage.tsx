@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 
-import SampleImg from "@/assets/images 2/image 3.png";
+import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
 import CreateProductForm from "@/components/admin/Products/CreateProductForm";
 import { DataTable } from "@/components/reusable/DataTable";
