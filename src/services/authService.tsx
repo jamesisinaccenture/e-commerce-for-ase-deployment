@@ -1,8 +1,7 @@
 import axios from "axios";
 
-import { useAuthStore } from "@/hooks/state/useAuth";
 import { API_URL } from "@/lib/constants";
-import { getToken, getUserSession, headerConfig } from "@/lib/utils";
+import { getToken, headerConfig } from "@/lib/utils";
 import {
   LoginFormData,
   SignupFormData,
