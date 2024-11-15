@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { UpdateInformationFormDataForStore } from "@/models/auth.model";
 
 const defaultValue = {
-  id: "",
+  user_id: "",
   first_name: "",
   last_name: "",
   address: "",
