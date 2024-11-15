@@ -11,3 +11,8 @@ export interface IProduct {
   date_created?: string;
   created_by?: string;
 }
+
+export interface IDropImageInput {
+  onImageDrop?: (file: File) => void;
+  value?: string;
+}

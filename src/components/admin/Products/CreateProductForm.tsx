@@ -5,6 +5,8 @@ import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
 import { FormField, Form } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
+import { imageToBlob } from "@/lib/utils";
 import { IProduct } from "@/models/admin.model";
 import { productFormSchema } from "@/schema/adminSchema";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -101,16 +103,28 @@ const CreateProductForm = () => {
               <FormField
                 control={form.control}
                 name="product_img"
-                render={({ field }) => (
-                  <CustomFormItem label="Product image">
-                    <DropImageInput
-                      onImageDrop={(file) => {
-                        field.onChange(file);
-                      }}
-                      value={field.value}
-                    />
-                  </CustomFormItem>
-                )}
+                render={({ field }) => {
+                  const { onChange } = field;
+                  return (
+                    <CustomFormItem label="Product image">
+                      <DropImageInput
+                        onImageDrop={async (file) => {
+                          try {
+                            const blob = await imageToBlob(file);
+                            onChange(blob);
+                          } catch (error) {
+                            toast({
+                              variant: "destructive",
+                              title: "Error uploading image",
+                              description: "Please try again.",
+                            });
+                          }
+                        }}
+                        value={field.value}
+                      />
+                    </CustomFormItem>
+                  );
+                }}
               />
             </div>
             <div className="flex gap-2 justify-end">

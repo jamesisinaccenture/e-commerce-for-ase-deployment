@@ -58,7 +58,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="p-4 h-fit flex flex-row items-center">
+      <SidebarHeader className="p-4 h-fit flex flex-row items-center bg-white">
         <SidebarMenu>
           <SidebarMenuItem className="">
             <DropdownMenu>
