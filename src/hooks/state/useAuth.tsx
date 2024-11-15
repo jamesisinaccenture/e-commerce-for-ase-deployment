@@ -9,6 +9,9 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   isAuth: JSON.parse(localStorage.getItem("isAuth") || "false"),
   token: JSON.parse(localStorage.getItem("token") || "{}"),
   user: {},
+  updateUserInfo: (user: any) => {
+    sessionStorage.setItem("session", JSON.stringify(user));
+  },
   login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => {
     localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
     localStorage.setItem("isAuth", JSON.stringify(isAuth));

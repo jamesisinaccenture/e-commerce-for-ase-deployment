@@ -1,8 +1,13 @@
 import axios from "axios";
 
+import { useAuthStore } from "@/hooks/state/useAuth";
 import { API_URL } from "@/lib/constants";
-import { headerConfig } from "@/lib/utils";
-import { LoginFormData, SignupFormData } from "@/models/auth.model";
+import { getToken, getUserSession, headerConfig } from "@/lib/utils";
+import {
+  LoginFormData,
+  SignupFormData,
+  UpdateInformationFormData,
+} from "@/models/auth.model";
 
 export const loginService = async (data: LoginFormData) => {
   try {
@@ -56,6 +61,7 @@ export const logoutService = async () => {
     throw error;
   }
 };
+
 export const signupService = async (data: SignupFormData) => {
   try {
     const response = await axios.post(
@@ -82,6 +88,69 @@ export const signupService = async (data: SignupFormData) => {
       const errorMessage = error.response.data.message || "Signup failed";
       console.error("Signup error:", errorMessage);
       throw new Error(errorMessage); // Throw a user-friendly error
+    } else {
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred.");
+    }
+  }
+};
+
+export const getUserInformation = async () => {
+  try {
+    const token = getToken();
+    const userResponse = await axios.get(`${API_URL}/user`, {
+      headers: {
+        ...headerConfig,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log("Noreen wag mo galawin", userResponse);
+
+    if (userResponse) {
+      const user = userResponse.data.data;
+      sessionStorage.setItem("session", JSON.stringify(user));
+    }
+
+    return userResponse;
+  } catch (error) {
+    console.error("Unexpected error in get information:", error);
+    throw new Error("An unexpected error occurred.");
+  }
+};
+
+export const updateInformationService = async (
+  data: UpdateInformationFormData
+) => {
+  try {
+    const token = getToken();
+    const response = await axios.put(
+      `${API_URL}/user/${data.user_id}`,
+      {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        address: data.address,
+        contact_number: data.contact_number,
+        username: data.username,
+        // email: data.email,
+        // date_created: data.date_created,
+        // password: data.old_password,
+        // new_password: data.new_password,
+      },
+      {
+        headers: {
+          ...headerConfig,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const errorMessage =
+        error.response.data.message || "Editing profile failed.";
+      console.error("Edit profile error:", errorMessage);
+      throw new Error(errorMessage);
     } else {
       console.error("Unexpected error:", error);
       throw new Error("An unexpected error occurred.");
