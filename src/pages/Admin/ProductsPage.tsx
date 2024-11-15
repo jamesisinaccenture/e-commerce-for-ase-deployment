@@ -154,12 +154,11 @@ const ProductsPage = () => {
 
   useEffect(() => {
     getProducts();
-    console.log(isLoading);
   }, []);
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Products Page</h1>
+      <h1 className="text-3xl">Products Page {isLoading ? "true" : "false"}</h1>
       <div className="flex items-center justify-between w-full">
         <Input
           placeholder="Search products..."

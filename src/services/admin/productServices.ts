@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 import { useAxios } from "@/hooks/useAxios";
+import { IProduct } from "@/models/admin.model";
 
 export const useProductServices = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const api = useAxios();
 
-  const getProducts = async (callback?: (data: any) => void) => {
+  const getProducts = async (callback?: (data: IProduct[]) => void) => {
     setIsLoading(true);
-    console.log("test");
 
     try {
-      const response = await api.get("/products");
+      const response: IProduct[] = await api.get("/products");
       console.log(response);
       setIsLoading(false);
       if (callback) callback(response);
@@ -21,6 +21,7 @@ export const useProductServices = () => {
       setIsLoading(false);
     }
   };
+
   return {
     getProducts,
     isLoading,

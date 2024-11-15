@@ -43,7 +43,7 @@ export function Modal({
       </DialogTrigger>
       <DialogTitle></DialogTitle>
       <DialogDescription></DialogDescription>
-      <DialogContent className="sm:max-w-[425px]">{children}</DialogContent>
+      <DialogContent className="">{children}</DialogContent>
     </Dialog>
   );
 }

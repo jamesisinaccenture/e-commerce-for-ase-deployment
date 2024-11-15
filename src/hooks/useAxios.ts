@@ -4,22 +4,21 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-import { getToken } from "@/lib/utils";
+import { API_URL } from "@/lib/constants";
+import { getToken, headerConfig } from "@/lib/utils";
+import { useAuthStore } from "./state/useAuth";
 
-// Custom Axios Hook
 export const useAxios = () => {
+  const { isAuth }: any = useAuthStore();
   const token = getToken();
 
-  const group_tag = "group2-malakas";
-  const API_URL = "https://backend-user-product-management.vercel.app/";
+  let Authorization = isAuth ? `Bearer ${token}` : undefined;
 
-  // Axios instance with default headers
   const api = axios.create({
     baseURL: API_URL,
     headers: {
-      "Content-Type": "application/json",
-      "x-request-id": group_tag,
-      Authorization: `Bearer ${token}`,
+      ...headerConfig,
+      Authorization,
     },
   });
 
