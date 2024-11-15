@@ -24,7 +24,7 @@ export default {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "hsl(var(black))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -75,6 +75,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        "admin-text-primary": "#343434",
+        "admin-text-secondary": "#FFFFFF",
+        "admin-bg-primary": "#0832DE",
+        "admin-bg-secondary": "",
+        "store-text-primary": "",
+        "store-text-secondary": "",
+        "store-bg-primary": "",
+        "store-bg-secondary": "",
       },
     },
   },
