@@ -9,7 +9,7 @@ const ProductSectionCard = (products: any) => {
             <img
               src={productImage} // src={products.products.product_img}
               alt={products.product_name}
-              className="rounded-t-lg"
+              className="rounded-t-lg h-fit w-fit"
             />
           </div>
           <div className="flex flex-col text-sm pl-2 pr-2 pb-2 font-semibold font-sans">
