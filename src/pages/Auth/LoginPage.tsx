@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import loginImage from "@/assets/images/login-image.jpg";
 import CustomInput from "@/components/reusable/CustomInput";
@@ -40,12 +40,18 @@ const LoginPage = () => {
     try {
       // Make the API call using the login service
       const response = await loginService(data);
+      const session = JSON.parse(localStorage.getItem("session") || "{}");
       if (response) {
-        // If the response is valid, store it in sessionStorage, we need to stringify the response for it not to end up being [Object Object] in the session
+        // If the response is valid, store it in localStorage, we need to stringify the response for it not to end up being [Object Object] in the session
         const { token } = response;
-        sessionStorage.setItem("session", JSON.stringify(response));
 
-        login(true, true, token, { user: response });
+        if (session?.data?.access_level === "admin") {
+          login(true, true, token, { user: response });
+          navigate(ROUTES.ADMIN.BASE);
+        } else {
+          login(false, true, token, { user: response });
+          navigate(ROUTES.BASE);
+        }
 
         // Display a toast
         toast({
@@ -54,11 +60,9 @@ const LoginPage = () => {
           description: "You will be redirected in a few seconds.",
         });
 
-        navigate(ROUTES.ADMIN.BASE);
-
         setLoading(false);
       }
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
       toast({
         variant: "destructive",
@@ -67,6 +71,8 @@ const LoginPage = () => {
       });
     }
   };
+
+  console.log(form.formState.errors);
 
   return (
     <>
@@ -122,14 +128,18 @@ const LoginPage = () => {
                     Remember me
                   </label>
                 </div>
-                <p className="text-red-500">Forgot Password</p>
+                <Link to={ROUTES.FORGOT_PASSWORD} className="text-red-500">
+                  Forgot Password
+                </Link>
               </div>
               <Button type="submit" className="w-80 bg-blue-600">
                 Login
               </Button>
               <p className="text-sm mt-2">
                 Don't have an account?{" "}
-                <span className="text-red-500">Signup</span>
+                <span className="text-red-500">
+                  <Link to={ROUTES.REGISTER}>Signup</Link>
+                </span>
               </p>
             </div>
             <div className="hidden md:block mt-6 max-w-80 max-h-96 min-h-96 min-w-80">

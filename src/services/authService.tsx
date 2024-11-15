@@ -1,9 +1,8 @@
 import axios from "axios";
 
+import { API_URL } from "@/lib/constants";
 import { headerConfig } from "@/lib/utils";
 import { LoginFormData, SignupFormData } from "@/models/auth.model";
-
-const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 
 export const loginService = async (data: LoginFormData) => {
   try {
@@ -27,6 +26,8 @@ export const loginService = async (data: LoginFormData) => {
         },
       });
 
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("session", JSON.stringify(userResponse.data));
       return { ...userResponse.data, token };
     }
   } catch (error) {
@@ -36,7 +37,7 @@ export const loginService = async (data: LoginFormData) => {
 };
 
 export const logoutService = async () => {
-  const token = JSON.parse(sessionStorage.getItem("token") || "{}");
+  const token = JSON.parse(localStorage.getItem("token") || "{}");
   try {
     const response = await axios.post(
       `${API_URL}/auth/logout`,

@@ -9,7 +9,7 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
-  value?: string;
+  value?: any;
   label?: string;
   name?: string;
   type?: HTMLInputTypeAttribute;
@@ -38,7 +38,7 @@ export interface IProductStore {
 }
 
 export interface IProductData {
-  product_id: string;
+  product_id?: string;
   product_name?: string;
   product_img?: string;
   product_description?: string;
@@ -52,4 +52,25 @@ export interface IProductData {
 }
 export interface ISampleProductData {
   store_products: IProductData[];
+}
+
+/*Used in the footer only*/
+export interface ContactInfoProps {
+  icon: React.ReactNode;
+  label: string;
+  contact: string;
+}
+
+export interface FooterSectionProps {
+  title: string;
+  items: string[];
+}
+
+export interface EndFooterSectionProps {
+  version: string;
+}
+/*End of footer props*/
+
+export interface DropdownAvatarProps {
+  handleLogout: () => void;
 }

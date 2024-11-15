@@ -1,14 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import forget from "@/assets/images/forget.png";
 import verify from "@/assets/images/verify.png";
 import CustomInput from "@/components/reusable/CustomInput";
+import { FormField, FormItem, FormMessage, Form } from "@/components/ui/form";
 import { usePasswordPage } from "@/hooks/state/usePasswordPage";
+import { resetPasswordSchema } from "@/schema/authSchema";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ForgetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
+  const form = useForm({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      email: "",
+      verificationCode: "",
+      newPassword: "",
+    },
+  });
+
   const {
     currentPageIndex,
     nextPage,
@@ -44,9 +58,12 @@ const ForgetPasswordPage: React.FC = () => {
   const currentPage = pages[currentPageIndex];
 
   useEffect(() => {
-    setInputValue("");
-    setError("");
-  }, [currentPageIndex]);
+    console.log("Current Page Index:", currentPageIndex);
+    if (currentPageIndex !== undefined && currentPageIndex >= 0) {
+      setInputValue("");
+      setError("");
+    }
+  }, [currentPageIndex, setInputValue, setError]);
 
   const validateInput = () => {
     if (currentPageIndex === 0) {
@@ -75,8 +92,8 @@ const ForgetPasswordPage: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const onSubmit = (e: any) => {
+    e.preventDefault();
 
     if (validateInput()) {
       if (currentPageIndex === 0) {
@@ -88,7 +105,7 @@ const ForgetPasswordPage: React.FC = () => {
       }
     }
   };
-
+  console.log("Form Data:", form.formState.errors);
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 font-poppins">
       <div className="bg-white shadow-xl rounded-lg flex flex-col lg:flex-row w-3/4 max-w-5xl">
@@ -115,43 +132,65 @@ const ForgetPasswordPage: React.FC = () => {
           )}
           <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
           <p className="text-gray-600 mb-10">{currentPage.description}</p>
-
-          <form onSubmit={handleSubmit}>
-            {/* Render input fields conditionally */}
+          <Form {...form}>
             {currentPageIndex === 0 && (
-              <CustomInput
-                label={currentPage.inputLabel}
-                type="text"
+              <FormField
+                control={form.control}
                 name="email"
-                onChange={(e) => setInputValue(e.target.value)}
+                render={({ field }) => (
+                  <FormItem>
+                    <CustomInput
+                      label={currentPage.inputLabel}
+                      type="text"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             )}
             {currentPageIndex === 1 && (
-              <CustomInput
-                label={currentPage.inputLabel}
-                type="text"
+              <FormField
+                control={form.control}
                 name="verificationCode"
-                onChange={(e) => setInputValue(e.target.value)}
+                render={({ field }) => (
+                  <FormItem>
+                    <CustomInput
+                      label={currentPage.inputLabel}
+                      type="text"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             )}
             {currentPageIndex === 2 && (
-              <CustomInput
-                label={currentPage.inputLabel}
-                type="password"
+              <FormField
+                control={form.control}
                 name="newPassword"
-                onChange={(e) => setInputValue(e.target.value)}
+                render={({ field }) => (
+                  <FormItem>
+                    <CustomInput
+                      label={currentPage.inputLabel}
+                      type="resetpassword"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             )}
 
             {error && <p className="text-red-500 mt-2">{error}</p>}
 
             <button
-              type="submit"
+              onSubmit={onSubmit}
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
             >
               {currentPage.buttonText}
             </button>
-          </form>
+          </Form>
         </div>
 
         <div className="hidden lg:flex w-1/2 items-center justify-center bg-gray-100 rounded-r-lg">

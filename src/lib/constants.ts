@@ -1,5 +1,8 @@
+import { IProduct } from "@/models/admin.model";
 
-export const store_products = [
+export const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
+
+export const store_products: IProduct[] = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",
@@ -184,4 +187,29 @@ export const store_products = [
     date_created: "2024-07-10",
     created_by: "JamesAllen",
   },
+];
+
+//delete this later when categories API fetching is established
+export const categories = [
+  "Mobile",
+  "Cosmetics",
+  "Watches",
+  "Furniture",
+  "Photography",
+  "Kitchen Appliance",
+  "Home Decor",
+  "Fitness",
+  "Home Appliance",
+  "Electronics",
+  "Home Automation",
+];
+
+export const services = [
+  "About Us",
+  "Terms & Conditions",
+  "Contact Us",
+  "FAQs",
+  "Privacy Policy",
+  "E-waste Policy",
+  "Cancellation & Return Policy",
 ];

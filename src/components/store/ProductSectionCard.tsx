@@ -6,7 +6,7 @@ const ProductSectionCard = (products: IProductData) => {
     <>
       <div className="flex flex-col justify-center border-2 rounded-xl hover:border-blue-500 shadowx-xl">
         <div className="container">
-          <div className="h-48 w-44">
+          <div className="h-48 w-44 max-w-44">
             <img
               src={products.product_img}
               alt={products.product_name}
