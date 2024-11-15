@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import { User2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,7 +15,6 @@ import { toast } from "@/hooks/use-toast";
 import { getUserSession } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/authService";
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import Loader from "../reusable/Loader";
 
 export function UserDropdown() {
