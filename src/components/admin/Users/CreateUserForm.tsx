@@ -1,4 +1,3 @@
-import { ShoppingBasket } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import CustomFormItem from "@/components/reusable/CustomFormItem";
@@ -31,17 +30,14 @@ const CreateProductForm = () => {
   };
   return (
     <div>
-      <div className="flex gap-2 items-center my-2">
-        <ShoppingBasket />
-        <h1 className="font-bold text-lg">Add new products</h1>
-      </div>
+      <h1>Add New Products</h1>
       <div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
+            <div className="flex flex-col gap-4">
               <FormField
                 control={form.control}
                 name="product_name"

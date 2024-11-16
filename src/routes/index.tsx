@@ -6,7 +6,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import StoreLayout from "@/layouts/StoreLayout";
 import DashboardPage from "@/pages/Admin/DashboardPage";
 import ProductsPage from "@/pages/Admin/ProductsPage";
-// import ProductsPage from "@/pages/Admin/ProductsPage";
+import UsersPage from "@/pages/Admin/UsersPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
 import ForgotPassword from "@/pages/Auth/ForgetPasswordPage";
 import LoginPage from "@/pages/Auth/LoginPage";
@@ -55,6 +55,7 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.ADMIN.BASE, element: <DashboardPage /> },
       { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
+      { path: ROUTES.ADMIN.USERS, element: <UsersPage /> },
     ],
   },
   {

@@ -114,3 +114,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.admintable thead tr th:last-child,
+.admintable tbody tr td:last-child {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background-color: white;
+}

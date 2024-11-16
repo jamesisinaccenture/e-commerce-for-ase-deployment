@@ -1,4 +1,4 @@
-import { IProduct } from "@/models/admin.model";
+import { IProduct, IUser } from "@/models/admin.model";
 
 export const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 
@@ -212,4 +212,38 @@ export const services = [
   "Privacy Policy",
   "E-waste Policy",
   "Cancellation & Return Policy",
+];
+
+export const user = {
+  user_id: "5177192a-997f-407f-85e8-d32b95e0ff8e",
+  first_name: "Joel",
+  last_name: "Malupiton",
+  contact_number: "09232321231",
+  address: "96 Etivac St, Sampaloc Cavite, 1191, Philippines",
+  date_created: "2024-11-11T08:56:05.937",
+  username: "boss!?ikawnanamanyan",
+  access_level: "user",
+  user_img: null,
+  position: null,
+  department: null,
+  branch: null,
+  group_tag: "group2-malakas",
+};
+
+export const usersList: IUser[] = [
+  {
+    user_id: "5177192a-997f-407f-85e8-d32b95e0ff8e",
+    first_name: "Joel",
+    last_name: "Malupiton",
+    contact_number: "09232321231",
+    address: "96 Etivac St, Sampaloc Cavite, 1191, Philippines",
+    date_created: "2024-11-11T08:56:05.937",
+    username: "boss!?ikawnanamanyan",
+    access_level: "user",
+    user_img: null,
+    position: null,
+    department: null,
+    branch: null,
+    group_tag: "group2-malakas",
+  },
 ];
