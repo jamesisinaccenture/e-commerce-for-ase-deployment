@@ -53,14 +53,14 @@ export default function Carousel() {
           }`}
         >
           {/* Text Section */}
-          <div className="flex flex-col justify-center p-8 text-left space-y-4 text-white bg-[#1A1E3A] w-1/2 h-full">
-            <p className="text-lg">{item.description}</p>
-            <h1 className="text-5xl font-bold">{item.title}</h1>
-            <p className="text-lg font-semibold">{item.discount}</p>
+          <div className="flex flex-col justify-center p-8 text-left space-y-4 text-white bg-[#1A1E3A] w-full md:w-1/2 h-auto md:h-full">
+            <p className="text-sm md:text-lg">{item.description}</p>
+            <h1 className="text-2xl md:text-5xl font-bold">{item.title}</h1>
+            <p className="text-base md:text:lg font-semibold">{item.discount}</p>
           </div>
 
           {/* Image Section */}
-          <div className="w-1/2 h-full flex items-center justify-center bg-[#1A1E3A]">
+          <div className="w-full md:w-1/2 h-auto md:h-full flex items-center justify-center bg-[#1A1E3A]">
             <img
               src={item.image}
               alt={item.title}
