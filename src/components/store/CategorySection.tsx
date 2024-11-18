@@ -7,8 +7,8 @@ import { ROUTES } from "@/routes/endpoints";
 const products = [
   {
     product_id: "P001",
-    product_name: "Samsung Galaxy S22 Ultra",
-    product_img: "src/assets/images/image p..png",
+    product_name: "Wireless Earbuds",
+    product_img: "src/assets/images/image 3 (1).png",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
     category: "Mobile",
@@ -22,6 +22,7 @@ const products = [
     product_id: "P002",
     product_name: "Gaming Laptop",
     product_img: "src/assets/images/image b..png",
+    product_img: "src/assets/images/image b..png",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Cosmetics",
     price: 1299.99,
@@ -34,6 +35,7 @@ const products = [
     product_id: "P003",
     product_name: "Smart Watch",
     product_img: "src/assets/images/image e..png",
+    product_img: "src/assets/images/image e..png",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
     category: "Electronics",
@@ -45,9 +47,10 @@ const products = [
   },
   {
     product_id: "P004",
-    product_name: "Reclining Chair",
+    product_name: "Electric Toothbrush",
     product_img: "src/assets/images/image c..png",
-    product_description: "Rechargeable ",
+    product_description:
+      "Rechargeable toothbrush with multiple cleaning modes.",
     category: "Furniture",
     price: 49.99,
     currency: "USD",
@@ -58,6 +61,7 @@ const products = [
   {
     product_id: "P005",
     product_name: "4K TV",
+    product_img: "src/assets/images/image w..png",
     product_img: "src/assets/images/image w..png",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Watches",
@@ -71,6 +75,7 @@ const products = [
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
     product_img: "src/assets/images/image d..png",
+    product_img: "src/assets/images/image d..png",
     product_description: "Waterproof portable speaker with deep bass.",
     category: "Decor",
     price: 39.99,
@@ -82,6 +87,7 @@ const products = [
   {
     product_id: "P007",
     product_name: "Digital Camera",
+    product_img: "src/assets/images/image a..png",
     product_img: "src/assets/images/image a..png",
     product_description: "Compact digital camera with 20x zoom.",
     category: "Accesories",

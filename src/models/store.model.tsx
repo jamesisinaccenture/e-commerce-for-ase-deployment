@@ -9,13 +9,16 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
   label?: string;
   name?: string;
   type?: HTMLInputTypeAttribute;
   isRequired?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   disabled?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   className?: any;
 }
 
@@ -44,8 +47,9 @@ export interface IProductData {
   price?: number;
   currency?: string;
   sold?: number;
-  date_created?: string;
-  created_by?: string;
+  date_created: string;
+  created_by: string;
+  variants?: string[];
 }
 export interface ISampleProductData {
   store_products: IProductData[];

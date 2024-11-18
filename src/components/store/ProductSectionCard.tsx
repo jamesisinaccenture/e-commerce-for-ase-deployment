@@ -1,7 +1,9 @@
 import productImage from "@/assets/images/product-image.jpg";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { IProductData } from "@/models/store.model";
 
-const ProductSectionCard = (products: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ProductSectionCard = (products: IProductData) => {
   return (
     <>
       <div className="flex flex-col justify-between border-2 rounded-xl hover:border-blue-500 shadow-xl">
