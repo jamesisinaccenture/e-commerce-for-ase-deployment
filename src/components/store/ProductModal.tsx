@@ -19,14 +19,12 @@ const ProductModal = ({ product }: { product: IProductData }) => {
   return (
     <DialogContent className="max-w-3xl p-8 bg-white rounded-lg shadow-lg h-fit">
       <div className="flex justify-between items-start">
-        {/* Product Image */}
         <img
           src={product.product_img || "src/assets/images/wireless airpods.jpg"}
           alt={product.product_name || "Product"}
           className="w-52 h-52 object-cover rounded-md"
         />
 
-        {/* Product Details */}
         <div className="flex-1 pl-8">
           <DialogHeader>
             <DialogTitle className="text-3xl font-bold mb-2">
@@ -37,7 +35,6 @@ const ProductModal = ({ product }: { product: IProductData }) => {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Variants Section */}
           <div className="mb-4">
             <p className="font-semibold text-lg">Variants:</p>
             <div className="flex space-x-2 mt-2">
@@ -60,7 +57,6 @@ const ProductModal = ({ product }: { product: IProductData }) => {
             </div>
           </div>
 
-          {/* Description Section */}
           <div className="mb-6">
             <p className="font-semibold text-lg">Product Description:</p>
             <p className="text-gray-700 mt-2">
@@ -68,7 +64,6 @@ const ProductModal = ({ product }: { product: IProductData }) => {
             </p>
           </div>
 
-          {/* Quantity Control */}
           <div className="flex items-center space-x-4 mb-6">
             <button
               onClick={handleDecrease}

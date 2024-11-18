@@ -19,7 +19,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P002",
     product_name: "Gaming Laptop",
-    product_img: "src/assets/gaming laptop.jpg",
+    product_img: "src/assets/images/gaming laptop.jpg",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Computers",
     price: 1299.99,
@@ -31,7 +31,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P003",
     product_name: "Smart Watch",
-    product_img: "src/assets/Smart Watch.webp",
+    product_img: "src/assets/images/Smart Watch.webp",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
     category: "Wearables",
@@ -57,7 +57,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P005",
     product_name: "4K TV",
-    product_img: "src/assets/4K TV.webp",
+    product_img: "src/assets/images/4K TV.webp",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Home Entertainment",
     price: 599.99,
