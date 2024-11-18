@@ -58,8 +58,8 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
 
   return (
     <>
-      <div className="rounded-md border overflow-auto">
-        <Table>
+      <div className="rounded-md border overflow-auto min-h-96 ">
+        <Table className="admintable">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -81,7 +81,7 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() ? "selected" : undefined}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

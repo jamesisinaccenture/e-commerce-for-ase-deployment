@@ -19,7 +19,6 @@ import Loader from "../reusable/Loader";
 
 export function UserDropdown() {
   const user = getUserSession();
-  const { first_name, last_name, username } = user;
   const navigate = useNavigate();
 
   const { logout, isLoading, setLoading } = useAuthStore();
@@ -30,7 +29,6 @@ export function UserDropdown() {
       const response = await logoutService();
 
       if (response) {
-        sessionStorage.removeItem("session");
         toast({
           variant: "success",
           title: "Logout successful!",
@@ -57,7 +55,7 @@ export function UserDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost">
-          <User2 /> {username}
+          <User2 /> {user?.username}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -68,7 +66,7 @@ export function UserDropdown() {
               Welcome!
             </DropdownMenuLabel>
             <DropdownMenuLabel className="truncate">
-              {first_name} {last_name}
+              {user?.first_name} {user?.last_name}
             </DropdownMenuLabel>
           </div>
         </div>

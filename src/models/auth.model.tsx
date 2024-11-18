@@ -11,6 +11,7 @@ export interface IAuthStore {
   isAuth: boolean;
   token: string;
   user: any;
+  updateUserInfo: (user: any) => void;
   login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => void;
   logout: () => void;
   setLoading: (loading: boolean) => void;
@@ -33,6 +34,37 @@ export interface SignupFormData {
   dateCreated?: string;
 }
 
+export interface InformationFormData {
+  first_name: string;
+  last_name: string;
+  contact_number: string;
+  address: string;
+  date_created: string;
+  username: string;
+  access_level: string;
+  user_img: string;
+}
+
+export interface UpdateInformationFormData {
+  user_id: string;
+  first_name: string;
+  last_name: string;
+  address: string;
+  contact_number: string;
+  username: string;
+  // email: string;
+  // user_img: string;
+  // date_created: string;
+  // old_password?: string;
+  // new_password?: string;
+  // confirm_new_password?: string;
+}
+
+export interface UpdateInformationFormDataForStore {
+  data: UpdateInformationFormData;
+  setData: (data: UpdateInformationFormData) => void;
+}
+
 export interface Product {
   product_id: string;
   product_name: string;
@@ -45,6 +77,7 @@ export interface Product {
   created_by: string;
   quantity: number; // Add quantity if needed for cart items
 }
+
 export interface ForgotPasswordFormData {
   email: string;
   verificationCode: string;

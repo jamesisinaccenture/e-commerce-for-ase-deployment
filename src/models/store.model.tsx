@@ -9,6 +9,7 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
   label?: string;
   name?: string;

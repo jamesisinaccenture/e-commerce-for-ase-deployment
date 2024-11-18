@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useMemo, useState } from "react";
 import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 
@@ -9,10 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { store_products } from "@/lib/constants";
 import { IProduct } from "@/models/admin.model";
+import { useProductServices } from "@/services/admin/productServices";
 import { ColumnDef } from "@tanstack/react-table";
 
 const ProductsPage = () => {
   const [search, setSearch] = useState("");
+  const { getProducts, isLoading } = useProductServices();
   const productColumns: ColumnDef<IProduct>[] = [
     {
       id: "product_id",
@@ -149,9 +152,13 @@ const ProductsPage = () => {
     );
   }, [search]);
 
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Products Page</h1>
+      <h1 className="text-3xl">Products Page {isLoading ? "true" : "false"}</h1>
       <div className="flex items-center justify-between w-full">
         <Input
           placeholder="Search products..."
