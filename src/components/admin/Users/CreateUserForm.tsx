@@ -1,4 +1,3 @@
-import { ShoppingBasket } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import CustomFormItem from "@/components/reusable/CustomFormItem";
@@ -6,8 +5,6 @@ import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
 import { FormField, Form } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/hooks/use-toast";
-import { imageToBlob } from "@/lib/utils";
 import { IProduct } from "@/models/admin.model";
 import { productFormSchema } from "@/schema/adminSchema";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -33,17 +30,14 @@ const CreateProductForm = () => {
   };
   return (
     <div>
-      <div className="flex gap-2 items-center my-2">
-        <ShoppingBasket />
-        <h1 className="font-bold text-lg">Add new products</h1>
-      </div>
+      <h1>Add New Products</h1>
       <div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
+            <div className="flex flex-col gap-4">
               <FormField
                 control={form.control}
                 name="product_name"
@@ -107,28 +101,16 @@ const CreateProductForm = () => {
               <FormField
                 control={form.control}
                 name="product_img"
-                render={({ field }) => {
-                  const { onChange } = field;
-                  return (
-                    <CustomFormItem label="Product image">
-                      <DropImageInput
-                        onImageDrop={async (file) => {
-                          try {
-                            const blob = await imageToBlob(file);
-                            onChange(blob);
-                          } catch (error) {
-                            toast({
-                              variant: "destructive",
-                              title: "Error uploading image",
-                              description: "Please try again.",
-                            });
-                          }
-                        }}
-                        value={field.value}
-                      />
-                    </CustomFormItem>
-                  );
-                }}
+                render={({ field }) => (
+                  <CustomFormItem label="Product image">
+                    <DropImageInput
+                      onImageDrop={(file) => {
+                        field.onChange(file);
+                      }}
+                      value={field.value}
+                    />
+                  </CustomFormItem>
+                )}
               />
             </div>
             <div className="flex gap-2 justify-end">

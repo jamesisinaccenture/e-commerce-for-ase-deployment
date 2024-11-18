@@ -1,13 +1,13 @@
+import { MessageCircle, Phone } from "lucide-react";
+
+import mask from "@/assets/images/mask.png";
+import playStore from "@/assets/images/playstore.png";
+import { categories, services } from "@/lib/constants";
 import {
   ContactInfoProps,
   EndFooterSectionProps,
   FooterSectionProps,
 } from "@/models/store.model";
-import { MessageCircle, Phone } from "lucide-react";
-import { categories, services } from "@/lib/constants";
-
-import mask from "@/assets/images/mask.png";
-import playStore from "@/assets/images/playStore.png";
 
 const StoreFooter = () => {
   return (

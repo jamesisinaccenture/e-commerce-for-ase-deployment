@@ -6,7 +6,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import StoreLayout from "@/layouts/StoreLayout";
 import DashboardPage from "@/pages/Admin/DashboardPage";
 import ProductsPage from "@/pages/Admin/ProductsPage";
-// import ProductsPage from "@/pages/Admin/ProductsPage";
+import UsersPage from "@/pages/Admin/UsersPage";
 import AccessDenied from "@/pages/Auth/AccessDenied";
 import ForgotPassword from "@/pages/Auth/ForgetPasswordPage";
 import LoginPage from "@/pages/Auth/LoginPage";
@@ -19,57 +19,51 @@ import StoreProductsPage from "@/pages/Store/StoreProductsPage";
 import UpdateInformationSettingsPage from "@/pages/Store/UpdateInformationSettingsPage";
 import { ROUTES } from "./endpoints";
 
-export const router = createBrowserRouter(
-  [
-    {
-      path: ROUTES.LOGIN,
-      element: <LoginPage />,
-    },
-    {
-      path: ROUTES.FORGOT_PASSWORD,
-      element: <ForgotPassword />,
-    },
-    {
-      path: ROUTES.REGISTER,
-      element: <SignupPage />,
-    },
-    {
-      path: ROUTES.BASE,
-      element: <StoreRoutes component={StoreLayout} />,
-      children: [
-        { path: ROUTES.BASE, element: <LandingPage /> },
-        { path: ROUTES.STORE.PRODUCTS, element: <StoreProductsPage /> },
-        { path: ROUTES.STORE.CART, element: <CartPage /> },
-        {
-          path: ROUTES.STORE.PROFILE,
-          element: <InformationSettingsPage />,
-        },
-        {
-          path: ROUTES.STORE.PROFILE_SETTINGS,
-          element: <UpdateInformationSettingsPage />,
-        },
-      ],
-    },
-    {
-      path: ROUTES.ADMIN.BASE,
-      element: <AdminRoutes component={AdminLayout} />,
-      children: [
-        { path: ROUTES.ADMIN.BASE, element: <DashboardPage /> },
-        { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
-      ],
-    },
-    {
-      path: ROUTES.NOT_FOUND,
-      element: <NotFound />,
-    },
-    {
-      path: ROUTES.ACCESS_DENIED,
-      element: <AccessDenied />,
-    },
-  ],
+export const router = createBrowserRouter([
   {
-    future: {
-      v7_partialHydration: true,
-    },
-  }
-);
+    path: ROUTES.LOGIN,
+    element: <LoginPage />,
+  },
+  {
+    path: ROUTES.FORGOT_PASSWORD,
+    element: <ForgotPassword />,
+  },
+  {
+    path: ROUTES.REGISTER,
+    element: <SignupPage />,
+  },
+  {
+    path: ROUTES.BASE,
+    element: <StoreRoutes component={StoreLayout} />,
+    children: [
+      { path: ROUTES.BASE, element: <LandingPage /> },
+      { path: ROUTES.STORE.PRODUCTS, element: <StoreProductsPage /> },
+      { path: ROUTES.STORE.CART, element: <CartPage /> },
+      {
+        path: ROUTES.STORE.PROFILE,
+        element: <InformationSettingsPage />,
+      },
+      {
+        path: ROUTES.STORE.PROFILE_SETTINGS,
+        element: <UpdateInformationSettingsPage />,
+      },
+    ],
+  },
+  {
+    path: ROUTES.ADMIN.BASE,
+    element: <AdminRoutes component={AdminLayout} />,
+    children: [
+      { path: ROUTES.ADMIN.BASE, element: <DashboardPage /> },
+      { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
+      { path: ROUTES.ADMIN.USERS, element: <UsersPage /> },
+    ],
+  },
+  {
+    path: ROUTES.NOT_FOUND,
+    element: <NotFound />,
+  },
+  {
+    path: ROUTES.ACCESS_DENIED,
+    element: <AccessDenied />,
+  },
+]);

@@ -14,8 +14,10 @@ const AdminLayout = () => {
           <SidebarTrigger />
           <UserDropdown />
         </div>
-        <div className="w-full h-[calc(100vh-60px)] overflow-x-auto overflow-y-auto">
-          <Outlet />
+        <div className="flex justify-center w-full">
+          <div className="w-full max-w-[1100px] max-h-[calc(100vh-53px)] overflow-auto max-sm:w-full">
+            <Outlet />
+          </div>
         </div>
       </div>
     </SidebarProvider>
