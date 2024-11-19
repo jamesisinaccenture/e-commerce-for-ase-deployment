@@ -1,8 +1,12 @@
 import axios from "axios";
 
 import { API_URL } from "@/lib/constants";
-import { headerConfig, getToken } from "@/lib/utils";
-import { LoginFormData, SignupFormData, UpdateInformationFormData } from "@/models/auth.model";
+import { getToken, headerConfig } from "@/lib/utils";
+import {
+  LoginFormData,
+  SignupFormData,
+  UpdateInformationFormData,
+} from "@/models/auth.model";
 
 export const loginService = async (data: LoginFormData) => {
   try {

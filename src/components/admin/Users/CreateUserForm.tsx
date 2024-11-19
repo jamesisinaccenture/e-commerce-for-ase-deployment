@@ -1,88 +1,76 @@
+import { UserPlus } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import CustomFormItem from "@/components/reusable/CustomFormItem";
 import CustomInput from "@/components/reusable/CustomInput";
+import { CustomSelect } from "@/components/reusable/CustomSelect";
 import { Button } from "@/components/ui/button";
 import { FormField, Form } from "@/components/ui/form";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { IProduct } from "@/models/admin.model";
-import { productFormSchema } from "@/schema/adminSchema";
+import { IUser } from "@/models/admin.model";
+import { userFormSchema } from "@/schema/adminSchema";
 import { DialogClose } from "@radix-ui/react-dialog";
 import DropImageInput from "../DropImageInput";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const CreateProductForm = () => {
+const CreateUserForm = () => {
   const form = useForm({
-    resolver: zodResolver(productFormSchema),
+    resolver: zodResolver(userFormSchema),
     defaultValues: {
-      product_name: "",
-      product_img: "",
-      product_description: "",
-      category: "",
-      price: 0,
-      currency: "",
+      first_name: "",
+      last_name: "",
+      contact_number: "",
+      address: "",
+      date_created: "",
+      username: "",
+      access_level: "user",
+      user_img: "",
+      position: "",
+      department: "",
+      branch: "",
+      status: 1,
     },
   });
 
-  const onSubmit = (data: IProduct) => {
+  const accessLevelList = [
+    {
+      label: "User",
+      value: "user",
+    },
+    {
+      label: "Admin",
+      value: "admin",
+    },
+  ];
+
+  const onSubmit = (data: IUser) => {
     console.log(data);
   };
+
   return (
-    <div>
-      <h1>Add New Products</h1>
+    <>
+      <div className="flex gap-2 items-center my-2">
+        <UserPlus />
+        <h1 className="font-bold text-lg">Add new user</h1>
+      </div>
       <div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col gap-4">
-              <FormField
-                control={form.control}
-                name="product_name"
-                render={({ field }) => (
-                  <CustomFormItem label="Product name*">
-                    <CustomInput
-                      label="Product"
-                      className="w-full"
-                      {...field}
-                    />
-                  </CustomFormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="product_description"
-                render={({ field }) => (
-                  <CustomFormItem label="Product description*">
-                    <Textarea placeholder="Product description" {...field} />
-                  </CustomFormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <CustomFormItem label="Category*">
-                    <CustomInput
-                      label="Category"
-                      className="w-full"
-                      {...field}
-                    />
-                  </CustomFormItem>
-                )}
-              />
+            <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
               <div className="flex justify-between gap-2">
                 <FormField
                   control={form.control}
-                  name="price"
+                  name="first_name"
                   render={({ field }) => (
-                    <CustomFormItem label="Price*">
+                    <CustomFormItem label="First name*">
                       <CustomInput
-                        label="Price"
+                        label="First name"
                         className="w-full"
-                        type="number"
                         {...field}
                       />
                     </CustomFormItem>
@@ -90,17 +78,126 @@ const CreateProductForm = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="currency"
+                  name="last_name"
                   render={({ field }) => (
-                    <CustomFormItem label="Currency*">
-                      <CustomInput label="Currency" {...field} />
+                    <CustomFormItem label="Last name*">
+                      <CustomInput
+                        label="Last name"
+                        className="w-full"
+                        {...field}
+                      />
                     </CustomFormItem>
                   )}
                 />
               </div>
               <FormField
                 control={form.control}
-                name="product_img"
+                name="address"
+                render={({ field }) => (
+                  <CustomFormItem label="Address*">
+                    <Textarea placeholder="Address" {...field} />
+                  </CustomFormItem>
+                )}
+              />
+              <div className="flex gap-2">
+                <FormField
+                  control={form.control}
+                  name="contact_number"
+                  render={({ field }) => (
+                    <CustomFormItem label="Contact number*">
+                      <CustomInput
+                        label="Contact number"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="access_level"
+                  render={({ field }) => (
+                    <CustomFormItem label="Access level" className="w-full">
+                      <CustomSelect
+                        items={accessLevelList}
+                        defaultValue={field.value}
+                        placeholder="Access Level"
+                        onChange={(value: string) => {
+                          field.onChange(value);
+                        }}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+              </div>
+              <div className="flex justify-between gap-2">
+                <FormField
+                  control={form.control}
+                  name="department"
+                  render={({ field }) => (
+                    <CustomFormItem label="Department">
+                      <CustomInput
+                        label="Department"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="branch"
+                  render={({ field }) => (
+                    <CustomFormItem label="Branch">
+                      <CustomInput
+                        label="Branch"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <FormField
+                    control={form.control}
+                    name="position"
+                    render={({ field }) => (
+                      <CustomFormItem label="Position">
+                        <CustomInput
+                          label="Position"
+                          className="w-full"
+                          {...field}
+                        />
+                      </CustomFormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <CustomFormItem
+                        label="Status"
+                        className="flex items-center"
+                      >
+                        <div className="w-fit py-2">
+                          <Switch
+                            onCheckedChange={(checked) =>
+                              field.onChange(checked ? 1 : 0)
+                            }
+                          />
+                        </div>
+                      </CustomFormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              <FormField
+                control={form.control}
+                name="user_img"
                 render={({ field }) => (
                   <CustomFormItem label="Product image">
                     <DropImageInput
@@ -128,8 +225,8 @@ const CreateProductForm = () => {
           </form>
         </Form>
       </div>
-    </div>
+    </>
   );
 };
 
-export default CreateProductForm;
+export default CreateUserForm;
