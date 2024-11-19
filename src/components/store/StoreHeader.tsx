@@ -53,39 +53,41 @@ const StoreHeader = () => {
       ) : (
         <>
           {/* Top Most Section */}
-          <div className="flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-2 shadow-md bg-[#f5f5f5]">
-            <span className="text-xs font-regular mb-2 md:mb-0">
-              Welcome to worldwide Megamart!
-            </span>
+          <div className="shadow-md bg-[#f5f5f5]">
+            <ContentWrapper className="flex flex-col md:flex-row items-center justify-between px-4">
+              <span className="text-xs font-regular mb-2 md:mb-0">
+                Welcome to worldwide Megamart!
+              </span>
 
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
-              <div className="flex items-center gap-2">
-                <MapPinned size={16} color="#008ECC" />
-                <span className="text-xs font-regular">
-                  Deliver to <strong>423651</strong>
-                </span>
+              <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+                <div className="flex items-center gap-2">
+                  <MapPinned size={16} color="#008ECC" />
+                  <span className="text-xs font-regular">
+                    Deliver to <strong>423651</strong>
+                  </span>
+                </div>
+
+                <span className="hidden md:block text-muted-foreground">|</span>
+
+                <div className="flex items-center gap-2">
+                  <Truck size={16} color="#008ECC" />
+                  <span className="text-xs font-regular">Track your order</span>
+                </div>
+
+                <span className="hidden md:block text-muted-foreground">|</span>
+
+                <div className="flex items-center gap-2">
+                  <BadgePercent size={16} color="#008ECC" />
+                  <span className="text-xs font-regular">All Offers</span>
+                </div>
               </div>
-
-              <span className="hidden md:block text-muted-foreground">|</span>
-
-              <div className="flex items-center gap-2">
-                <Truck size={16} color="#008ECC" />
-                <span className="text-xs font-regular">Track your order</span>
-              </div>
-
-              <span className="hidden md:block text-muted-foreground">|</span>
-
-              <div className="flex items-center gap-2">
-                <BadgePercent size={16} color="#008ECC" />
-                <span className="text-xs font-regular">All Offers</span>
-              </div>
-            </div>
+            </ContentWrapper>
           </div>
 
           {/* Middle Section */}
-          <div className="flex flex-row items-start justify-between px-4 md:items-center md:px-6 py-2 shadow-md space-y-2 md:space-y-0">
+          <div className="shadow-md">
             {/* Logo Section */}
-            <ContentWrapper className="flex flex-row items-start justify-between px-4 md:items-center md:px-6 py-2 space-y-2 md:space-y-0">
+            <ContentWrapper className="flex flex-row items-start justify-between px-4 md:items-center py-2 space-y-2 md:space-y-0">
               <div className="flex flex-row items-center gap-2">
                 <div className="w-6 h-6 md:w-12 md:h-12">
                   <Avatar>

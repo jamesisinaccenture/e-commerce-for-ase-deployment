@@ -7,8 +7,8 @@ import { ROUTES } from "@/routes/endpoints";
 const products = [
   {
     product_id: "P001",
-    product_name: "Samsung Galaxy S22 Ultra",
-    product_img: "src/assets/images/image p..png",
+    product_name: "Wireless Earbuds",
+    product_img: "src/assets/images/image 3 (1).png",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
     category: "Mobile",
@@ -45,9 +45,10 @@ const products = [
   },
   {
     product_id: "P004",
-    product_name: "Reclining Chair",
+    product_name: "Electric Toothbrush",
     product_img: "src/assets/images/image c..png",
-    product_description: "Rechargeable ",
+    product_description:
+      "Rechargeable toothbrush with multiple cleaning modes.",
     category: "Furniture",
     price: 49.99,
     currency: "USD",
@@ -98,11 +99,11 @@ const CategorySection: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-between ml-5 mt-10 mb-2">
+      <div className="flex justify-between">
         <h1 className="text-2xl font-semibold">
-          Top <span className="text-blue-500">Categories</span>
+          Our <span className="text-blue-500">Categories</span>
         </h1>
-        <Link to={ROUTES.STORE.CATEGORY}>View All</Link>
+        <Link to={ROUTES.STORE.PRODUCTS}>View All</Link>
       </div>
       <hr />
       <div className="flex flex-wrap justify-center gap-16 mt-3">

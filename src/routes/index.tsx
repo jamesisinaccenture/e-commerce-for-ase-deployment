@@ -19,6 +19,7 @@ import LandingPage from "@/pages/Store/LandingPage";
 import StoreProductsPage from "@/pages/Store/StoreProductsPage";
 import UpdateInformationSettingsPage from "@/pages/Store/UpdateInformationSettingsPage";
 import { ROUTES } from "./endpoints";
+import CheckoutSuccessPage from "@/pages/Store/CheckoutSuccessPage";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.STORE.PROFILE_SETTINGS,
         element: <UpdateInformationSettingsPage />,
+      },
+      {
+        path: ROUTES.STORE.CHECKOUT_SUCCESS,
+        element: <CheckoutSuccessPage />,
       },
     ],
   },

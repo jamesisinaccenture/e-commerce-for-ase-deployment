@@ -1,12 +1,13 @@
-import { IProduct, IUser } from "@/models/admin.model";
+import { IUser } from "@/models/admin.model";
+import { IProductData } from "@/models/store.model";
 
 export const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 
-export const store_products: IProduct[] = [
+export const store_products: IProductData[] = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",
-    product_img: "https://example.com/images/earbuds.jpg",
+    product_img: "src/assets/images/wireless airpods.jpg",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
     category: "Electronics",
@@ -19,7 +20,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P002",
     product_name: "Gaming Laptop",
-    product_img: "https://example.com/images/gaming-laptop.jpg",
+    product_img: "src/assets/images/gaming laptop.jpg",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Computers",
     price: 1299.99,
@@ -31,7 +32,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P003",
     product_name: "Smart Watch",
-    product_img: "https://example.com/images/smart-watch.jpg",
+    product_img: "src/assets/images/Smart Watch.webp",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
     category: "Wearables",
@@ -44,7 +45,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P004",
     product_name: "Electric Toothbrush",
-    product_img: "https://example.com/images/toothbrush.jpg",
+    product_img: "src/assets/images/Electric Toothbrush.jpg",
     product_description:
       "Rechargeable toothbrush with multiple cleaning modes.",
     category: "Personal Care",
@@ -57,7 +58,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P005",
     product_name: "4K TV",
-    product_img: "https://example.com/images/4k-tv.jpg",
+    product_img: "src/assets/images/4K TV.webp",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Home Entertainment",
     price: 599.99,
@@ -69,7 +70,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
-    product_img: "https://example.com/images/speaker.jpg",
+    product_img: "src/assets/images/Portable Bluetooth Speaker.jpg",
     product_description: "Waterproof portable speaker with deep bass.",
     category: "Audio",
     price: 39.99,
@@ -81,7 +82,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P007",
     product_name: "Digital Camera",
-    product_img: "https://example.com/images/camera.jpg",
+    product_img: "src/assets/images/Digital Camera.jpg",
     product_description: "Compact digital camera with 20x zoom.",
     category: "Photography",
     price: 349.99,
@@ -93,7 +94,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P008",
     product_name: "Smartphone Tripod",
-    product_img: "https://example.com/images/tripod.jpg",
+    product_img: "src/assets/images/Smartphone Tripod.jpg",
     product_description: "Lightweight and adjustable tripod for smartphones.",
     category: "Photography",
     price: 24.99,
@@ -105,7 +106,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P009",
     product_name: "Electric Kettle",
-    product_img: "https://example.com/images/kettle.jpg",
+    product_img: "src/assets/images/Electric Kettle.jpg",
     product_description: "Stainless steel kettle with rapid boiling feature.",
     category: "Kitchen Appliances",
     price: 29.99,
@@ -117,7 +118,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P010",
     product_name: "Desk Lamp",
-    product_img: "https://example.com/images/desk-lamp.jpg",
+    product_img: "src/assets/images/Desk Lamp.jpg",
     product_description:
       "LED desk lamp with adjustable brightness and USB port.",
     category: "Home Decor",
@@ -130,7 +131,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P011",
     product_name: "Yoga Mat",
-    product_img: "https://example.com/images/yoga-mat.jpg",
+    product_img: "src/assets/images/Yoga Mat.webp",
     product_description: "Non-slip yoga mat with excellent cushioning.",
     category: "Fitness",
     price: 14.99,
@@ -142,7 +143,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P012",
     product_name: "Air Purifier",
-    product_img: "https://example.com/images/air-purifier.jpg",
+    product_img: "src/assets/images/Air Purifier.jpg",
     product_description: "HEPA filter air purifier for home use.",
     category: "Home Appliances",
     price: 129.99,
@@ -154,7 +155,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P013",
     product_name: "Coffee Maker",
-    product_img: "https://example.com/images/coffee-maker.jpg",
+    product_img: "src/assets/images/Coffee Maker.jpg",
     product_description: "Single-serve coffee maker with fast brew technology.",
     category: "Kitchen Appliances",
     price: 89.99,
@@ -166,7 +167,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P014",
     product_name: "Tablet",
-    product_img: "https://example.com/images/tablet.jpg",
+    product_img: "src/assets/images/Tablet.jpg",
     product_description: "10-inch tablet with 128GB storage and HD display.",
     category: "Electronics",
     price: 249.99,
@@ -178,7 +179,7 @@ export const store_products: IProduct[] = [
   {
     product_id: "P015",
     product_name: "Smart Thermostat",
-    product_img: "https://example.com/images/thermostat.jpg",
+    product_img: "src/assets/images/Smart Thermostat.jpg",
     product_description: "Smart thermostat with voice control compatibility.",
     category: "Home Automation",
     price: 179.99,
