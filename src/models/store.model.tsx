@@ -47,8 +47,8 @@ export interface IProductData {
   price?: number;
   currency?: string;
   sold?: number;
-  date_created: string;
-  created_by: string;
+  date_created?: string | undefined;
+  created_by?: string | undefined;
   variants?: string[];
 }
 export interface ISampleProductData {

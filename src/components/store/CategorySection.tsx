@@ -22,7 +22,6 @@ const products = [
     product_id: "P002",
     product_name: "Gaming Laptop",
     product_img: "src/assets/images/image b..png",
-    product_img: "src/assets/images/image b..png",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Cosmetics",
     price: 1299.99,
@@ -34,7 +33,6 @@ const products = [
   {
     product_id: "P003",
     product_name: "Smart Watch",
-    product_img: "src/assets/images/image e..png",
     product_img: "src/assets/images/image e..png",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
@@ -62,7 +60,6 @@ const products = [
     product_id: "P005",
     product_name: "4K TV",
     product_img: "src/assets/images/image w..png",
-    product_img: "src/assets/images/image w..png",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Watches",
     price: 599.99,
@@ -75,7 +72,6 @@ const products = [
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
     product_img: "src/assets/images/image d..png",
-    product_img: "src/assets/images/image d..png",
     product_description: "Waterproof portable speaker with deep bass.",
     category: "Decor",
     price: 39.99,
@@ -87,7 +83,6 @@ const products = [
   {
     product_id: "P007",
     product_name: "Digital Camera",
-    product_img: "src/assets/images/image a..png",
     product_img: "src/assets/images/image a..png",
     product_description: "Compact digital camera with 20x zoom.",
     category: "Accesories",
