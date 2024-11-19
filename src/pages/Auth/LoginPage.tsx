@@ -20,7 +20,7 @@ import Loader from "@/components/reusable/Loader";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { loginSchema } from "@/schema/authSchema";
-import { loginService } from "@/services/authService";
+import { loginService } from "@/services/auth/authService";
 
 import { useAuthStore } from "@/hooks/state/useAuth";
 import { useToast } from "@/hooks/use-toast";

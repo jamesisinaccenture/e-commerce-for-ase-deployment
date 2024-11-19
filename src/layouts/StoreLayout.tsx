@@ -8,11 +8,9 @@ const StoreLayout = () => {
   return (
     <>
       <StoreHeader />
-      <div className="h-full">
-        <ContentWrapper>
-          <Outlet />
-        </ContentWrapper>
-      </div>
+      <ContentWrapper>
+        <Outlet />
+      </ContentWrapper>
       <StoreFooter />
     </>
   );

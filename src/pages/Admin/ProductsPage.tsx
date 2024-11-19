@@ -1,21 +1,28 @@
 import { useEffect } from "react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 
 import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
 import CreateProductForm from "@/components/admin/Products/CreateProductForm";
+import UpdateProductForm from "@/components/admin/Products/UpdateProductForm";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { store_products } from "@/lib/constants";
+import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
+import { useAdminProductStore } from "@/hooks/state/admin/useAdminProduct";
+import { closeModal } from "@/lib/utils";
 import { IProduct } from "@/models/admin.model";
 import { useProductServices } from "@/services/admin/productServices";
+import { DialogClose } from "@radix-ui/react-dialog";
 import { ColumnDef } from "@tanstack/react-table";
 
 const ProductsPage = () => {
-  const [search, setSearch] = useState("");
-  const { getProducts, isLoading } = useProductServices();
+  const { search, setSearch } = useAdminGeneralStore();
+  const { products } = useAdminProductStore();
+
+  const { getProducts, deleteProduct, isLoading } = useProductServices();
+
   const productColumns: ColumnDef<IProduct>[] = [
     {
       id: "product_id",
@@ -105,7 +112,7 @@ const ProductsPage = () => {
         <div className="capitalize flex gap-2">
           <div>
             <Modal triggerSize="icon" trigger={<Edit />} variant="ghost">
-              <CreateProductForm />
+              <UpdateProductForm product={row.original} />
             </Modal>
           </div>
           <div>
@@ -126,11 +133,16 @@ const ProductsPage = () => {
                 This action cannot be undone.
               </div>
               <div className="flex justify-end gap-2">
+                <DialogClose asChild>
+                  <Button variant="ghost" id="closeModal">
+                    Cancel
+                  </Button>
+                </DialogClose>
                 <Button
+                  id="submit"
                   variant="destructive"
-                  onClick={() => {
-                    row.toggleSelected(false);
-                  }}
+                  disabled={isLoading}
+                  onClick={() => deleteProduct(row.original, closeModal)}
                 >
                   Delete
                 </Button>
@@ -142,15 +154,15 @@ const ProductsPage = () => {
     },
   ];
 
-  const products = useMemo(() => {
-    return store_products.filter(
+  const productsData: IProduct[] = useMemo(() => {
+    return products.filter(
       (product) =>
         product.product_name.toLowerCase().includes(search.toLowerCase()) ||
-        product.category.toLowerCase().includes(search.toLowerCase()) ||
+        // product?.category?.toLowerCase().includes(search.toLowerCase()) ||
         product.price.toString().toLowerCase().includes(search.toLowerCase()) ||
         product.currency.toLowerCase().includes(search.toLowerCase())
     );
-  }, [search]);
+  }, [search, products]);
 
   useEffect(() => {
     getProducts();
@@ -158,7 +170,7 @@ const ProductsPage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Products Page {isLoading ? "true" : "false"}</h1>
+      <h1 className="text-3xl">Products Page</h1>
       <div className="flex items-center justify-between w-full">
         <Input
           placeholder="Search products..."
@@ -172,7 +184,7 @@ const ProductsPage = () => {
         </div>
       </div>
       <div className="w-full overflow-auto">
-        <DataTable columns={productColumns} data={products} />
+        <DataTable columns={productColumns} data={productsData} />
       </div>
     </div>
   );

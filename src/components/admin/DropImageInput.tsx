@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-interface DropImageInputProps {
-  onImageDrop?: (file: File) => void;
-  value?: string;
-}
+import { IDropImageInput } from "@/models/admin.model";
 
-const DropImageInput: React.FC<DropImageInputProps> = ({
+const DropImageInput: React.FC<IDropImageInput> = ({
   onImageDrop,
   value,
   ...props
@@ -17,13 +14,10 @@ const DropImageInput: React.FC<DropImageInputProps> = ({
     (acceptedFiles: File[]) => {
       if (acceptedFiles && acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
-        console.log(file);
 
-        // Set preview URL for image
         const previewUrl = URL.createObjectURL(file);
         setPreview(previewUrl);
 
-        // Pass file to parent component if needed
         if (onImageDrop) onImageDrop(file);
       }
     },
@@ -36,7 +30,6 @@ const DropImageInput: React.FC<DropImageInputProps> = ({
     multiple: false,
   });
 
-  // Clean up the object URL on component unmount
   useEffect(() => {
     return () => {
       if (preview) URL.revokeObjectURL(preview);
@@ -57,8 +50,8 @@ const DropImageInput: React.FC<DropImageInputProps> = ({
         ) : (
           <p>Drag & drop an image, or click to select one</p>
         )}
-        {/* Image Preview */}
-      </div>{" "}
+      </div>
+
       {preview && (
         <div className="p-2 border border-gray-300 w-14 h-14 rounded">
           <img

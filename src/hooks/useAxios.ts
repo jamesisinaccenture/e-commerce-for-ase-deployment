@@ -33,7 +33,7 @@ export const useAxios = () => {
 
   api.interceptors.response.use(
     (response: AxiosResponse) => {
-      return response.data.data;
+      return response.data;
     },
     (error: AxiosError) => {
       const message = getErrorMessage(error);
@@ -43,6 +43,8 @@ export const useAxios = () => {
   );
 
   const getErrorMessage = (error: AxiosError): any => {
+    console.log(error);
+
     if (error.response) {
       return (
         error.response?.data || { message: "An unexpected error occurred" }

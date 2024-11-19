@@ -23,7 +23,6 @@ import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 
 export function AppSidebar() {
   const location = useLocation();
-  console.log(location);
 
   // Menu items
   const items = [
@@ -63,7 +62,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4 bg-white h-fit flex flex-row items-center">
         <SidebarMenu>
-          <SidebarMenuItem className="">
+          <SidebarMenuItem>
             <DropdownMenu>
               <SidebarMenuButton size="lg" className="cursor-default">
                 <div className="flex bg-black p-2 aspect-square items-center justify-center rounded-lg text-white">
@@ -85,18 +84,16 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    className={`${
-                      location.pathname === item.url
-                        ? "bg-black text-admin-text-secondary hover:bg-black hover:text-admin-text-secondary cursor-default"
-                        : "hover:bg-black hover:text-admin-text-secondary"
-                    } p-4 rounded-lg`}
-                    disabled={location.pathname === item.url}
-                    asChild
-                  >
+                  <SidebarMenuButton className="w-full h-fit p-0">
                     <Link
-                      to={item.url || "/"}
-                      className="flex gap-2 items-center h-fit"
+                      to={
+                        location.pathname === item.url ? "#" : item.url || "/"
+                      }
+                      className={`${
+                        location.pathname === item.url
+                          ? "bg-black text-admin-text-secondary hover:bg-black hover:text-admin-text-secondary cursor-default"
+                          : "hover:bg-black hover:text-admin-text-secondary cursor-pointer"
+                      } p-4 rounded-lg flex gap-2 items-center w-full transition-all`}
                     >
                       <item.icon className="w-5 h-5" />
                       <span>{item.title}</span>

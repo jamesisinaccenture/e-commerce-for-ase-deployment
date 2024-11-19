@@ -1,17 +1,33 @@
 
+// Products interface
 export interface IProduct {
-  product_id?: string;
+  product_id?: string | undefined;
   product_name: string;
-  product_img: string;
-  product_description: string;
-  category: string;
+  product_img?: any;
+  product_description: string | undefined;
+  category: string | null | undefined;
   price: number;
   currency: string;
   sold?: number;
   date_created?: string;
   created_by?: string;
 }
+export interface IProductResponse {
+  data: {
+    products: IProduct[];
+  };
+}
 
+// Categories interface
+export interface ICategory {
+  category_id?: string;
+  category_name: string;
+  category_img?: string;
+  date_created?: string;
+  create_by?: string;
+}
+
+// User interface
 export interface IUser {
   first_name: string;
   last_name: string;
@@ -29,4 +45,31 @@ export interface IUser {
   branch?: string | null;
   group_tag?: string | null;
   status?: number; // 0 = disabled, 1 = enabled}
+}
+
+// store state interfaces
+export interface IAdminProductStore {
+  products: IProduct[];
+  setProducts: (products: IProduct[]) => void;
+  clearProducts: () => void;
+}
+
+export interface IAdminCategoryStore {
+  category: ICategory[];
+  setCategory: (category: ICategory[]) => void;
+  clearCategory: () => void;
+}
+
+export interface IAdminGeneralStore {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+
+  search: string;
+  setSearch: (search: string) => void;
+}
+
+// Generals interface
+export interface IDropImageInput {
+  onImageDrop?: (file: File) => void;
+  value?: string;
 }

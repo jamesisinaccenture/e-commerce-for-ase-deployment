@@ -1,18 +1,20 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 
 import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
-import CreateUserForm from "@/components/admin/Products/CreateUserForm";
+import CreateUserForm from "@/components/admin/Users/CreateUserForm";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { usersList } from "@/lib/constants";
 import { IUser } from "@/models/admin.model";
 import { ColumnDef } from "@tanstack/react-table";
 
 const UsersPage = () => {
-  const [search, setSearch] = useState("");
+  const { search, setSearch } = useAdminGeneralStore();
+
   const usersColumns: ColumnDef<IUser>[] = [
     {
       id: "user_id",
