@@ -4,6 +4,7 @@ import AdminRoutes from "@/components/reusable/AdminRoutes";
 import StoreRoutes from "@/components/reusable/StoreRoutes";
 import AdminLayout from "@/layouts/AdminLayout";
 import StoreLayout from "@/layouts/StoreLayout";
+import CategoryPage from "@/pages/Admin/CategoryPage";
 import DashboardPage from "@/pages/Admin/DashboardPage";
 import ProductsPage from "@/pages/Admin/ProductsPage";
 import UsersPage from "@/pages/Admin/UsersPage";
@@ -55,6 +56,7 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.ADMIN.BASE, element: <DashboardPage /> },
       { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
+      { path: ROUTES.ADMIN.CATEGORY, element: <CategoryPage /> },
       { path: ROUTES.ADMIN.USERS, element: <UsersPage /> },
     ],
   },

@@ -45,3 +45,9 @@ export const imageToBlob = (file: File): Promise<Blob> => {
     reader.readAsArrayBuffer(file);
   });
 };
+
+export const closeModal = () => {
+  const close = document.getElementById("closeModal");
+
+  if (close) close.click();
+};

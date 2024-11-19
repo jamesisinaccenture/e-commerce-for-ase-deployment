@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/hooks/state/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { ROUTES } from "@/routes/endpoints";
-import { logoutService } from "@/services/authService";
+import { logoutService } from "@/services/auth/authService";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import ContentWrapper from "../reusable/ContentWrapper";
 
 const StoreHeader = () => {
   const { logout, isLoading, setLoading } = useAuthStore();
@@ -44,6 +45,7 @@ const StoreHeader = () => {
       console.error("Logout failed", error);
     }
   };
+
   return (
     <header className="flex flex-col">
       {isLoading ? (
@@ -83,32 +85,34 @@ const StoreHeader = () => {
           {/* Middle Section */}
           <div className="flex flex-row items-start justify-between px-4 md:items-center md:px-6 py-2 shadow-md space-y-2 md:space-y-0">
             {/* Logo Section */}
-            <div className="flex flex-row items-center gap-2">
-              <div className="w-6 h-6 md:w-12 md:h-12">
-                <Avatar>
-                  <AvatarImage src={logo} alt="Logo" />
-                  <AvatarFallback>MC</AvatarFallback>
-                </Avatar>
+            <ContentWrapper className="flex flex-row items-start justify-between px-4 md:items-center md:px-6 py-2 space-y-2 md:space-y-0">
+              <div className="flex flex-row items-center gap-2">
+                <div className="w-6 h-6 md:w-12 md:h-12">
+                  <Avatar>
+                    <AvatarImage src={logo} alt="Logo" />
+                    <AvatarFallback>MC</AvatarFallback>
+                  </Avatar>
+                </div>
+                <h1 className="text-sm md:text-3xl font-bold text-[#008ECC]">
+                  Mobile Center
+                </h1>
               </div>
-              <h1 className="text-sm md:text-3xl font-bold text-[#008ECC]">
-                Mobile Center
-              </h1>
-            </div>
 
-            {/* Search and Cart Section */}
-            <div className="flex flex-row items-center gap-4 justify-end w-full md:w-auto ">
-              <Input
-                type="search"
-                icon={<Search size={20} color="#008ECC" />}
-                isSearch
-                placeholder="Search mobile, accessories, and more..."
-                className="w-2/3 md:w-96" // Full width on mobile, fixed width on larger screens
-              />
-              <DropdownAvatar handleLogout={handleLogout} />
+              {/* Search and Cart Section */}
+              <div className="flex flex-row items-center gap-4 justify-end w-full md:w-auto ">
+                <Input
+                  type="search"
+                  icon={<Search size={20} color="#008ECC" />}
+                  isSearch
+                  placeholder="Search mobile, accessories, and more..."
+                  className="w-2/3 md:w-96" // Full width on mobile, fixed width on larger screens
+                />
+                <DropdownAvatar handleLogout={handleLogout} />
 
-              <span className="hidden md:block text-muted-foreground">|</span>
-              <CartDrawer />
-            </div>
+                <span className="hidden md:block text-muted-foreground">|</span>
+                <CartDrawer />
+              </div>
+            </ContentWrapper>
           </div>
         </>
       )}

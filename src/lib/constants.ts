@@ -247,3 +247,76 @@ export const usersList: IUser[] = [
     group_tag: "group2-malakas",
   },
 ];
+
+export const categoryList = [
+  {
+    category_id: "C001",
+    category_name: "Electronics",
+    category_img: "https://example.com/images/electronics.jpg",
+    date_created: "2024-01-05",
+    created_by: "JohnDoe",
+  },
+  {
+    category_id: "C002",
+    category_name: "Computers",
+    category_img: "https://example.com/images/computers.jpg",
+    date_created: "2024-01-15",
+    created_by: "JaneSmith",
+  },
+  {
+    category_id: "C003",
+    category_name: "Wearables",
+    category_img: "https://example.com/images/wearables.jpg",
+    date_created: "2024-02-01",
+    created_by: "EmilyBrown",
+  },
+  {
+    category_id: "C004",
+    category_name: "Personal Care",
+    category_img: "https://example.com/images/personal-care.jpg",
+    date_created: "2024-02-20",
+    created_by: "ChrisJohnson",
+  },
+  {
+    category_id: "C005",
+    category_name: "Home Entertainment",
+    category_img: "https://example.com/images/home-entertainment.jpg",
+    date_created: "2024-03-10",
+    created_by: "AlexLee",
+  },
+  {
+    category_id: "C006",
+    category_name: "Audio",
+    category_img: "https://example.com/images/audio.jpg",
+    date_created: "2024-03-25",
+    created_by: "SophiaDavis",
+  },
+  {
+    category_id: "C007",
+    category_name: "Photography",
+    category_img: "https://example.com/images/photography.jpg",
+    date_created: "2024-04-05",
+    created_by: "LiamMartinez",
+  },
+  {
+    category_id: "C008",
+    category_name: "Kitchen Appliances",
+    category_img: "https://example.com/images/kitchen-appliances.jpg",
+    date_created: "2024-04-20",
+    created_by: "OliviaGarcia",
+  },
+  {
+    category_id: "C009",
+    category_name: "Home Decor",
+    category_img: "https://example.com/images/home-decor.jpg",
+    date_created: "2024-05-01",
+    created_by: "MasonWilson",
+  },
+  {
+    category_id: "C010",
+    category_name: "Fitness",
+    category_img: "https://example.com/images/fitness.jpg",
+    date_created: "2024-05-15",
+    created_by: "EmmaClark",
+  },
+];

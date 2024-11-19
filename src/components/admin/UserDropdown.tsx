@@ -14,7 +14,7 @@ import { useAuthStore } from "@/hooks/state/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { getUserSession } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
-import { logoutService } from "@/services/authService";
+import { logoutService } from "@/services/auth/authService";
 import Loader from "../reusable/Loader";
 
 export function UserDropdown() {
