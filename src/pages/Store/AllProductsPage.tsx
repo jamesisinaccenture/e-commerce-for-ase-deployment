@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/pagination";
 import { store_products } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { IProductData } from "@/models/store.model";
 
 const categories = [
   "All",
@@ -36,7 +35,7 @@ const AllProductsPage: React.FC = () => {
     selectedCategory === "All"
       ? store_products
       : store_products.filter(
-          (product: IProductData) => product.category === selectedCategory
+          (product) => product.category === selectedCategory
         );
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
@@ -122,12 +121,12 @@ const AllProductsPage: React.FC = () => {
 
       {/* Display products in 10 rows, each with 4 products */}
       <div className="flex justify-center gap-10 flex-wrap">
-        {displayedProducts.map((product: IProductData) => (
+        {displayedProducts.map((product) => (
           <div
             key={product.product_id}
             className="w-1/4 p-2" // Adjust the width per product card
           >
-            <ProductSectionCard product={product} />
+            <ProductSectionCard {...product} />
           </div>
         ))}
       </div>
@@ -135,8 +134,10 @@ const AllProductsPage: React.FC = () => {
       <Pagination className="mt-6">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+            <PaginationPrevious
+              onClick={() =>
+                currentPage > 1 && handlePageChange(currentPage - 1)
+              }
               aria-disabled={currentPage === 1}
               className={cn(
                 "cursor-pointer",
@@ -147,7 +148,9 @@ const AllProductsPage: React.FC = () => {
           {renderPaginationItems()}
           <PaginationItem>
             <PaginationNext
-              onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+              onClick={() =>
+                currentPage < totalPages && handlePageChange(currentPage + 1)
+              }
               aria-disabled={currentPage === totalPages}
               className={cn(
                 "cursor-pointer",
