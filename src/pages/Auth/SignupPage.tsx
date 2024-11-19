@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
 import CustomInput from "@/components/reusable/CustomInput";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -191,9 +191,11 @@ const SignupPage = () => {
             render={({ field }) => (
               <FormItem className="flex items-center space-x-2">
                 <FormControl>
-                  <Checkbox
+                  <input
+                    type="checkbox"
+                    className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"                
                     checked={field.value}
-                    onCheckedChange={field.onChange}
+                    onChange={field.onChange}
                   />
                 </FormControl>
                 <span className="text-gray-600">
