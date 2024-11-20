@@ -30,7 +30,7 @@ const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
           </div>
           <hr />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 mb-10">
+        <div className="grid grid-cols-custom gap-4 w-full">
           {store_products.map((products) => {
             return (
               <ProductSectionCard {...products} key={products.product_id} />
