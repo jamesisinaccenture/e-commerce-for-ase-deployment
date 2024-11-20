@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ProductSectionCard from "@/components/store/ProductSectionCard";
+import ProductSection from "@/components/store/ProductSection";
 import {
   Pagination,
   PaginationContent,
@@ -94,13 +94,8 @@ const AllProductsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="px-6 py-10 min-h-screen">
       <header className="flex flex-col md:flex-row justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold">
-            All <span className="text-blue-600">Products</span>
-          </h1>
-        </div>
         <div className="flex flex-wrap gap-3 mt-4 md:mt-0 flex-col sm:flex-row">
           {categories.map((category) => (
             <button
@@ -120,16 +115,7 @@ const AllProductsPage: React.FC = () => {
       </header>
 
       {/* Display products in 10 rows, each with 4 products */}
-      <div className="flex justify-center gap-10 flex-wrap">
-        {displayedProducts.map((product) => (
-          <div
-            key={product.product_id}
-            className="w-1/4 p-2" // Adjust the width per product card
-          >
-            <ProductSectionCard {...product} />
-          </div>
-        ))}
-      </div>
+      <ProductSection store_products={displayedProducts} />
 
       <Pagination className="mt-6">
         <PaginationContent>
