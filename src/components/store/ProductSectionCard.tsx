@@ -1,7 +1,6 @@
 import { IProductData } from "@/models/store.model";
 
 const ProductSectionCard = ({
-  // product_id,
   product_name,
   product_img,
   currency,
