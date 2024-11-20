@@ -10,6 +10,7 @@ export interface CountInterface {
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isSearch?: boolean;
   value?: any;
   label?: string;
   name?: string;
