@@ -26,7 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           type={type}
           className={cn(
             "h-9 rounded-md border border-input px-3 py-1 text-sm shadow-sm transition-all duration-300 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-            isSearch ? "bg-[#f3f8fb] hidden md:inline-block" : "bg-transparent",
+            isSearch ? "bg-[#f3f8fb] pl-10" : "bg-transparent",
             className
           )}
           ref={ref}

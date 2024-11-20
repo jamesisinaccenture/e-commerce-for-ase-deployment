@@ -94,7 +94,7 @@ const AllProductsPage: React.FC = () => {
   };
 
   return (
-    <div className="px-6 py-10 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen mt-5">
       <header className="flex flex-col md:flex-row justify-between items-center mb-6">
         <div className="flex flex-wrap gap-3 mt-4 md:mt-0 flex-col sm:flex-row">
           {categories.map((category) => (
