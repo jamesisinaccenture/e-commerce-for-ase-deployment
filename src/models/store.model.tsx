@@ -53,6 +53,7 @@ export interface IProductData {
 }
 export interface ISampleProductData {
   store_products: IProductData[];
+  isHome?: boolean;
 }
 
 /*Used in the footer only*/
