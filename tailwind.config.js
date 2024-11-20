@@ -84,6 +84,9 @@ export default {
         "store-bg-primary": "",
         "store-bg-secondary": "",
       },
+      gridTemplateColumns: {
+        custom: "repeat(auto-fill, minmax(200px, 1fr))",
+      },
     },
   },
   plugins: [require("tailwindcss-animate", "@tailwindcss/line-clamp")],
