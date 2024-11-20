@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 
+import ProductModal from "@/components/store/ProductModal";
 import ProductSectionCard from "@/components/store/ProductSectionCard";
-import { ISampleProductData } from "@/models/store.model";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { IProductData, ISampleProductData } from "@/models/store.model";
 import { ROUTES } from "@/routes/endpoints";
 
 const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
