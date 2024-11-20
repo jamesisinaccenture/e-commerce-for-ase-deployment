@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import homeAppliances from "@/assets/images/homeAppliances.png";
 import latestSmartphones from "@/assets/images/latestSmartphones.png";
-import smartWearable from "@/assets/images/smartWearable.png"; 
+import smartWearable from "@/assets/images/smartWearable.png";
 import { Button } from "@/components/ui/button";
 
 const carouselItems = [
@@ -35,7 +35,9 @@ export default function Carousel() {
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + carouselItems.length) % carouselItems.length);
+    setCurrentSlide(
+      (prev) => (prev - 1 + carouselItems.length) % carouselItems.length
+    );
   };
 
   useEffect(() => {
@@ -44,23 +46,25 @@ export default function Carousel() {
   }, []);
 
   return (
-    <div className="relative mb-12 h-[300px] overflow-hidden rounded-lg">
+    <div className="relative mb-12 h-[300px] rounded-lg">
       {carouselItems.map((item, index) => (
         <div
           key={index}
-          className={`absolute inset-0 flex transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
+          className={`absolute inset-0 flex transition-opacity duration-1000 rounded-lg ${
+            index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
         >
           {/* Text Section */}
-          <div className="flex flex-col justify-center p-8 text-left space-y-4 text-white bg-[#1A1E3A] w-full md:w-1/2 h-auto md:h-full">
+          <div className="flex flex-col justify-center p-8 text-left space-y-4 rounded-s-3xl text-white bg-[#1A1E3A] w-full md:w-1/2 h-auto md:h-full">
             <p className="text-sm md:text-lg">{item.description}</p>
             <h1 className="text-2xl md:text-5xl font-bold">{item.title}</h1>
-            <p className="text-base md:text:lg font-semibold">{item.discount}</p>
+            <p className="text-base md:text:lg font-semibold">
+              {item.discount}
+            </p>
           </div>
 
           {/* Image Section */}
-          <div className="w-full md:w-1/2 h-auto md:h-full flex items-center justify-center bg-[#1A1E3A]">
+          <div className="w-full md:w-1/2 h-auto md:h-full flex items-center rounded-e-3xl justify-center bg-[#1A1E3A]">
             <img
               src={item.image}
               alt={item.title}
@@ -71,30 +75,35 @@ export default function Carousel() {
       ))}
 
       {/* Navigation Buttons */}
-      <Button
-        variant="ghost"
-        className="absolute left-0 top-1/2 z-10 -translate-y-1/2 text-white p-2 rounded-full"
-        size="icon"
-        onClick={prevSlide}
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </Button>
-      <Button
-        variant="ghost"
-        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 text-white p-2 rounded-full"
-        size="icon"
-        onClick={nextSlide}
-      >
-        <ChevronRight className="h-6 w-6" />
-      </Button>
+      <div className="bg-white absolute -left-6 top-[43%] z-10 rounded-full p-1">
+        <Button
+          variant="ghost"
+          className=" bg-[#F3F9FB] rounded-full"
+          size="icon"
+          onClick={prevSlide}
+        >
+          <ChevronLeft className="h-6 w-6 text-[#008ECC]" />
+        </Button>
+      </div>
+
+      <div className="bg-white absolute -right-6 top-[43%] z-10 rounded-full p-1">
+        <Button
+          variant="ghost"
+          className="bg-[#F3F9FB] rounded-full"
+          size="icon"
+          onClick={nextSlide}
+        >
+          <ChevronRight className="h-6 w-6 text-[#008ECC]" />
+        </Button>
+      </div>
 
       {/* Dots for Slide Navigation */}
-      <div className="absolute bottom-4 left-4 p-8 flex space-x-2">
+      <div className="absolute bottom-4 left-4 p-8 flex space-x-1">
         {carouselItems.map((_, index) => (
           <button
             key={index}
-            className={`h-2 w-2 rounded-full ${
-              index === currentSlide ? 'bg-white' : 'bg-gray-500'
+            className={`h-2  rounded-full transition-all ${
+              index === currentSlide ? "bg-white w-6" : "bg-gray-500 w-2"
             }`}
             onClick={() => setCurrentSlide(index)}
           />
