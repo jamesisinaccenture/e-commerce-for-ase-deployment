@@ -16,21 +16,27 @@ import DropImageInput from "../DropImageInput";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const CreateProductForm = () => {
+interface IUpdateProductForm {
+  product: IProduct;
+}
+
+const UpdateProductForm = ({ product }: IUpdateProductForm) => {
   const form = useForm({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
-      product_name: "",
-      product_img: "",
-      product_description: "",
-      category: null,
-      price: 0,
-      currency: "",
+      product_id: product.product_id,
+      product_name: product.product_name,
+      product_img: product.product_img,
+      product_description: product.date_created,
+      category: product.category,
+      price: product.price,
+      currency: product.currency,
     },
   });
-  const { createProduct, isLoading } = useProductServices();
 
-  const onSubmit = (data: IProduct) => createProduct(data, closeModal);
+  const { updateProduct, isLoading } = useProductServices();
+
+  const onSubmit = (data: IProduct) => updateProduct(data, closeModal);
 
   return (
     <div>
@@ -45,6 +51,11 @@ const CreateProductForm = () => {
             className="flex flex-col gap-6"
           >
             <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
+              <FormField
+                control={form.control}
+                name="product_id"
+                render={({ field }) => <input type="hidden" {...field} />}
+              />
               <FormField
                 control={form.control}
                 name="product_name"
@@ -156,4 +167,4 @@ const CreateProductForm = () => {
   );
 };
 
-export default CreateProductForm;
+export default UpdateProductForm;

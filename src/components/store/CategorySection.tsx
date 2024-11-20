@@ -99,14 +99,14 @@ const CategorySection: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-between ml-5 mt-10 mb-2">
+      <div className="flex justify-between">
         <h1 className="text-2xl font-semibold">
-          Top <span className="text-blue-500">Categories</span>
+          Our <span className="text-blue-500">Categories</span>
         </h1>
-        <Link to={ROUTES.STORE.CATEGORY}>View All</Link>
+        <Link to={ROUTES.STORE.PRODUCTS}>View All</Link>
       </div>
       <hr />
-      <div className="flex flex-wrap justify-center gap-16 mt-3">
+      <div className="flex flex-wrap justify-between gap-6 mt-3">
         {categories.map((category, index) => (
           <div key={index}>
             <div>
@@ -118,7 +118,7 @@ const CategorySection: React.FC = () => {
                       //src={sampleImage}
                       src={product.product_img}
                       alt={product.product_name}
-                      className="rounded-full w-20 h-20 hover:border-blue-500 border-2"
+                      className="rounded-full w-28 h-28 hover:border-blue-500 border-2"
                     />
                     <p className="text-center">{category}</p>
                   </div>

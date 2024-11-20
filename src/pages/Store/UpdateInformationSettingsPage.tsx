@@ -23,7 +23,7 @@ import { updateInformationSchema } from "@/schema/authSchema";
 import {
   updateInformationService,
   getUserInformation,
-} from "@/services/authService";
+} from "@/services/auth/authService";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
