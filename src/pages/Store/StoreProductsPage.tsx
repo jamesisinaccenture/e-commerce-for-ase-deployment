@@ -1,6 +1,11 @@
+import AllProductsPage from "./AllProductsPage";
 
 const StoreProductsPage = () => {
-  return <></>;
+  return (
+    <>
+      <AllProductsPage />
+    </>
+  );
 };
 
 export default StoreProductsPage;

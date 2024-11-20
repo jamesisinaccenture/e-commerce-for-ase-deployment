@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
-import { ROUTES } from "@/routes/endpoints";
 
 //import sampleImage from "@/assets/images/wireless airpods.jpg";
 const products = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",
-    product_img: "src/assets/images/image 3 (1).png",
+    product_img: "/image 3 (1).png",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
     category: "Mobile",
@@ -21,7 +18,7 @@ const products = [
   {
     product_id: "P002",
     product_name: "Gaming Laptop",
-    product_img: "src/assets/images/image b..png",
+    product_img: "/image b..png",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Cosmetics",
     price: 1299.99,
@@ -33,7 +30,7 @@ const products = [
   {
     product_id: "P003",
     product_name: "Smart Watch",
-    product_img: "src/assets/images/image e..png",
+    product_img: "/image e..png",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
     category: "Electronics",
@@ -46,7 +43,7 @@ const products = [
   {
     product_id: "P004",
     product_name: "Electric Toothbrush",
-    product_img: "src/assets/images/image c..png",
+    product_img: "/image c..png",
     product_description:
       "Rechargeable toothbrush with multiple cleaning modes.",
     category: "Furniture",
@@ -59,7 +56,7 @@ const products = [
   {
     product_id: "P005",
     product_name: "4K TV",
-    product_img: "src/assets/images/image w..png",
+    product_img: "/image w..png",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Watches",
     price: 599.99,
@@ -71,7 +68,7 @@ const products = [
   {
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
-    product_img: "src/assets/images/image d..png",
+    product_img: "/image d..png",
     product_description: "Waterproof portable speaker with deep bass.",
     category: "Decor",
     price: 39.99,
@@ -83,7 +80,7 @@ const products = [
   {
     product_id: "P007",
     product_name: "Digital Camera",
-    product_img: "src/assets/images/image a..png",
+    product_img: "/image a..png",
     product_description: "Compact digital camera with 20x zoom.",
     category: "Accesories",
     price: 349.99,
@@ -99,14 +96,16 @@ const CategorySection: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold">
-          Our <span className="text-blue-500">Categories</span>
-        </h1>
-        <Link to={ROUTES.STORE.PRODUCTS}>View All</Link>
+      <div>
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-semibold border-b border-blue-300">
+            Our
+            <span className="text-blue-500">Categories</span>
+          </h1>
+        </div>
+        <hr />
       </div>
-      <hr />
-      <div className="flex flex-wrap justify-center gap-16 mt-3">
+      <div className="flex flex-wrap justify-between gap-6 mt-3">
         {categories.map((category, index) => (
           <div key={index}>
             <div>
@@ -118,7 +117,7 @@ const CategorySection: React.FC = () => {
                       //src={sampleImage}
                       src={product.product_img}
                       alt={product.product_name}
-                      className="rounded-full w-20 h-20 hover:border-blue-500 border-2"
+                      className="rounded-full w-28 h-28 hover:border-blue-500 border"
                     />
                     <p className="text-center">{category}</p>
                   </div>

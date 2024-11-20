@@ -10,6 +10,7 @@ export interface CountInterface {
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isSearch?: boolean;
   value?: any;
   label?: string;
   name?: string;
@@ -53,6 +54,7 @@ export interface IProductData {
 }
 export interface ISampleProductData {
   store_products: IProductData[];
+  isHome?: boolean;
 }
 
 /*Used in the footer only*/

@@ -8,7 +8,7 @@ const StoreLayout = () => {
   return (
     <>
       <StoreHeader />
-      <ContentWrapper>
+      <ContentWrapper className="min-h-[40rem]">
         <Outlet />
       </ContentWrapper>
       <StoreFooter />

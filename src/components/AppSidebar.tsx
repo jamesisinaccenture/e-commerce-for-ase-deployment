@@ -84,7 +84,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton className="w-full h-fit p-0">
+                  {/* <SidebarMenuButton className="w-full h-fit p-0">
                     <Link
                       to={
                         location.pathname === item.url ? "#" : item.url || "/"
@@ -94,6 +94,26 @@ export function AppSidebar() {
                           ? "bg-black text-admin-text-secondary hover:bg-black hover:text-admin-text-secondary cursor-default"
                           : "hover:bg-black hover:text-admin-text-secondary cursor-pointer"
                       } p-4 rounded-lg flex gap-2 items-center w-full transition-all`}
+                    >
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton> */}
+
+                  <SidebarMenuButton
+                    className={`${
+                      location.pathname === item.url
+                        ? "bg-black text-admin-text-secondary hover:bg-black hover:text-admin-text-secondary cursor-default"
+                        : "hover:bg-black hover:text-admin-text-secondary cursor-pointer"
+                    } p-0 rounded-lg flex gap-2 items-center w-full transition-all h-fit`}
+                    asChild={item.url === location.pathname}
+                    disabled={item.url === location.pathname}
+                  >
+                    <Link
+                      to={
+                        location.pathname === item.url ? "#" : item.url || "/"
+                      }
+                      className={`p-4 rounded-lg flex gap-2 items-center w-full transition-all`}
                     >
                       <item.icon className="w-5 h-5" />
                       <span>{item.title}</span>

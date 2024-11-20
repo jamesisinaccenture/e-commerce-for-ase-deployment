@@ -5,7 +5,17 @@ import { Input } from "../ui/input";
 
 const CustomInput = forwardRef<HTMLInputElement, ICustomInput>(
   (
-    { label, name, type, onChange, isRequired, value, className, ...props },
+    {
+      label,
+      name,
+      type,
+      onChange,
+      isRequired,
+      value,
+      isSearch = false,
+      className,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -13,6 +23,7 @@ const CustomInput = forwardRef<HTMLInputElement, ICustomInput>(
         <Input
           className={`${className} w-full`}
           ref={ref}
+          isSearch={isSearch}
           name={name}
           type={type}
           onChange={onChange}

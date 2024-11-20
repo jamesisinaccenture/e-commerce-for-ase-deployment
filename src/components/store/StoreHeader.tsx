@@ -1,5 +1,5 @@
 import { BadgePercent, MapPinned, Search, Truck } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import logo from "@/assets/images/logo.png";
 import Loader from "@/components/reusable/Loader";
@@ -88,17 +88,19 @@ const StoreHeader = () => {
           <div className="shadow-md">
             {/* Logo Section */}
             <ContentWrapper className="flex flex-row items-start justify-between px-4 md:items-center py-2 space-y-2 md:space-y-0">
-              <div className="flex flex-row items-center gap-2">
-                <div className="w-6 h-6 md:w-12 md:h-12">
-                  <Avatar>
-                    <AvatarImage src={logo} alt="Logo" />
-                    <AvatarFallback>MC</AvatarFallback>
-                  </Avatar>
+              <Link to={ROUTES.BASE}>
+                <div className="flex flex-row items-center gap-2">
+                  <div className="w-6 h-6 md:w-12 md:h-12">
+                    <Avatar>
+                      <AvatarImage src={logo} alt="Logo" />
+                      <AvatarFallback>MC</AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <h1 className="text-sm md:text-3xl font-bold text-[#008ECC]">
+                    Mobile Center
+                  </h1>
                 </div>
-                <h1 className="text-sm md:text-3xl font-bold text-[#008ECC]">
-                  Mobile Center
-                </h1>
-              </div>
+              </Link>
 
               {/* Search and Cart Section */}
               <div className="flex flex-row items-center gap-4 justify-end w-full md:w-auto ">
