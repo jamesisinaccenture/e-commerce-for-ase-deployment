@@ -96,13 +96,15 @@ const CategorySection: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold">
-          Our <span className="text-blue-500">Categories</span>
-        </h1>
-        {/* <Link to="#">Expand</Link> */}
+      <div>
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-semibold border-b border-blue-300">
+            Our
+            <span className="text-blue-500">Categories</span>
+          </h1>
+        </div>
+        <hr />
       </div>
-      <hr />
       <div className="flex flex-wrap justify-between gap-6 mt-3">
         {categories.map((category, index) => (
           <div key={index}>
