@@ -7,7 +7,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P001",
     product_name: "Wireless Earbuds",
-    product_img: "src/assets/images/wireless airpods.jpg",
+    product_img: "/wireless airpods.jpg",
     product_description:
       "High-quality wireless earbuds with noise cancellation.",
     category: "Electronics",
@@ -20,7 +20,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P002",
     product_name: "Gaming Laptop",
-    product_img: "src/assets/images/gaming laptop.jpg",
+    product_img: "/gaming laptop.jpg",
     product_description: "Powerful laptop for gaming with RGB keyboard.",
     category: "Computers",
     price: 1299.99,
@@ -32,7 +32,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P003",
     product_name: "Smart Watch",
-    product_img: "src/assets/images/Smart Watch.webp",
+    product_img: "/Smart Watch.webp",
     product_description:
       "Water-resistant smartwatch with health tracking features.",
     category: "Wearables",
@@ -45,7 +45,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P004",
     product_name: "Electric Toothbrush",
-    product_img: "src/assets/images/Electric Toothbrush.jpg",
+    product_img: "/Electric Toothbrush.jpg",
     product_description:
       "Rechargeable toothbrush with multiple cleaning modes.",
     category: "Personal Care",
@@ -58,7 +58,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P005",
     product_name: "4K TV",
-    product_img: "src/assets/images/4K TV.webp",
+    product_img: "/4K TV.webp",
     product_description: "55-inch smart 4K Ultra HD TV with HDR support.",
     category: "Home Entertainment",
     price: 599.99,
@@ -70,7 +70,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P006",
     product_name: "Portable Bluetooth Speaker",
-    product_img: "src/assets/images/Portable Bluetooth Speaker.jpg",
+    product_img: "/Portable Bluetooth Speaker.jpg",
     product_description: "Waterproof portable speaker with deep bass.",
     category: "Audio",
     price: 39.99,
@@ -82,7 +82,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P007",
     product_name: "Digital Camera",
-    product_img: "src/assets/images/Digital Camera.jpg",
+    product_img: "/Digital Camera.jpg",
     product_description: "Compact digital camera with 20x zoom.",
     category: "Photography",
     price: 349.99,
@@ -94,7 +94,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P008",
     product_name: "Smartphone Tripod",
-    product_img: "src/assets/images/Smartphone Tripod.jpg",
+    product_img: "/Smartphone Tripod.jpg",
     product_description: "Lightweight and adjustable tripod for smartphones.",
     category: "Photography",
     price: 24.99,
@@ -106,7 +106,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P009",
     product_name: "Electric Kettle",
-    product_img: "src/assets/images/Electric Kettle.jpg",
+    product_img: "/Electric Kettle.jpg",
     product_description: "Stainless steel kettle with rapid boiling feature.",
     category: "Kitchen Appliances",
     price: 29.99,
@@ -118,7 +118,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P010",
     product_name: "Desk Lamp",
-    product_img: "src/assets/images/Desk Lamp.jpg",
+    product_img: "/Desk Lamp.jpg",
     product_description:
       "LED desk lamp with adjustable brightness and USB port.",
     category: "Home Decor",
@@ -131,7 +131,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P011",
     product_name: "Yoga Mat",
-    product_img: "src/assets/images/Yoga Mat.webp",
+    product_img: "/Yoga Mat.webp",
     product_description: "Non-slip yoga mat with excellent cushioning.",
     category: "Fitness",
     price: 14.99,
@@ -143,7 +143,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P012",
     product_name: "Air Purifier",
-    product_img: "src/assets/images/Air Purifier.jpg",
+    product_img: "/Air Purifier.jpg",
     product_description: "HEPA filter air purifier for home use.",
     category: "Home Appliances",
     price: 129.99,
@@ -155,7 +155,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P013",
     product_name: "Coffee Maker",
-    product_img: "src/assets/images/Coffee Maker.jpg",
+    product_img: "/Coffee Maker.jpg",
     product_description: "Single-serve coffee maker with fast brew technology.",
     category: "Kitchen Appliances",
     price: 89.99,
@@ -167,7 +167,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P014",
     product_name: "Tablet",
-    product_img: "src/assets/images/Tablet.jpg",
+    product_img: "/Tablet.jpg",
     product_description: "10-inch tablet with 128GB storage and HD display.",
     category: "Electronics",
     price: 249.99,
@@ -179,7 +179,7 @@ export const store_products: IProductData[] = [
   {
     product_id: "P015",
     product_name: "Smart Thermostat",
-    product_img: "src/assets/images/Smart Thermostat.jpg",
+    product_img: "/Smart Thermostat.jpg",
     product_description: "Smart thermostat with voice control compatibility.",
     category: "Home Automation",
     price: 179.99,

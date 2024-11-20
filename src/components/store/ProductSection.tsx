@@ -18,7 +18,7 @@ const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
           </div>
           <hr />
         </div>
-        <div className="grid grid-cols-5 gap-4 w-full">
+        <div className="grid grid-cols-custom gap-4 w-full">
           {store_products.map((products) => {
             return (
               <ProductSectionCard {...products} key={products.product_id} />
