@@ -115,7 +115,10 @@ const AllProductsPage: React.FC = () => {
       </header>
 
       {/* Display products in 10 rows, each with 4 products */}
-      <ProductSection store_products={displayedProducts} />
+      <ProductSection
+        store_products={displayedProducts}
+        key={selectedCategory}
+      />
 
       <Pagination className="mt-6">
         <PaginationContent>

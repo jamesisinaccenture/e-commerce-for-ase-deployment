@@ -48,6 +48,7 @@ export interface IProductData {
   price?: number;
   currency?: string;
   sold?: number;
+  discount?: number | undefined;
   date_created?: string | undefined;
   created_by?: string | undefined;
   variants?: string[];
