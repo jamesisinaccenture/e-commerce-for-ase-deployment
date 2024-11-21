@@ -53,8 +53,8 @@ const StoreHeader = () => {
       ) : (
         <>
           {/* Top Most Section */}
-          <div className="shadow-md bg-[#f5f5f5]">
-            <ContentWrapper className="flex flex-col md:flex-row items-center justify-between">
+          <div className="border-b bg-[#f5f5f5]">
+            <ContentWrapper className="flex flex-col md:flex-row items-center justify-between min-h-8">
               <span className="text-xs font-regular mb-2 md:mb-0">
                 Welcome to worldwide Megamart!
               </span>
@@ -85,7 +85,7 @@ const StoreHeader = () => {
           </div>
 
           {/* Middle Section */}
-          <div className="shadow-md">
+          <div className="border-b">
             {/* Logo Section */}
             <ContentWrapper className="flex flex-row items-start justify-between md:items-center py-2 space-y-2 md:space-y-0">
               <Link to={ROUTES.BASE}>
