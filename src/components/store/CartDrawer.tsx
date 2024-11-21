@@ -34,15 +34,13 @@ const CartDrawer = () => {
     <Drawer>
       {/* Trigger Icon */}
       <DrawerTrigger asChild>
-        <div className="flex flex-row items-center gap-2 hover:cursor-pointer">
+        <div className="flex flex-row items-center gap-2 hover:cursor-pointer hover:bg-gray-300 py-1 px-2 rounded">
           <ShoppingCart
             size={18}
             color="#008ECC"
             className="hover:cursor-pointer "
           />
-          <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold">
-            Cart
-          </h4>
+          <h4 className="text-sm hidden md:inline-block">Cart</h4>
         </div>
       </DrawerTrigger>
 

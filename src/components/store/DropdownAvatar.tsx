@@ -63,19 +63,15 @@ const DropdownAvatar = ({ handleLogout }: DropdownAvatarProps) => {
         <>
           <Link
             to={ROUTES.LOGIN}
-            className="flex items-center gap-2 hover:cursor-pointer"
+            className="flex items-center gap-2 hover:cursor-pointer hover:bg-gray-300 py-1 px-2 rounded"
           >
             <User size={20} color="#008ECC" />
             <Link to={ROUTES.REGISTER}>
-              <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold ">
-                Sign Up
-              </h4>
+              <h4 className="text-sm hidden md:inline-block">Sign Up</h4>
             </Link>
             <span className="hidden md:block text-muted-foreground">|</span>
             <Link to={ROUTES.LOGIN}>
-              <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold ">
-                Sign In
-              </h4>
+              <h4 className="text-sm hidden md:inline-block">Sign In</h4>
             </Link>
           </Link>
         </>
