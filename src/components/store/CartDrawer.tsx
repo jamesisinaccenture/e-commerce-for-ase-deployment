@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Trash2 } from "lucide-react"; // Import Trash2 icon for remove button
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
@@ -12,14 +12,17 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useCartStore } from "@/store/useCartStore"; // Import the store properly
+import { useCartStore } from "@/store/useCartStore";
 
 const CartDrawer = () => {
-  const cartItems = useCartStore((state) => state.cartItems);  // Access cartItems
-  const removeFromCart = useCartStore((state) => state.removeFromCart);  // Access removeFromCart
-  const increaseQuantity = useCartStore((state) => state.increaseQuantity);  // Access increaseQuantity
-  const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);  // Access decreaseQuantity
-  const removeAll = useCartStore((state) => state.removeAll);  // Access removeAll
+  const cartItems = useCartStore((state) => state.cartItems);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const increaseQuantity = useCartStore((state) => state.increaseQuantity);
+  const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
+  const removeAll = useCartStore((state) => state.removeAll);
+
+  const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
 
   return (
     <Drawer>
@@ -30,47 +33,58 @@ const CartDrawer = () => {
         </div>
       </DrawerTrigger>
 
-      <DrawerContent className="w-[400px] h-screen">
-        <div className="mx-auto w-full">
+      <DrawerContent className="w-[400px] h-screen flex flex-col">
+        <div className="mx-auto w-full flex-1 flex flex-col">
           <DrawerHeader>
             <DrawerTitle>Shopping Cart</DrawerTitle>
             <DrawerDescription>Your selected items</DrawerDescription>
           </DrawerHeader>
 
-          {/* Cart Items */}
-          {cartItems.length === 0 ? (
-            <p className="text-center">Your cart is empty</p>
-          ) : (
-            cartItems.map((item) => (
-              <div key={item.product_id} className="my-4">
-                <div className="flex items-center justify-between p-4 bg-gray-100 rounded-md">
-                  <div className="flex items-center space-x-4">
-                    <img
-                      src={item.product_img}
-                      alt={item.product_name}
-                      className="w-16 h-16 object-cover rounded-md"
-                    />
-                    <div>
-                      <h3 className="text-sm font-semibold">{item.product_name}</h3>
-                      <p className="text-xs text-gray-500">{item.description}</p>
+          {/* Cart Items with scrolling */}
+          <div className="overflow-y-auto flex-1 max-h-[calc(85vh-220px)]"> {/* Adjust height for scrolling */}
+            {cartItems.length === 0 ? (
+              <p className="text-center">Your cart is empty</p>
+            ) : (
+              cartItems.map((item) => (
+                <div key={item.product_id} className="my-4">
+                  <div className="flex items-center justify-between p-4 bg-gray-100 rounded-md space-y-2">
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src={item.product_img}
+                        alt={item.product_name}
+                        className="w-10 h-10 object-cover rounded-md"
+                      />
+                      <div>
+                        <h3 className="text-sm font-semibold">{item.product_name}</h3>
+                        <p className="text-xs text-gray-500">{item.description}</p>
+                      </div>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Button onClick={() => decreaseQuantity(item.product_id)}>-</Button>
+                      <p>{item.quantity}</p>
+                      <Button onClick={() => increaseQuantity(item.product_id)}>+</Button>
+                    </div>
+                    <p className="text-sm font-bold">${(item.price * item.quantity).toFixed(2)}</p>
+                    <Button variant="outline" onClick={() => removeFromCart(item.product_id)} className="p-1 rounded-md">
+                      <Trash2 size={18} color="#D92D2A" />
+                    </Button>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button onClick={() => decreaseQuantity(item.product_id)}>-</Button>
-                    <p>{item.quantity}</p>
-                    <Button onClick={() => increaseQuantity(item.product_id)}>+</Button>
-                  </div>
-                  <p className="text-sm font-bold">${item.price * item.quantity}</p>
-                  <Button variant="outline" onClick={() => removeFromCart(item.product_id)}>
-                    Remove
-                  </Button>
                 </div>
-              </div>
-            ))
-          )}
-
-          {/* Footer Actions */}
+              ))
+            )}
+          </div>
+          
+          <div className="flex justify-center mt-2">
+            <Link to="/store/cart" className="text-black-500 hover:underline cursor-pointer">
+              View All Items
+            </Link>
+          </div>
           <DrawerFooter className="mt-6 flex justify-between">
+            <div className="flex flex-col">
+              <p className="text-sm font-semibold">Total Quantity: {totalQuantity}</p>
+              <p className="text-lg font-bold">Total Price: ${totalPrice}</p>
+            </div>
+            
             <DrawerClose asChild>
               <Button variant="outline">Continue Shopping</Button>
             </DrawerClose>
@@ -78,6 +92,8 @@ const CartDrawer = () => {
               <Link to="/checkout">Checkout</Link>
             </Button>
           </DrawerFooter>
+
+          
         </div>
       </DrawerContent>
     </Drawer>
@@ -85,4 +101,3 @@ const CartDrawer = () => {
 };
 
 export default CartDrawer;
-
