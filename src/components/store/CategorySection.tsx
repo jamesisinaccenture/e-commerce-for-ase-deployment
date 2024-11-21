@@ -105,24 +105,27 @@ const CategorySection: React.FC = () => {
           </div>
           <hr />
         </div>
-        <div className="flex flex-wrap justify-between gap-6 mt-3">
+        <div className="flex flex-wrap gap-4">
           {categories.map((category, index) => (
             <div key={index}>
-              <div>
-                {products
-                  .filter((product) => product.category === category)
-                  .map((product) => (
-                    <div key={product.product_id} className="container p-2">
-                      <img
-                        //src={sampleImage}
-                        src={product.product_img}
-                        alt={product.product_name}
-                        className="rounded-full w-28 h-28 hover:border-store-primary border"
-                      />
-                      <p className="text-center">{category}</p>
-                    </div>
-                  ))}
-              </div>
+              {products
+                .filter((product) => product.category === category)
+                .map((product) => (
+                  <div
+                    key={product.product_id}
+                    className="container p-2 group hover:cursor-pointer"
+                  >
+                    <img
+                      //src={sampleImage}
+                      src={product.product_img}
+                      alt={product.product_name}
+                      className="rounded-full w-28 h-28 group-hover:border-store-primary group-hover:shadow-md border"
+                    />
+                    <p className="text-center group-hover:font-semibold">
+                      {category}
+                    </p>
+                  </div>
+                ))}
             </div>
           ))}
         </div>

@@ -73,7 +73,14 @@ const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
               {isHome ? "Our" : "All"}{" "}
               <span className="text-store-primary">Products</span>
             </h1>
-            {isHome && <Link to={ROUTES.STORE.PRODUCTS}>View All</Link>}
+            {isHome && (
+              <Link
+                to={ROUTES.STORE.PRODUCTS}
+                className="hover:text-store-primary"
+              >
+                View All
+              </Link>
+            )}
           </div>
           <hr />
         </div>
