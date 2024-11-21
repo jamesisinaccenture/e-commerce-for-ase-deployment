@@ -46,7 +46,7 @@ export default function Carousel() {
   }, []);
 
   return (
-    <div className="relative mb-12 h-[300px] rounded-lg">
+    <div className="relative h-[300px] rounded-lg">
       {carouselItems.map((item, index) => (
         <div
           key={index}
