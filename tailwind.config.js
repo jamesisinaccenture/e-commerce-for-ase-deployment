@@ -13,6 +13,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        "store-primary": "#008ECC",
+        "store-heading": "#666666",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
