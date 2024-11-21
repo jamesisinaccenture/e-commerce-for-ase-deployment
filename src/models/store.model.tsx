@@ -11,6 +11,7 @@ export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   isSearch?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
   label?: string;
   name?: string;
@@ -51,6 +52,7 @@ export interface IProductData {
   date_created?: string | undefined;
   created_by?: string | undefined;
   variants?: string[];
+
 }
 export interface ISampleProductData {
   store_products: IProductData[];
@@ -76,4 +78,22 @@ export interface EndFooterSectionProps {
 
 export interface DropdownAvatarProps {
   handleLogout: () => void;
+}
+
+export interface CartItem{
+  product_id: string;
+  product_name: string;
+  product_img: string;
+  description: string;
+  quantity: number;
+  price: number;
+}
+
+export interface CartState {
+  cartItems: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (product_id: string) => void;
+  increaseQuantity: (product_id: string) => void;
+  decreaseQuantity: (product_id: string) => void;
+  removeAll: () => void;
 }

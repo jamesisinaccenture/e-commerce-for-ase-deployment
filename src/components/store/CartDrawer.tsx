@@ -12,37 +12,21 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useCartStore } from "@/store/useCartStore"; // Import the store properly
 
-const sampleItems = [
-  {
-    itemId: "1",
-    title: "Item 1",
-    description: "Description of item 1",
-    image: "/iphone.png",
-    price: 20,
-  },
-  {
-    itemId: "2",
-    title: "Item 2",
-    description: "Description of item 2",
-    image: "/iphone.png",
-    price: 30,
-  },
-];
 const CartDrawer = () => {
+  const cartItems = useCartStore((state) => state.cartItems);  // Access cartItems
+  const removeFromCart = useCartStore((state) => state.removeFromCart);  // Access removeFromCart
+  const increaseQuantity = useCartStore((state) => state.increaseQuantity);  // Access increaseQuantity
+  const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);  // Access decreaseQuantity
+  const removeAll = useCartStore((state) => state.removeAll);  // Access removeAll
+
   return (
     <Drawer>
-      {/* Trigger Icon */}
       <DrawerTrigger asChild>
         <div className="flex flex-row items-center gap-2 hover:cursor-pointer">
-          <ShoppingCart
-            size={18}
-            color="#008ECC"
-            className="hover:cursor-pointer "
-          />
-          <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold">
-            Cart
-          </h4>
+          <ShoppingCart size={18} color="#008ECC" />
+          <h4 className="text-sm hidden md:inline-block md:text-lg font-semibold">Cart</h4>
         </div>
       </DrawerTrigger>
 
@@ -54,33 +38,43 @@ const CartDrawer = () => {
           </DrawerHeader>
 
           {/* Cart Items */}
-          {sampleItems.map((item) => (
-            <div key={item.itemId} className="my-4">
-              <div className="flex items-center justify-between p-4 bg-gray-100 rounded-md">
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-16 h-16 object-cover rounded-md"
-                  />
-
-                  <div>
-                    <h3 className="text-sm font-semibold">{item.title}</h3>
-                    <p className="text-xs text-gray-500">{item.description}</p>
+          {cartItems.length === 0 ? (
+            <p className="text-center">Your cart is empty</p>
+          ) : (
+            cartItems.map((item) => (
+              <div key={item.product_id} className="my-4">
+                <div className="flex items-center justify-between p-4 bg-gray-100 rounded-md">
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={item.product_img}
+                      alt={item.product_name}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
+                    <div>
+                      <h3 className="text-sm font-semibold">{item.product_name}</h3>
+                      <p className="text-xs text-gray-500">{item.description}</p>
+                    </div>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <Button onClick={() => decreaseQuantity(item.product_id)}>-</Button>
+                    <p>{item.quantity}</p>
+                    <Button onClick={() => increaseQuantity(item.product_id)}>+</Button>
+                  </div>
+                  <p className="text-sm font-bold">${item.price * item.quantity}</p>
+                  <Button variant="outline" onClick={() => removeFromCart(item.product_id)}>
+                    Remove
+                  </Button>
                 </div>
-
-                <p className="text-sm font-bold">${item.price}</p>
               </div>
-            </div>
-          ))}
+            ))
+          )}
 
           {/* Footer Actions */}
           <DrawerFooter className="mt-6 flex justify-between">
             <DrawerClose asChild>
               <Button variant="outline">Continue Shopping</Button>
             </DrawerClose>
-            <Button asChild>
+            <Button asChild onClick={removeAll}>
               <Link to="/checkout">Checkout</Link>
             </Button>
           </DrawerFooter>
@@ -91,3 +85,4 @@ const CartDrawer = () => {
 };
 
 export default CartDrawer;
+
