@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import Loader from "@/components/reusable/Loader";
 import { LoginFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 import { loginSchema } from "@/schema/authSchema";
@@ -26,12 +25,17 @@ import { useAuthStore } from "@/hooks/state/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import LoadingIcon from "@/components/reusable/LoadingIcon";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
 
   const { login, isLoading, setLoading } = useAuthStore();
@@ -40,16 +44,15 @@ const LoginPage = () => {
     try {
       // Make the API call using the login service
       const response = await loginService(data);
-      const session = JSON.parse(localStorage.getItem("session") || "{}");
       if (response) {
         // If the response is valid, store it in localStorage, we need to stringify the response for it not to end up being [Object Object] in the session
-        const { token } = response;
+        const { token, data } = response;
 
-        if (session?.data?.access_level === "admin") {
-          login(true, true, token, { user: response });
+        if (data?.access_level === "admin") {
+          login(true, true, token, data);
           navigate(ROUTES.ADMIN.BASE);
         } else {
-          login(false, true, token, { user: response });
+          login(false, true, token, data);
           navigate(ROUTES.BASE);
         }
 
@@ -64,6 +67,8 @@ const LoginPage = () => {
       }
     } catch (error: any) {
       setLoading(false);
+      console.log(error);
+
       toast({
         variant: "destructive",
         title: "Oops! We've encountered an obstacle",
@@ -72,82 +77,91 @@ const LoginPage = () => {
     }
   };
 
-  console.log(form.formState.errors);
-
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Form {...form}>
-          <form
-            className="justify-center p-12 flex space-x-60 lg:space-x-60 md:space-x-0 sm:space-x-0 min-h-screen w-full"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <div className="mt-16 w-full lg:w-auto">
-              <div className="mb-8">
-                <FormLabel className="text-3xl font-sans font-semibold">
-                  Login
-                </FormLabel>
-                <FormDescription className="mt-3">
-                  Login to access your account.
-                </FormDescription>
-              </div>
-              <div className="mb-3 w-80">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <CustomInput type="text" label="Username" {...field} />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="mb-3 w-80">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <CustomInput
-                        type="password"
-                        label="Password"
-                        {...field}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex items-center space-x-24 mb-8 text-sm">
-                <div>
-                  <Checkbox id="rem" />
-                  <label htmlFor="rem" className="ml-1">
-                    Remember me
-                  </label>
+      <Form {...form}>
+        <form
+          className="justify-center items-center flex min-h-screen"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <div className="justify-center items-center flex max-md:gap-4 gap-10 w-full max-w-[80rem] max-md:flex-col-reverse">
+            <div className="flex-1 flex flex-col items-center justify-center">
+              <div className="max-w-80">
+                <div className="mb-8">
+                  <FormLabel className="text-3xl font-sans font-semibold">
+                    Login
+                  </FormLabel>
+                  <FormDescription className="mt-3">
+                    Login to access your account.
+                  </FormDescription>
                 </div>
-                <Link to={ROUTES.FORGOT_PASSWORD} className="text-red-500">
-                  Forgot Password
-                </Link>
+                <div className="mb-3">
+                  <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <CustomInput type="text" label="Username" {...field} />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="mb-3">
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <CustomInput
+                          type="password"
+                          label="Password"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center space-x-24 mb-8 text-sm">
+                  <div>
+                    <Checkbox id="rem" />
+                    <label htmlFor="rem" className="ml-1">
+                      Remember me
+                    </label>
+                  </div>
+                  <Link
+                    to={ROUTES.FORGOT_PASSWORD}
+                    className="underline text-blue-500 hover:text-blue-500/80"
+                  >
+                    Forgot Password
+                  </Link>
+                </div>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-2 text-white bg-store-primary rounded-md hover:bg-store-primary/80"
+                >
+                  Login {isLoading && <LoadingIcon />}
+                </Button>
+                <p className="text-sm mt-2">
+                  Don't have an account?{" "}
+                  <span className="underline text-blue-500 hover:text-blue-500/80">
+                    <Link to={ROUTES.REGISTER}>Signup</Link>
+                  </span>
+                </p>
               </div>
-              <Button type="submit" className="w-80 bg-blue-600">
-                Login
-              </Button>
-              <p className="text-sm mt-2">
-                Don't have an account?{" "}
-                <span className="text-red-500">
-                  <Link to={ROUTES.REGISTER}>Signup</Link>
-                </span>
-              </p>
             </div>
-            <div className="hidden md:block mt-6 max-w-80 max-h-96 min-h-96 min-w-80">
-              <img src={loginImage} alt="Sample Image." />
+            <div className="flex-1 flex items-center justify-center">
+              <img
+                src={loginImage}
+                alt="Sample Image."
+                className="max-w-80 max-md:w-40 max-h-80"
+              />
             </div>
-          </form>
-        </Form>
-      )}
+          </div>
+        </form>
+      </Form>
     </>
   );
 };

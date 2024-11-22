@@ -1,37 +1,64 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import forget from "@/assets/images/forget.png";
 import verify from "@/assets/images/verify.png";
 import CustomInput from "@/components/reusable/CustomInput";
 import { FormField, FormItem, FormMessage, Form } from "@/components/ui/form";
-import { usePasswordPage } from "@/hooks/state/usePasswordPage";
-import { resetPasswordSchema } from "@/schema/authSchema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+
+import z from "zod";
+import { ROUTES } from "@/routes/endpoints";
 
 const ForgetPasswordPage: React.FC = () => {
-  const navigate = useNavigate();
-  const form = useForm({
-    resolver: zodResolver(resetPasswordSchema),
-    defaultValues: {
-      email: "",
-      verificationCode: "",
-      newPassword: "",
-    },
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+
+  const formEmail = useForm({
+    resolver: zodResolver(
+      z.object({
+        email: z
+          .string()
+          .min(1, { message: "Email is required" })
+          .email("Valid email is needed"),
+      })
+    ),
+    defaultValues: { email: "" },
   });
 
-  const {
-    currentPageIndex,
-    nextPage,
-    previousPage,
-    setInputValue,
-    setError,
-    inputValue,
-    error,
-  } = usePasswordPage();
+  const formVerification = useForm({
+    resolver: zodResolver(
+      z.object({
+        verificationCode: z
+          .string()
+          .min(4, "Validation Code must be 4 numbers")
+          .max(4, "Validation Code must be 4 numbers"),
+      })
+    ),
+    defaultValues: { verificationCode: "" },
+  });
+
+  const formNewPassword = useForm({
+    resolver: zodResolver(
+      z
+        .object({
+          newPassword: z
+            .string()
+            .min(8, "New password must be at least 8 characters"),
+          confirmPassword: z
+            .string()
+            .min(8, "Confirmation must be at least 8 characters"),
+        })
+        .refine((data) => data.newPassword === data.confirmPassword, {
+          message: "Passwords doesn't match",
+          path: ["confirmPassword"],
+        })
+    ),
+    defaultValues: { newPassword: "", confirmPassword: "" },
+  });
 
   const pages = [
     {
@@ -40,179 +67,199 @@ const ForgetPasswordPage: React.FC = () => {
         "Don't worry, happens to all of us. Enter your email below to recover your password.",
       inputLabel: "Email",
       buttonText: "Submit",
+      form: formEmail,
     },
     {
       title: "Verify your email",
       description: "Please enter the verification code sent to your email.",
       inputLabel: "Verification Code",
       buttonText: "Verify",
+      form: formVerification,
     },
     {
       title: "Reset your password",
       description: "Enter your new password below.",
       inputLabel: "New Password",
       buttonText: "Reset Password",
+      form: formNewPassword,
     },
   ];
 
   const currentPage = pages[currentPageIndex];
 
-  useEffect(() => {
-    console.log("Current Page Index:", currentPageIndex);
-    if (currentPageIndex !== undefined && currentPageIndex >= 0) {
-      setInputValue("");
-      setError("");
-    }
-  }, [currentPageIndex, setInputValue, setError]);
+  const submitEmail = () => nextPage();
+  const submitVerification = () => nextPage();
+  const submitNewPassword = () => {};
 
-  const validateInput = () => {
-    if (currentPageIndex === 0) {
-      if (!inputValue.trim()) {
-        setError("Email is required.");
-        return false;
-      }
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(inputValue)) {
-        setError("Please enter a valid email address.");
-        return false;
-      }
-    } else if (currentPageIndex === 1) {
-      if (!inputValue.trim()) {
-        setError("Verification code is required.");
-        return false;
-      }
-    } else if (currentPageIndex === 2) {
-      if (inputValue.length < 6) {
-        setError("Password must be at least 6 characters long.");
-        return false;
-      }
-    }
+  const nextPage = () => setCurrentPageIndex((pageIndex) => pageIndex + 1);
 
-    setError("");
-    return true;
-  };
+  const previousPage = () =>
+    setCurrentPageIndex((pageIndex) => Math.max(pageIndex - 1, 0));
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-
-    if (validateInput()) {
-      if (currentPageIndex === 0) {
-        nextPage();
-      } else if (currentPageIndex === 1) {
-        nextPage();
-      } else if (currentPageIndex === 2) {
-        navigate("/login");
-      }
-    }
-  };
-  console.log("Form Data:", form.formState.errors);
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 font-poppins">
-      <div className="bg-white shadow-xl rounded-lg flex flex-col lg:flex-row w-3/4 max-w-5xl">
-        <div className="w-full lg:w-1/2 p-10">
-          {currentPageIndex === 0 && (
-            <a
-              href="/login"
-              className="text-blue-500 hover:underline mb-6 block"
-            >
-              &lt; Back to login
-            </a>
-          )}
-          {currentPageIndex > 0 && (
-            <a
-              href="#"
-              className="text-blue-500 hover:underline mb-6 block"
-              onClick={(event) => {
-                event.preventDefault();
-                previousPage();
-              }}
-            >
-              &lt; Back to {pages[currentPageIndex - 1].title}
-            </a>
-          )}
-          <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
-          <p className="text-gray-600 mb-10">{currentPage.description}</p>
-          <Form {...form}>
+    <div className="flex min-h-screen items-center justify-center w-full">
+      <div className="flex max-md:flex-col-reverse max-w-[80rem] w-full gap-10 item-center justify-center">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-col gap-2 justify-center max-w-80">
+            {currentPageIndex > 0 && (
+              <Button
+                variant="link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  previousPage();
+                }}
+                className="text-blue-500 hover:text-blue-500/80 px-0"
+              >
+                &lt; Back to {pages[currentPageIndex - 1].title}
+              </Button>
+            )}
+            <h1 className="text-4xl font-bold mb-4">{currentPage.title}</h1>
+            <p className="text-gray-600 mb-10">{currentPage.description}</p>
+
             {currentPageIndex === 0 && (
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <CustomInput
-                      label={currentPage.inputLabel}
-                      type="text"
-                      {...field}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Form {...formEmail}>
+                <form onSubmit={formEmail.handleSubmit(submitEmail)}>
+                  <FormField
+                    control={formEmail.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <CustomInput
+                          label={currentPage.inputLabel}
+                          type="text"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex flex-col gap-2 justify-center">
+                    <Button className="w-full bg-store-primary hover:bg-store-primary/80 text-white mt-6">
+                      {currentPage.buttonText}
+                    </Button>
+
+                    <Button variant="link" asChild>
+                      <Link
+                        to={ROUTES.LOGIN}
+                        className="text-blue-500 hover:text-blue-500/80"
+                      >
+                        Back to login
+                      </Link>
+                    </Button>
+                  </div>
+                </form>
+              </Form>
             )}
             {currentPageIndex === 1 && (
-              <FormField
-                control={form.control}
-                name="verificationCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <CustomInput
-                      label={currentPage.inputLabel}
-                      type="text"
-                      {...field}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Form {...formVerification}>
+                <form
+                  onSubmit={formVerification.handleSubmit(submitVerification)}
+                >
+                  <FormField
+                    control={formVerification.control}
+                    name="verificationCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <CustomInput
+                          label={currentPage.inputLabel}
+                          type="number"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex flex-col gap-2 justify-center">
+                    <Button className="w-full bg-store-primary hover:bg-store-primary/80 text-white mt-6">
+                      {currentPage.buttonText}
+                    </Button>
+
+                    <Button variant="link" asChild>
+                      <Link
+                        to={ROUTES.LOGIN}
+                        className="text-blue-500 hover:text-blue-500/80"
+                      >
+                        Back to login
+                      </Link>
+                    </Button>
+                  </div>
+                </form>
+              </Form>
             )}
             {currentPageIndex === 2 && (
-              <FormField
-                control={form.control}
-                name="newPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <CustomInput
-                      label={currentPage.inputLabel}
-                      type="resetpassword"
-                      {...field}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Form {...formNewPassword}>
+                <form
+                  onSubmit={formNewPassword.handleSubmit(submitNewPassword)}
+                  className="flex flex-col gap-4"
+                >
+                  <FormField
+                    control={formNewPassword.control}
+                    name="newPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <CustomInput
+                          label={currentPage.inputLabel}
+                          type="password"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={formNewPassword.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <CustomInput
+                          label={currentPage.inputLabel}
+                          type="password"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex flex-col gap-2 justify-center">
+                    <Button className="w-full bg-store-primary hover:bg-store-primary/80 text-white mt-6">
+                      {currentPage.buttonText}
+                    </Button>
+
+                    <Button variant="link" asChild>
+                      <Link
+                        to={ROUTES.LOGIN}
+                        className="text-blue-500 hover:text-blue-500/80"
+                      >
+                        Back to login
+                      </Link>
+                    </Button>
+                  </div>
+                </form>
+              </Form>
             )}
-
-            {error && <p className="text-red-500 mt-2">{error}</p>}
-
-            <button
-              onSubmit={onSubmit}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-6"
-            >
-              {currentPage.buttonText}
-            </button>
-          </Form>
+          </div>
         </div>
-
-        <div className="hidden lg:flex w-1/2 items-center justify-center bg-gray-100 rounded-r-lg">
+        <div className="flex-1 flex items-center justify-center rounded-r-lg">
           {currentPage.title === "Forgot your password?" && (
             <img
               src={forget}
               alt="Password Recovery Illustration"
-              className="max-h-[450px] object-contain"
+              className="max-h-[400px] object-contain"
             />
           )}
           {currentPage.title === "Verify your email" && (
             <img
               src={verify}
               alt="Verification Illustration"
-              className="max-h-[450px] object-contain"
+              className="max-h-[400px] object-contain"
             />
           )}
           {currentPage.title === "Reset your password" && (
             <img
               src={forget}
               alt="Reset Password Illustration"
-              className="max-h-[450px] object-contain"
+              className="max-h-[400px] object-contain"
             />
           )}
         </div>

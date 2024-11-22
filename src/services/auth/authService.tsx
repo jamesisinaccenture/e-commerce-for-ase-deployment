@@ -30,8 +30,6 @@ export const loginService = async (data: LoginFormData) => {
         },
       });
 
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("session", JSON.stringify(userResponse.data));
       return { ...userResponse.data, token };
     }
   } catch (error) {
@@ -41,7 +39,8 @@ export const loginService = async (data: LoginFormData) => {
 };
 
 export const logoutService = async () => {
-  const token = JSON.parse(localStorage.getItem("token") || "{}");
+  const token = getToken();
+
   try {
     const response = await axios.post(
       `${API_URL}/auth/logout`,

@@ -14,6 +14,7 @@ export interface ICustomInput {
   value?: any;
   label?: string;
   name?: string;
+  checked?: boolean;
   type?: HTMLInputTypeAttribute;
   isRequired?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;

@@ -35,8 +35,8 @@ const DropdownAvatar = ({ handleLogout }: DropdownAvatarProps) => {
           <DropdownMenuContent align="end" side="bottom" sideOffset={8}>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer">
-              Profile
+            <DropdownMenuItem className="hover:cursor-pointer" asChild>
+              <Link to={ROUTES.STORE.PROFILE}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="hover:cursor-pointer">
               Billing

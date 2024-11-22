@@ -15,7 +15,7 @@ import { toast } from "@/hooks/use-toast";
 import { getUserSession } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/auth/authService";
-import Loader from "../reusable/Loader";
+import LoadingIcon from "../reusable/LoadingIcon";
 
 export function UserDropdown() {
   const user = getUserSession();
@@ -87,7 +87,7 @@ export function UserDropdown() {
             disabled={isLoading}
           >
             Logout
-            {isLoading && <Loader size="small" />}
+            {isLoading && <LoadingIcon />}
           </Button>
         </div>
       </DropdownMenuContent>
