@@ -51,3 +51,28 @@ export const closeModal = () => {
 
   if (close) close.click();
 };
+
+export const formatPrice = (
+  price: number,
+  currency = "USD",
+  locale = "en-US"
+) => {
+  const formatter = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return formatter.format(price);
+};
+
+export const formatDate = (date: string, locale = "en-US", options = {}) => {
+  const formatter = new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    ...options,
+  });
+
+  return formatter.format(new Date(date));
+};

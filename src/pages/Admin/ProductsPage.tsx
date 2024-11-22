@@ -6,12 +6,13 @@ import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
 import CreateProductForm from "@/components/admin/Products/CreateProductForm";
 import UpdateProductForm from "@/components/admin/Products/UpdateProductForm";
+import { CustomSelect } from "@/components/reusable/CustomSelect";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { useAdminProductStore } from "@/hooks/state/admin/useAdminProduct";
-import { closeModal } from "@/lib/utils";
+import { closeModal, formatDate, formatPrice } from "@/lib/utils";
 import { IProduct } from "@/models/admin.model";
 import { useProductServices } from "@/services/admin/productServices";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -29,9 +30,7 @@ const ProductsPage = () => {
       accessorKey: "product_id",
       header: "ID",
       cell: ({ row }) => (
-        <div className="capitalize w-full h-12 p-1">
-          {row.getValue("product_id")}
-        </div>
+        <div className="capitalize w-full h-12 p-1">{row.index + 1}</div>
       ),
     },
     {
@@ -59,7 +58,7 @@ const ProductsPage = () => {
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("product_name")}</div>
+        <div className="capitalize px-4">{row.getValue("product_name")}</div>
       ),
     },
     {
@@ -73,21 +72,21 @@ const ProductsPage = () => {
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("category")}</div>
+        <div className="capitalize px-4">{row.getValue("category")}</div>
       ),
     },
     {
       accessorKey: "price",
       header: "Price",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("price")}</div>
+        <div className="capitalize">{formatPrice(row.getValue("price"))}</div>
       ),
     },
     {
       accessorKey: "currency",
       header: "Currency",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("currency")}</div>
+        <div className="uppercase">{row.getValue("currency")}</div>
       ),
     },
     {
@@ -101,8 +100,8 @@ const ProductsPage = () => {
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("date_created")}
+        <div className="capitalize px-4">
+          {formatDate(row.getValue("date_created"))}
         </div>
       ),
     },
@@ -167,18 +166,54 @@ const ProductsPage = () => {
   useEffect(() => {
     getProducts();
   }, []);
+  const searchByList = [
+    {
+      label: "All",
+      value: "all",
+    },
+    {
+      label: "ID",
+      value: "product_id",
+    },
+    {
+      label: "Product name",
+      value: "product_name",
+    },
+    {
+      label: "Category name",
+      value: "category_name",
+    },
+    {
+      label: "Currency",
+      value: "currency",
+    },
+    {
+      label: "Created by",
+      value: "created_by",
+    },
+  ];
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Products Page</h1>
+      <h1 className="text-3xl">Products</h1>
       <div className="flex items-center justify-between w-full">
-        <Input
-          placeholder="Search products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <Input
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <CustomSelect
+            items={searchByList}
+            defaultValue={"all"}
+            placeholder="Search by"
+            onChange={(value: string) => {
+              console.log(value);
+            }}
+          />
+        </div>
         <div>
-          <Modal trigger="Add new product">
+          <Modal trigger="Add product">
             <CreateProductForm />
           </Modal>
         </div>

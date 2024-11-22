@@ -28,8 +28,8 @@ const ProductSectionCard = (product: IProductData) => {
     <>
       <motion.div
         whileHover={{
-          scale: 1.05,
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+          scale: 1.005,
+          boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.2)",
         }}
         whileTap={{ scale: 0.98 }}
         initial={{ opacity: 0, y: 20 }}
@@ -40,12 +40,17 @@ const ProductSectionCard = (product: IProductData) => {
         <Dialog key={product.product_id}>
           <DialogTrigger asChild>
             <div className="-z-10">
-              <AspectRatio ratio={1 / 1}>
-                <img
-                  src={product.product_img}
-                  alt={product.product_name}
-                  className="rounded-3xl object-contain bg-cover w-full max-h-[250px] p-4"
-                />
+              <AspectRatio
+                ratio={1 / 1}
+                className="overflow-hidden rounded-t-lg"
+              >
+                <div className="rounded-lg overflow-hidden w-fit p-4">
+                  <img
+                    src={product.product_img}
+                    alt={product.product_name}
+                    className="rounded-3xl object-contain bg-cover w-full max-h-[200px]"
+                  />
+                </div>
                 {product.discount ? (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}

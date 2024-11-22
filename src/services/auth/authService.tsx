@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { useAuthStore } from "@/hooks/state/useAuth";
 import { API_URL } from "@/lib/constants";
 import { getToken, headerConfig } from "@/lib/utils";
 import {
@@ -94,6 +95,7 @@ export const signupService = async (data: SignupFormData) => {
 };
 
 export const getUserInformation = async () => {
+  const { updateUserInfo } = useAuthStore();
   try {
     const token = getToken();
     const userResponse = await axios.get(`${API_URL}/user`, {
@@ -106,7 +108,8 @@ export const getUserInformation = async () => {
 
     if (userResponse) {
       const user = userResponse.data.data;
-      sessionStorage.setItem("session", JSON.stringify(user));
+      updateUserInfo(user);
+      // sessionStorage.setItem("user", JSON.stringify(user));
     }
 
     return userResponse;

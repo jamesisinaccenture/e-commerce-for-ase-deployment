@@ -14,6 +14,7 @@ import { useAuthStore } from "@/hooks/state/useAuth";
 import { getUserSession } from "@/lib/utils";
 import { DropdownAvatarProps } from "@/models/store.model";
 import { ROUTES } from "@/routes/endpoints";
+import { Button } from "../ui/button";
 
 const DropdownAvatar = ({ handleLogout }: DropdownAvatarProps) => {
   const { isAuth } = useAuthStore();
@@ -25,7 +26,7 @@ const DropdownAvatar = ({ handleLogout }: DropdownAvatarProps) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex items-center hover:cursor-pointer">
-              <Avatar>
+              <Avatar className="w-9 h-9">
                 <AvatarImage src={session.img} />
                 <AvatarFallback>{session.first_name?.charAt(0)}</AvatarFallback>
               </Avatar>
@@ -48,14 +49,15 @@ const DropdownAvatar = ({ handleLogout }: DropdownAvatarProps) => {
               Subscription
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer">
-              <div
+            <DropdownMenuItem className="hover:cursor-pointer" asChild>
+              <Button
+                variant="ghost"
                 className="flex w-full items-center justify-between"
                 onClick={handleLogout}
               >
                 <span>Logout</span>
                 <LogOut size={16} color="black" />
-              </div>
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -63,7 +65,7 @@ const DropdownAvatar = ({ handleLogout }: DropdownAvatarProps) => {
         <>
           <Link
             to={ROUTES.LOGIN}
-            className="flex items-center gap-2 hover:cursor-pointer hover:bg-gray-300 py-1 px-2 rounded"
+            className="flex items-center gap-2 hover:cursor-pointer hover:bg-gray-300/80 py-1 p-2 rounded"
           >
             <User size={20} color="#008ECC" />
             <Link to={ROUTES.REGISTER}>

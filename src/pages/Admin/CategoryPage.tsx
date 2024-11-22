@@ -4,11 +4,13 @@ import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 
 import CreateCategoryForm from "@/components/admin/Category/CreateCategory";
 import { Modal } from "@/components/admin/Modal";
+import { CustomSelect } from "@/components/reusable/CustomSelect";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { categoryList } from "@/lib/constants";
+import { formatDate } from "@/lib/utils";
 import { ICategory } from "@/models/admin.model";
 import { useCategoryServices } from "@/services/admin/categoryServices";
 import { ColumnDef } from "@tanstack/react-table";
@@ -23,9 +25,7 @@ const CategoryPage = () => {
       accessorKey: "category_id",
       header: "ID",
       cell: ({ row }) => (
-        <div className="capitalize w-full h-12 p-1">
-          {row.getValue("category_id")}
-        </div>
+        <div className="capitalize w-full h-12 p-1">{row.index + 1}</div>
       ),
     },
     {
@@ -39,7 +39,7 @@ const CategoryPage = () => {
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("category_name")}</div>
+        <div className="capitalize px-4">{row.getValue("category_name")}</div>
       ),
     },
     {
@@ -53,7 +53,7 @@ const CategoryPage = () => {
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("created_by")}</div>
+        <div className="capitalize px-4">{row.getValue("created_by")}</div>
       ),
     },
     {
@@ -67,8 +67,8 @@ const CategoryPage = () => {
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize text-center">
-          {row.getValue("date_created")}
+        <div className="capitalize px-4">
+          {formatDate(row.getValue("date_created"))}
         </div>
       ),
     },
@@ -130,18 +130,46 @@ const CategoryPage = () => {
   useEffect(() => {
     getCategory();
   }, []);
+  const searchByList = [
+    {
+      label: "All",
+      value: "all",
+    },
+    {
+      label: "ID",
+      value: "category_id",
+    },
+    {
+      label: "Category name",
+      value: "category_name",
+    },
+    {
+      label: "Created by",
+      value: "created_by",
+    },
+  ];
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Category Page</h1>
+      <h1 className="text-3xl">Category</h1>
       <div className="flex items-center justify-between w-full">
-        <Input
-          placeholder="Search products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <Input
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <CustomSelect
+            items={searchByList}
+            defaultValue={"all"}
+            placeholder="Search by"
+            onChange={(value: string) => {
+              console.log(value);
+            }}
+          />
+        </div>
         <div>
-          <Modal trigger="Add new product">
+          <Modal trigger="Add category">
             <CreateCategoryForm />
           </Modal>
         </div>

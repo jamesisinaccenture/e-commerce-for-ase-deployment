@@ -8,7 +8,7 @@ interface IFormItem {
 
 const CustomFormItem = ({ label, className, children }: IFormItem) => {
   return (
-    <FormItem className="relative">
+    <FormItem className="relative w-full">
       <FormLabel>{label}</FormLabel>
       <FormControl className={className}>{children}</FormControl>
       <div className="absolute -bottom-4 right-0">
