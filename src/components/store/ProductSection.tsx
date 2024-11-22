@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import ProductSectionCard from "@/components/store/ProductSectionCard";
 import { cn } from "@/lib/utils";
-import { ISampleProductData } from "@/models/store.model";
+import { IProductSection } from "@/models/store.model";
 import { ROUTES } from "@/routes/endpoints";
 import {
   PaginationItem,
@@ -15,11 +15,11 @@ import {
   PaginationNext,
 } from "../ui/pagination";
 
-const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
+const ProductSection = ({ products, isHome }: IProductSection) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const PRODUCTS_PER_PAGE = 40;
 
-  const totalPages = Math.ceil(store_products.length / PRODUCTS_PER_PAGE);
+  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -86,13 +86,13 @@ const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
         </div>
 
         <div className="grid grid-cols-custom gap-4 w-full">
-          {store_products.map((products) => {
+          {products.map((products) => {
             return (
               <ProductSectionCard {...products} key={products.product_id} />
             );
           })}
         </div>
-        {!store_products.length && (
+        {!products.length && (
           <div className="flex justify-center items-center min-h-64">
             <p>No results.</p>
           </div>
@@ -122,7 +122,7 @@ const ProductSection = ({ store_products, isHome }: ISampleProductData) => {
               aria-disabled={currentPage === totalPages}
               className={cn(
                 "cursor-pointer",
-                (currentPage === totalPages || store_products.length < 2) &&
+                (currentPage === totalPages || products.length < 2) &&
                   "pointer-events-none opacity-50"
               )}
             />

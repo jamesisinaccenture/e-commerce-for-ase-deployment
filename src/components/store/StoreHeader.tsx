@@ -5,7 +5,7 @@ import logo from "@/assets/images/logo.png";
 import CartDrawer from "@/components/store/CartDrawer";
 import DropdownAvatar from "@/components/store/DropdownAvatar";
 import { Input } from "@/components/ui/input";
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/auth/authService";

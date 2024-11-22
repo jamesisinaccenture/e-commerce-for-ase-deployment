@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { getUserSession } from "@/lib/utils";
 import { ROUTES } from "@/routes/endpoints";

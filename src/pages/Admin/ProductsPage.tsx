@@ -163,9 +163,6 @@ const ProductsPage = () => {
     );
   }, [search, products]);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
   const searchByList = [
     {
       label: "All",
@@ -192,6 +189,10 @@ const ProductsPage = () => {
       value: "created_by",
     },
   ];
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div className="p-4 flex flex-col gap-4">

@@ -24,39 +24,37 @@ export interface ICustomInput {
   className?: any;
 }
 
-// We will change this to the actual later on depending on the structure, as for now this is template only
+// Products interface
 export interface IProduct {
-  albumId: number;
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  product_id?: string | undefined;
+  product_name: string;
+  product_img?: any;
+  product_description: string | undefined;
+  category?: string[] | null | undefined;
+  price: number;
+  currency: string;
+  sold?: number;
+  date_created?: string;
+  created_by?: string;
+  discount?: string;
+  variants?: string[];
+  other_details: any;
+}
+
+export interface IProductSection {
+  products: IProduct[];
+  isHome?: boolean;
 }
 
 export interface IProductStore {
   products: IProduct[];
   setProducts: (products: IProduct[]) => void;
-  addProduct: (product: IProduct) => void;
-  clearProducts: () => void;
 }
 
-export interface IProductData {
-  product_id?: string;
-  product_name?: string;
-  product_img?: string;
-  product_description?: string;
-  category?: string;
-  price?: number;
-  currency?: string;
-  sold?: number;
-  discount?: number | undefined;
-  date_created?: string | undefined;
-  created_by?: string | undefined;
-  variants?: string[];
-}
-export interface ISampleProductData {
-  store_products: IProductData[];
-  isHome?: boolean;
+export interface IProductResponse {
+  data: {
+    products: IProduct[];
+  };
 }
 
 /*Used in the footer only*/

@@ -127,9 +127,6 @@ const CategoryPage = () => {
     );
   }, [search]);
 
-  useEffect(() => {
-    getCategory();
-  }, []);
   const searchByList = [
     {
       label: "All",
@@ -148,6 +145,10 @@ const CategoryPage = () => {
       value: "created_by",
     },
   ];
+
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   return (
     <div className="p-4 flex flex-col gap-4">

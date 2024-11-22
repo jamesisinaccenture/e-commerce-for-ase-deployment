@@ -13,7 +13,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { SignupFormData } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
@@ -43,7 +43,7 @@ const SignupPage = () => {
 
   const onSubmit = async (data: SignupFormData) => {
     setLoading(true);
-    console.log("Form submitted with data:", data);
+
     try {
       const response = await signupService(data);
 
@@ -61,23 +61,21 @@ const SignupPage = () => {
         description: "Your account has been created.",
       });
 
-      console.log("User created:", response);
-
       setLoading(false);
       navigate("/login");
-    } catch (error) {
-      console.error("Signup failed:", error);
+    } catch (error: any) {
+      console.error(error);
 
       setLoading(false);
       toast({
         variant: "destructive",
         title: "Signup failed",
-        description: `Something went wrong: ${error}`,
+        description: `Something went wrong: ${
+          error.data?.error || error.error || "please contact developers"
+        }`,
       });
     }
   };
-
-  console.log(form.watch("terms"));
 
   return (
     <div className="flex items-center justify-center min-h-screen">

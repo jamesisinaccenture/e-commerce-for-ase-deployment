@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { API_URL } from "@/lib/constants";
 import { getToken, headerConfig } from "@/lib/utils";
 import {
@@ -33,9 +33,8 @@ export const loginService = async (data: LoginFormData) => {
 
       return { ...userResponse.data, token };
     }
-  } catch (error) {
-    console.error("Login failed:", error);
-    throw error;
+  } catch (error: any) {
+    throw error.response.data;
   }
 };
 
@@ -81,16 +80,18 @@ export const signupService = async (data: SignupFormData) => {
     );
 
     return response.data;
-  } catch (error) {
-    // Capture specific errors (e.g., 400 for validation issues)
-    if (axios.isAxiosError(error) && error.response) {
-      const errorMessage = error.response.data.message || "Signup failed";
-      console.error("Signup error:", errorMessage);
-      throw new Error(errorMessage); // Throw a user-friendly error
-    } else {
-      console.error("Unexpected error:", error);
-      throw new Error("An unexpected error occurred.");
-    }
+  } catch (error: any) {
+    // // Capture specific errors (e.g., 400 for validation issues)
+    // if (axios.isAxiosError(error) && error.response) {
+    //   const errorMessage = error.response.data.message || "Signup failed";
+    //   console.error("Signup error:", errorMessage);
+    //   throw new Error(errorMessage); // Throw a user-friendly error
+    // } else {
+    //   console.error("Unexpected error:", error);
+    //   throw new Error("An unexpected error occurred.");
+    // }
+
+    throw error.response.data;
   }
 };
 

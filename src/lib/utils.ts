@@ -11,8 +11,11 @@ export const headerConfig = {
 };
 
 export const getToken = () => {
-  const token = JSON.parse(localStorage.getItem("token") || "");
-  return token;
+  const token = localStorage.getItem("token") || "";
+
+  console.log(token);
+
+  return !token.length ? "" : JSON.parse(token);
 };
 
 export const getUserSession = () => {

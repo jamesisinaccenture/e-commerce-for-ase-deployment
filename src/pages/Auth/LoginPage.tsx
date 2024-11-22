@@ -21,7 +21,7 @@ import { ROUTES } from "@/routes/endpoints";
 import { loginSchema } from "@/schema/authSchema";
 import { loginService } from "@/services/auth/authService";
 
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import withAdminAuth from "@/hoc/withAdminAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -67,12 +67,13 @@ const LoginPage = () => {
       }
     } catch (error: any) {
       setLoading(false);
-      console.log(error);
 
       toast({
         variant: "destructive",
-        title: "Oops! We've encountered an obstacle",
-        description: `Something went wrong: ${error}`,
+        title: "Logins failed",
+        description: `Something went wrong: ${
+          error.data?.error || error?.error || "please contact developers"
+        }`,
       });
     }
   };

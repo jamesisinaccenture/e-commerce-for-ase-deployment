@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
+import defaultImage from "/image 3.png";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
 import ProductModal from "@/components/store/ProductModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { IProductData } from "@/models/store.model";
+import { formatPrice } from "@/lib/utils";
+import { IProduct } from "@/models/store.model";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import ProductCardAnimated from "./ProductCardAnimated";
 import { Button } from "../ui/button";
 
-const ProductSectionCard = (product: IProductData) => {
+const ProductSectionCard = (product: IProduct) => {
   // this is one use case that we need to use local state since using global state for this
   // will result in re-rendering all the cards and will cause to only use the image of the last item in the cart.
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -22,7 +24,7 @@ const ProductSectionCard = (product: IProductData) => {
   };
 
   useEffect(() => {
-    console.log(isAddingToCart);
+    console.log("isAddingToCart", isAddingToCart);
   }, [isAddingToCart]);
   return (
     <>
@@ -44,14 +46,14 @@ const ProductSectionCard = (product: IProductData) => {
                 ratio={1 / 1}
                 className="overflow-hidden rounded-t-lg"
               >
-                <div className="rounded-lg overflow-hidden w-fit p-4">
+                <div className="rounded-lg overflow-hidden w-full p-4">
                   <img
-                    src={product.product_img}
+                    src={product.product_img || defaultImage}
                     alt={product.product_name}
                     className="rounded-3xl object-contain bg-cover w-full max-h-[200px]"
                   />
                 </div>
-                {product.discount ? (
+                {product?.discount ? (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -59,7 +61,7 @@ const ProductSectionCard = (product: IProductData) => {
                     className="absolute bg-store-primary p-2 top-0 right-0 rounded-tr-md rounded-bl-lg"
                   >
                     <p className="text-white text-center">
-                      {product.discount}%
+                      {product?.discount}%
                       <br /> OFF
                     </p>
                   </motion.div>
@@ -82,7 +84,7 @@ const ProductSectionCard = (product: IProductData) => {
                   transition={{ duration: 0.3, delay: 0.4 }}
                   className="font-bold"
                 >
-                  {`${product.currency} ${product.price}`}
+                  {formatPrice(product.price || 0, product.currency)}
                 </motion.p>
                 <hr className="mt-2 border-[1.2px]" />
               </div>

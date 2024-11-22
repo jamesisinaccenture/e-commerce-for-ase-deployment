@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import profileImage from "@/assets/images/profile-image.jpg";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { ROUTES } from "@/routes/endpoints";
 
 const InformationSettingsPage = () => {

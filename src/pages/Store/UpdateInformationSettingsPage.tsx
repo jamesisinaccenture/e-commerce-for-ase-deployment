@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { UpdateInformationFormData } from "@/models/auth.model";
 import { updateInformationSchema } from "@/schema/authSchema";

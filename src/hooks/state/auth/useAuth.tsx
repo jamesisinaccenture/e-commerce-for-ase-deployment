@@ -29,5 +29,5 @@ export const useAuthStore = create<IAuthStore>((set) => ({
     localStorage.removeItem("user");
     set({ isAuth: false, isAdmin: false });
   },
-  setLoading: (loading: boolean) => set(() => ({ isLoading: loading })),
+  setLoading: (loading: boolean) => set({ isLoading: loading }),
 }));
