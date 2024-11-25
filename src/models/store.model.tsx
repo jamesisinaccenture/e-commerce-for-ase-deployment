@@ -36,7 +36,7 @@ export interface IProduct {
   sold?: number;
   date_created?: string;
   created_by?: string;
-  discount?: string;
+  discount?: number;
   variants?: string[];
   other_details: any;
 }
