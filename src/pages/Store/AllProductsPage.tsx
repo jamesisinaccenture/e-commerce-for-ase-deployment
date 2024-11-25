@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import ProductSection from "@/components/store/ProductSection";
-import { store_products } from "@/lib/constants";
+import { useProductStore } from "@/hooks/state/store/useProduct";
 import { cn } from "@/lib/utils";
+import useProductSevices from "@/services/store/productServices";
 
 const categories = [
   "All",
@@ -18,14 +19,21 @@ const PRODUCTS_PER_PAGE = 40;
 
 const AllProductsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const { products } = useProductStore();
+
+  const { getProducts } = useProductSevices();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? store_products
-      : store_products.filter(
-          (product) => product.category === selectedCategory
+  const filteredProducts = useMemo(() => {
+    return selectedCategory === "All"
+      ? products
+      : products.filter(
+          (product) =>
+            product?.category?.filter(
+              (category) => category === selectedCategory
+            )?.length
         );
+  }, [products]);
 
   // Display products for the current page only
   const displayedProducts = filteredProducts.slice(
@@ -37,6 +45,10 @@ const AllProductsPage: React.FC = () => {
     setSelectedCategory(category);
     setCurrentPage(1); // Reset to first page on category change
   };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div className="min-h-screen py-10">
@@ -60,7 +72,7 @@ const AllProductsPage: React.FC = () => {
       </header>
 
       {/* Display products in 10 rows, each with 4 products */}
-      <ProductSection store_products={displayedProducts} />
+      <ProductSection products={displayedProducts} />
     </div>
   );
 };

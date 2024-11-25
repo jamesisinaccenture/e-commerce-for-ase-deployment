@@ -18,6 +18,7 @@ interface ISelect {
   defaultValue?: string;
   placeholder?: string;
   onChange: (value: string) => void;
+  triggerClassName?: string;
 }
 
 export function CustomSelect({
@@ -25,10 +26,11 @@ export function CustomSelect({
   defaultValue,
   placeholder,
   onChange,
+  triggerClassName,
 }: ISelect) {
   return (
     <Select onValueChange={onChange} defaultValue={defaultValue}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className={`${triggerClassName}`}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

@@ -2,29 +2,32 @@
 import { create } from "zustand";
 
 import { IAuthStore } from "@/models/auth.model";
+import { IUser } from "@/models/admin.model";
 
 export const useAuthStore = create<IAuthStore>((set) => ({
   isLoading: false,
   isAdmin: JSON.parse(localStorage.getItem("isAdmin") || "false"),
   isAuth: JSON.parse(localStorage.getItem("isAuth") || "false"),
   token: JSON.parse(localStorage.getItem("token") || "{}"),
-  user: {},
-  updateUserInfo: (user: any) => {
-    sessionStorage.setItem("session", JSON.stringify(user));
+  user: JSON.parse(localStorage.getItem("user") || "{}"),
+  updateUserInfo: (user: IUser) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    set({ user, isAdmin: user.access_level === "admin" });
   },
   login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => {
     localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
     localStorage.setItem("isAuth", JSON.stringify(isAuth));
     localStorage.setItem("token", JSON.stringify(token));
-    localStorage.setItem("session", JSON.stringify(user));
-    set({ isAuth, isAdmin, token, user: user });
+    localStorage.setItem("user", JSON.stringify(user));
+
+    set({ isAuth, isAdmin, token, user });
   },
   logout: () => {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("token");
-    localStorage.removeItem("session");
+    localStorage.removeItem("user");
     set({ isAuth: false, isAdmin: false });
   },
-  setLoading: (loading: boolean) => set(() => ({ isLoading: loading })),
+  setLoading: (loading: boolean) => set({ isLoading: loading }),
 }));

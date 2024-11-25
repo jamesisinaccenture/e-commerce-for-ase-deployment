@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { IUser } from "./admin.model";
+
 export interface IRoutes {
   component: React.ComponentType<any> | React.ReactNode | any;
   [key: string]: any;
@@ -10,7 +12,7 @@ export interface IAuthStore {
   isAdmin: boolean;
   isAuth: boolean;
   token: string;
-  user: any;
+  user: IUser;
   updateUserInfo: (user: any) => void;
   login: (isAdmin: boolean, isAuth: boolean, token: string, user: any) => void;
   logout: () => void;

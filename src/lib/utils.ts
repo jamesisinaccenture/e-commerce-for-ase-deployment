@@ -11,18 +11,21 @@ export const headerConfig = {
 };
 
 export const getToken = () => {
-  const session = JSON.parse(localStorage.getItem("session") || "{}");
-  return session?.user?.token;
+  const token = localStorage.getItem("token") || "";
+
+  console.log(token);
+
+  return !token.length ? "" : JSON.parse(token);
 };
 
 export const getUserSession = () => {
-  const session = JSON.parse(localStorage.getItem("session") || "{}");
-  return session?.user?.data;
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  return user;
 };
 
 export const isUserAdmin = () => {
-  const session = JSON.parse(localStorage.getItem("session") || "{}");
-  return session?.user?.data?.access_level == "admin" ? true : false;
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+  return isAdmin;
 };
 
 export const imageToBlob = (file: File): Promise<Blob> => {
@@ -50,4 +53,29 @@ export const closeModal = () => {
   const close = document.getElementById("closeModal");
 
   if (close) close.click();
+};
+
+export const formatPrice = (
+  price: number,
+  currency = "USD",
+  locale = "en-US"
+) => {
+  const formatter = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return formatter.format(price);
+};
+
+export const formatDate = (date: string, locale = "en-US", options = {}) => {
+  const formatter = new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    ...options,
+  });
+
+  return formatter.format(new Date(date));
 };

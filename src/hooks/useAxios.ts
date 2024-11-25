@@ -6,7 +6,7 @@ import axios, {
 
 import { API_URL } from "@/lib/constants";
 import { getToken, headerConfig } from "@/lib/utils";
-import { useAuthStore } from "./state/useAuth";
+import { useAuthStore } from "./state/auth/useAuth";
 
 export const useAxios = () => {
   const { isAuth }: any = useAuthStore();
@@ -43,11 +43,11 @@ export const useAxios = () => {
   );
 
   const getErrorMessage = (error: AxiosError): any => {
-    console.log(error);
-
-    if (error.response) {
+    if (error.response?.data) {
       return (
-        error.response?.data || { message: "An unexpected error occurred" }
+        error.response.data || {
+          message: "An unexpected error occurred",
+        }
       );
     } else if (error.request) {
       return {
