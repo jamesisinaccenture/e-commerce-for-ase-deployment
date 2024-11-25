@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { IRoutes } from "@/models/auth.model";
 import { ROUTES } from "@/routes/endpoints";
 

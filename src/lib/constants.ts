@@ -1,5 +1,5 @@
 import { IUser } from "@/models/admin.model";
-import { IProductData } from "@/models/store.model";
+import { IProduct } from "@/models/store.model";
 
 export const API_URL = import.meta.env.VITE_BACKEND_API_URL_ENDPOINT;
 
@@ -262,7 +262,11 @@ export const store_products: IProduct[] = [
     created_by: "JamesAllen",
     other_details: {
       voice_control: true,
+<<<<<<< HEAD
       energy_saving: false,
+=======
+      energy_saving: true,
+>>>>>>> fdfaf7988cfeb4a2124fd63c0602bf6894cfd7d3
     },
   },
 ];

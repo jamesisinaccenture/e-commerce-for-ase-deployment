@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
+import defaultImage from "/image 3.png";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
 import ProductModal from "@/components/store/ProductModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { IProductData } from "@/models/store.model";
+import { formatPrice } from "@/lib/utils";
+import { IProduct } from "@/models/store.model";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import ProductCardAnimated from "./ProductCardAnimated";
 import { Button } from "../ui/button";
 
-const ProductSectionCard = (product: IProductData) => {
+const ProductSectionCard = (product: IProduct) => {
   // this is one use case that we need to use local state since using global state for this
   // will result in re-rendering all the cards and will cause to only use the image of the last item in the cart.
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -22,39 +24,44 @@ const ProductSectionCard = (product: IProductData) => {
   };
 
   useEffect(() => {
-    console.log(isAddingToCart);
+    console.log("isAddingToCart", isAddingToCart);
   }, [isAddingToCart]);
   return (
     <>
       <motion.div
         whileHover={{
-          scale: 1.05,
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+          scale: 1.005,
+          boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.2)",
         }}
         whileTap={{ scale: 0.98 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="flex flex-col justify-between border rounded-xl hover:border-blue-500 cursor-pointer"
+        className="flex flex-col justify-between border rounded-lg hover:border-store-primary cursor-pointer"
       >
         <Dialog key={product.product_id}>
           <DialogTrigger asChild>
             <div className="-z-10">
-              <AspectRatio ratio={1 / 1}>
-                <img
-                  src={product.product_img}
-                  alt={product.product_name}
-                  className="rounded-3xl object-contain bg-cover w-full max-h-[250px] p-4"
-                />
-                {product.discount ? (
+              <AspectRatio
+                ratio={1 / 1}
+                className="overflow-hidden rounded-t-lg"
+              >
+                <div className="rounded-lg overflow-hidden w-full p-4">
+                  <img
+                    src={product.product_img || defaultImage}
+                    alt={product.product_name}
+                    className="rounded-3xl object-contain bg-cover w-full max-h-[200px]"
+                  />
+                </div>
+                {product?.discount ? (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute bg-blue-500 p-2 top-0 right-0 rounded-tr-lg rounded-bl-lg"
+                    className="absolute bg-store-primary p-2 top-0 right-0 rounded-tr-md rounded-bl-lg"
                   >
                     <p className="text-white text-center">
-                      {product.discount}%
+                      {product?.discount}%
                       <br /> OFF
                     </p>
                   </motion.div>
@@ -77,7 +84,7 @@ const ProductSectionCard = (product: IProductData) => {
                   transition={{ duration: 0.3, delay: 0.4 }}
                   className="font-bold"
                 >
-                  {`${product.currency} ${product.price}`}
+                  {formatPrice(product.price || 0, product.currency)}
                 </motion.p>
                 <hr className="mt-2 border-[1.2px]" />
               </div>
@@ -90,7 +97,7 @@ const ProductSectionCard = (product: IProductData) => {
           <Button
             size="sm"
             variant={"default"}
-            className="bg-blue-300 hover:bg-blue-500"
+            className="bg-store-primary hover:bg-store-primary/80"
           >
             <Heart size={16} />
           </Button>
@@ -98,7 +105,7 @@ const ProductSectionCard = (product: IProductData) => {
             size="sm"
             variant={"default"}
             onClick={handleAddToCart}
-            className="bg-blue-500 hover:bg-blue-700"
+            className="bg-store-primary hover:bg-store-primary/80"
           >
             Add to Cart
           </Button>

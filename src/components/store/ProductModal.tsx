@@ -6,9 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IProductData } from "@/models/store.model";
+import { formatPrice } from "@/lib/utils";
+import { IProduct } from "@/models/store.model";
 
-const ProductModal = ({ product }: { product: IProductData }) => {
+const ProductModal = ({ product }: { product: IProduct }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrease = () => setQuantity(quantity + 1);
@@ -31,14 +32,14 @@ const ProductModal = ({ product }: { product: IProductData }) => {
               {product.product_name || "Unnamed Product"}
             </DialogTitle>
             <DialogDescription className="text-lg text-gray-700 mb-4">
-              {product.currency} {product.price}
+              {formatPrice(product.price)}
             </DialogDescription>
           </DialogHeader>
 
           <div className="mb-4">
             <p className="font-semibold text-lg">Variants:</p>
             <div className="flex space-x-2 mt-2">
-              {product.variants?.map((variant: string, index: number) => (
+              {/* {product?.variants?.map((variant: string, index: number) => (
                 <span
                   key={index}
                   className={`px-3 py-1 text-white rounded-full ${
@@ -53,7 +54,7 @@ const ProductModal = ({ product }: { product: IProductData }) => {
                 >
                   {variant}
                 </span>
-              ))}
+              ))} */}
             </div>
           </div>
 

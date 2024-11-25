@@ -119,6 +119,7 @@ const CreateUserForm = () => {
                   render={({ field }) => (
                     <CustomFormItem label="Access level" className="w-full">
                       <CustomSelect
+                        triggerClassName="w-full"
                         items={accessLevelList}
                         defaultValue={field.value}
                         placeholder="Access Level"

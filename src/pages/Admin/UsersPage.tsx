@@ -4,11 +4,13 @@ import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
 import CreateUserForm from "@/components/admin/Users/CreateUserForm";
+import { CustomSelect } from "@/components/reusable/CustomSelect";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { usersList } from "@/lib/constants";
+import { formatDate } from "@/lib/utils";
 import { IUser } from "@/models/admin.model";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -22,9 +24,7 @@ const UsersPage = () => {
       header: "ID",
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1 flex items-center">
-          <p className=" truncate max-w-10" title={row.getValue("user_id")}>
-            {row.getValue("user_id")}
-          </p>
+          <p title={row.getValue("user_id")}>{row.index + 1}</p>
         </div>
       ),
     },
@@ -49,13 +49,25 @@ const UsersPage = () => {
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name <ChevronsUpDown />
+          First Name <ChevronsUpDown />
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize pl-4">
-          {row.getValue("first_name")} {row.getValue("last_name")}
-        </div>
+        <div className="capitalize pl-4">{row.getValue("first_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "last_name",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Name <ChevronsUpDown />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="capitalize pl-4">{row.getValue("last_name")}</div>
       ),
     },
     {
@@ -133,7 +145,7 @@ const UsersPage = () => {
       ),
       cell: ({ row }) => (
         <div className="capitalize text-center">
-          {row.getValue("date_created")}
+          {formatDate(row.getValue("date_created"))}
         </div>
       ),
     },
@@ -196,17 +208,46 @@ const UsersPage = () => {
     );
   }, [search]);
 
+  const searchByList = [
+    {
+      label: "All",
+      value: "all",
+    },
+    {
+      label: "ID",
+      value: "user_id",
+    },
+    {
+      label: "Username",
+      value: "username",
+    },
+    {
+      label: "Name",
+      value: "name",
+    },
+  ];
+
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Users Page</h1>
+      <h1 className="text-3xl">Users</h1>
       <div className="flex items-center justify-between w-full">
-        <Input
-          placeholder="Search users..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <Input
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <CustomSelect
+            items={searchByList}
+            defaultValue={"all"}
+            placeholder="Search by"
+            onChange={(value: string) => {
+              console.log(value);
+            }}
+          />
+        </div>
         <div>
-          <Modal trigger="Add new user">
+          <Modal trigger="Add user">
             <CreateUserForm />
           </Modal>
         </div>

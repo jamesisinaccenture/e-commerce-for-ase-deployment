@@ -2,16 +2,16 @@ import { BadgePercent, MapPinned, Search, Truck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "@/assets/images/logo.png";
-import Loader from "@/components/reusable/Loader";
 import CartDrawer from "@/components/store/CartDrawer";
 import DropdownAvatar from "@/components/store/DropdownAvatar";
 import { Input } from "@/components/ui/input";
-import { useAuthStore } from "@/hooks/state/useAuth";
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { ROUTES } from "@/routes/endpoints";
 import { logoutService } from "@/services/auth/authService";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import ContentWrapper from "../reusable/ContentWrapper";
+import Loader from "../reusable/Loader";
 
 const StoreHeader = () => {
   const { logout, isLoading, setLoading } = useAuthStore();
