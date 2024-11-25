@@ -15,6 +15,7 @@ export interface ICustomInput {
   value?: any;
   label?: string;
   name?: string;
+  checked?: boolean;
   type?: HTMLInputTypeAttribute;
   isRequired?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -24,22 +25,34 @@ export interface ICustomInput {
   className?: any;
 }
 
-// We will change this to the actual later on depending on the structure, as for now this is template only
+// Products interface
 export interface IProduct {
-  albumId: number;
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  product_id?: string | undefined;
+  product_name: string;
+  product_img?: any;
+  product_description: string | undefined;
+  category?: string[] | null | undefined;
+  price: number;
+  currency: string;
+  sold?: number;
+  date_created?: string;
+  created_by?: string;
+  discount?: number;
+  variants?: string[];
+  other_details: any;
+}
+
+export interface IProductSection {
+  products: IProduct[];
+  isHome?: boolean;
 }
 
 export interface IProductStore {
   products: IProduct[];
   setProducts: (products: IProduct[]) => void;
-  addProduct: (product: IProduct) => void;
-  clearProducts: () => void;
 }
 
+<<<<<<< HEAD
 export interface IProductData {
   product_id?: string;
   product_name?: string;
@@ -57,6 +70,12 @@ export interface IProductData {
 export interface ISampleProductData {
   store_products: IProductData[];
   isHome?: boolean;
+=======
+export interface IProductResponse {
+  data: {
+    products: IProduct[];
+  };
+>>>>>>> 9f188b39956c6b230056ec858a5af0db5eece4d9
 }
 
 /*Used in the footer only*/

@@ -54,9 +54,7 @@ export const signupSchema = z
       .regex(/\d.*\d.*\d/, "Password must contain at least 3 numbers")
       .regex(/[A-Z]/, "Password must contain at least 1 capital letter"),
     confirmPassword: z.string().nonempty("Please confirm your password"),
-    terms: z.literal(true, {
-      errorMap: () => ({ message: "You must accept the terms" }),
-    }),
+    terms: z.boolean().default(false),
     dateCreated: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {

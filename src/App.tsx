@@ -1,13 +1,19 @@
+import { Suspense } from "react";
 import { RouterProvider } from "react-router-dom";
+
+import CustomLoader from "./components/reusable/CustomLoader";
 import { Toaster } from "@/components/ui/toaster";
+
 import { router } from "./routes";
 
 const App = () => {
   return (
-    <div className="App">
-      <Toaster />
-      <RouterProvider router={router} />
-    </div>
+    <Suspense fallback={<CustomLoader />}>
+      <div className="App h-full">
+        <Toaster />
+        <RouterProvider router={router} />
+      </div>
+    </Suspense>
   );
 };
 

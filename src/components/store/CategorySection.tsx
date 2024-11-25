@@ -96,35 +96,39 @@ const CategorySection: React.FC = () => {
 
   return (
     <>
-      <div>
-        <div className="flex justify-between">
-          <h1 className="text-2xl font-semibold border-b border-blue-300">
-            Our
-            <span className="text-blue-500">Categories</span>
-          </h1>
+      <div className="flex flex-col w-full">
+        <div className="mt-10 mb-10">
+          <div className="flex justify-between">
+            <h1 className="text-2xl text-store-heading font-semibold border-b-2 border-store-primary">
+              Our <span className="text-store-primary">Categories</span>
+            </h1>
+          </div>
+          <hr />
         </div>
-        <hr />
-      </div>
-      <div className="flex flex-wrap justify-between gap-6 mt-3">
-        {categories.map((category, index) => (
-          <div key={index}>
-            <div>
+        <div className="flex flex-wrap gap-4">
+          {categories.map((category, index) => (
+            <div key={index}>
               {products
                 .filter((product) => product.category === category)
                 .map((product) => (
-                  <div key={product.product_id} className="container p-2">
+                  <div
+                    key={product.product_id}
+                    className="container p-2 group hover:cursor-pointer"
+                  >
                     <img
                       //src={sampleImage}
                       src={product.product_img}
                       alt={product.product_name}
-                      className="rounded-full w-28 h-28 hover:border-blue-500 border"
+                      className="rounded-full w-28 h-28 group-hover:border-store-primary group-hover:shadow-md border"
                     />
-                    <p className="text-center">{category}</p>
+                    <p className="text-center group-hover:font-semibold">
+                      {category}
+                    </p>
                   </div>
                 ))}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );

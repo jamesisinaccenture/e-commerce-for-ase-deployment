@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { API_URL } from "@/lib/constants";
 import { getToken, headerConfig } from "@/lib/utils";
 import {
@@ -30,18 +31,16 @@ export const loginService = async (data: LoginFormData) => {
         },
       });
 
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("session", JSON.stringify(userResponse.data));
       return { ...userResponse.data, token };
     }
-  } catch (error) {
-    console.error("Login failed:", error);
-    throw error;
+  } catch (error: any) {
+    throw error.response.data;
   }
 };
 
 export const logoutService = async () => {
-  const token = JSON.parse(localStorage.getItem("token") || "{}");
+  const token = getToken();
+
   try {
     const response = await axios.post(
       `${API_URL}/auth/logout`,
@@ -81,20 +80,23 @@ export const signupService = async (data: SignupFormData) => {
     );
 
     return response.data;
-  } catch (error) {
-    // Capture specific errors (e.g., 400 for validation issues)
-    if (axios.isAxiosError(error) && error.response) {
-      const errorMessage = error.response.data.message || "Signup failed";
-      console.error("Signup error:", errorMessage);
-      throw new Error(errorMessage); // Throw a user-friendly error
-    } else {
-      console.error("Unexpected error:", error);
-      throw new Error("An unexpected error occurred.");
-    }
+  } catch (error: any) {
+    // // Capture specific errors (e.g., 400 for validation issues)
+    // if (axios.isAxiosError(error) && error.response) {
+    //   const errorMessage = error.response.data.message || "Signup failed";
+    //   console.error("Signup error:", errorMessage);
+    //   throw new Error(errorMessage); // Throw a user-friendly error
+    // } else {
+    //   console.error("Unexpected error:", error);
+    //   throw new Error("An unexpected error occurred.");
+    // }
+
+    throw error.response.data;
   }
 };
 
 export const getUserInformation = async () => {
+  const { updateUserInfo } = useAuthStore();
   try {
     const token = getToken();
     const userResponse = await axios.get(`${API_URL}/user`, {
@@ -107,7 +109,8 @@ export const getUserInformation = async () => {
 
     if (userResponse) {
       const user = userResponse.data.data;
-      sessionStorage.setItem("session", JSON.stringify(user));
+      updateUserInfo(user);
+      // sessionStorage.setItem("user", JSON.stringify(user));
     }
 
     return userResponse;

@@ -1,24 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import AdminRoutes from "@/components/reusable/AdminRoutes";
+import CustomLoader from "@/components/reusable/CustomLoader";
 import StoreRoutes from "@/components/reusable/StoreRoutes";
 import AdminLayout from "@/layouts/AdminLayout";
 import StoreLayout from "@/layouts/StoreLayout";
-import CategoryPage from "@/pages/Admin/CategoryPage";
-import DashboardPage from "@/pages/Admin/DashboardPage";
-import ProductsPage from "@/pages/Admin/ProductsPage";
-import UsersPage from "@/pages/Admin/UsersPage";
-import AccessDenied from "@/pages/Auth/AccessDenied";
-import ForgotPassword from "@/pages/Auth/ForgetPasswordPage";
-import LoginPage from "@/pages/Auth/LoginPage";
-import NotFound from "@/pages/Auth/NotFound";
-import SignupPage from "@/pages/Auth/SignupPage";
-import AllProductsPage from "@/pages/Store/AllProductsPage";
-import CartPage from "@/pages/Store/CartPage";
-import CheckoutSuccessPage from "@/pages/Store/CheckoutSuccessPage";
-import InformationSettingsPage from "@/pages/Store/InformationSettingsPage";
-import LandingPage from "@/pages/Store/LandingPage";
-import UpdateInformationSettingsPage from "@/pages/Store/UpdateInformationSettingsPage";
+import {
+  AccessDenied,
+  AllProductsPage,
+  CartPage,
+  CategoryPage,
+  CheckoutSuccessPage,
+  DashboardPage,
+  ForgetPasswordPage,
+  InformationSettingsPage,
+  LandingPage,
+  LoginPage,
+  NotFound,
+  ProductsPage,
+  SignupPage,
+  TransactionPage,
+  UpdateInformationSettingsPage,
+  UsersPage,
+} from "@/pages";
 import { ROUTES } from "./endpoints";
 
 export const router = createBrowserRouter([
@@ -28,11 +32,15 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.FORGOT_PASSWORD,
-    element: <ForgotPassword />,
+    element: <ForgetPasswordPage />,
   },
   {
     path: ROUTES.REGISTER,
     element: <SignupPage />,
+  },
+  {
+    path: ROUTES.TEST,
+    element: <CustomLoader />,
   },
   {
     path: ROUTES.BASE,
@@ -66,6 +74,7 @@ export const router = createBrowserRouter([
       { path: ROUTES.ADMIN.PRODUCT, element: <ProductsPage /> },
       { path: ROUTES.ADMIN.CATEGORY, element: <CategoryPage /> },
       { path: ROUTES.ADMIN.USERS, element: <UsersPage /> },
+      { path: ROUTES.ADMIN.TRANSACTIONS, element: <TransactionPage /> },
     ],
   },
   {

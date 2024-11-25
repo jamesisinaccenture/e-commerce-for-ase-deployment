@@ -4,7 +4,8 @@ export const ROUTES = {
   LOGIN: "/login",
   REGISTER: "/register",
   FORGOT_PASSWORD: "/forgot-password",
-  ACCESS_DENIED: "access_denied",
+  ACCESS_DENIED: "/access_denied",
+  TEST: "/test",
   NOT_FOUND: "*",
   ADMIN: {
     BASE: "/admin",
