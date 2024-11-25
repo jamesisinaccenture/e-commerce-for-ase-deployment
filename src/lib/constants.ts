@@ -262,7 +262,11 @@ export const store_products: IProduct[] = [
     created_by: "JamesAllen",
     other_details: {
       voice_control: true,
+<<<<<<< HEAD
+      energy_saving: false,
+=======
       energy_saving: true,
+>>>>>>> fdfaf7988cfeb4a2124fd63c0602bf6894cfd7d3
     },
   },
 ];
