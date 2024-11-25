@@ -1,75 +1,91 @@
+import { string } from 'zod';
 
 // Products interface
 export interface IProduct {
-  product_id?: string | undefined;
-  product_name: string;
-  product_img?: any;
-  product_description: string | undefined;
-  category: string | null | undefined;
-  price: number;
-  currency: string;
-  sold?: number;
-  date_created?: string;
-  created_by?: string;
+    product_id?: string | undefined;
+    product_name: string;
+    product_img?: any;
+    product_description: string | undefined;
+    category: string | null | undefined;
+    price: number;
+    currency: string;
+    sold?: number;
+    date_created?: string;
+    created_by?: string;
 }
 export interface IProductResponse {
-  data: {
-    products: IProduct[];
-  };
+    data: {
+        products: IProduct[];
+    };
 }
 
 // Categories interface
 export interface ICategory {
-  category_id?: string;
-  category_name: string;
-  category_img?: string;
-  date_created?: string;
-  create_by?: string;
+    category_id?: string;
+    category_name: string;
+    category_img?: string;
+    date_created?: string;
+    create_by?: string;
+}
+
+export interface ICategoryResponse {
+    data: ICategory[];
+}
+
+export interface ICreateCategoryResponse {
+    data: {
+        message: string;
+        category: ICategory[];
+    };
+}
+
+export interface ICreateCategoryPayload {
+    category_name: string;
 }
 
 // User interface
 export interface IUser {
-  first_name: string;
-  last_name: string;
-  username: string;
-  contact_number: string;
-  address: string;
-  date_created?: string;
-  password?: string;
-  access_level: string;
+    first_name: string;
+    last_name: string;
+    username: string;
+    contact_number: string;
+    address: string;
+    date_created?: string;
+    password?: string;
+    access_level: string;
 
-  user_id?: string;
-  user_img: any;
-  position?: string | null;
-  department?: string | null;
-  branch?: string | null;
-  group_tag?: string | null;
-  status?: number; // 0 = disabled, 1 = enabled}
+    user_id?: string;
+    user_img: any;
+    position?: string | null;
+    department?: string | null;
+    branch?: string | null;
+    group_tag?: string | null;
+    status?: number; // 0 = disabled, 1 = enabled}
 }
 
 // store state interfaces
 export interface IAdminProductStore {
-  products: IProduct[];
-  setProducts: (products: IProduct[]) => void;
-  clearProducts: () => void;
+    products: IProduct[];
+    setProducts: (products: IProduct[]) => void;
+    clearProducts: () => void;
 }
 
 export interface IAdminCategoryStore {
-  category: ICategory[];
-  setCategory: (category: ICategory[]) => void;
-  clearCategory: () => void;
+    category: ICategory[];
+    setCategory: (category: ICategory[]) => void;
+    clearCategory: () => void;
 }
 
 export interface IAdminGeneralStore {
-  open: boolean;
-  setOpen: (open: boolean) => void;
+    open: boolean;
+    setOpen: (open: boolean) => void;
 
-  search: string;
-  setSearch: (search: string) => void;
+    search: string;
+    setSearch: (search: string) => void;
 }
 
 // Generals interface
 export interface IDropImageInput {
-  onImageDrop?: (file: File) => void;
-  value?: string;
+    onImageDrop?: (file: File) => void;
+    value?: string;
 }

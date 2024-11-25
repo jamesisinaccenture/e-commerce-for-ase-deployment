@@ -5,7 +5,6 @@ import CustomFormItem from '@/components/reusable/CustomFormItem';
 import CustomInput from '@/components/reusable/CustomInput';
 import { Button } from '@/components/ui/button';
 import { FormField, Form } from '@/components/ui/form';
-import { toast } from '@/hooks/use-toast';
 import { closeModal } from '@/lib/utils';
 import { ICategory } from '@/models/admin.model';
 import { categoryFormSchema } from '@/schema/adminSchema';
@@ -14,7 +13,7 @@ import { DialogClose } from '@radix-ui/react-dialog';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const CreateCategoryForm = () => {
+const UpdateCategoryForm = () => {
     const form = useForm({
         resolver: zodResolver(categoryFormSchema),
         defaultValues: {
@@ -23,21 +22,15 @@ const CreateCategoryForm = () => {
     });
     const { createCategory } = useCategoryServices();
 
-    const onSubmit = (data: ICategory) =>
-        createCategory(data, () => {
-            toast({
-                title: 'Category created successfully!',
-                description: 'The new category has been added to the system.',
-                variant: 'success',
-            });
-            closeModal();
-        });
-
+    const onSubmit = (data: ICategory) => {
+        console.log(data);
+        closeModal();
+    };
     return (
         <div>
             <div className='flex gap-2 items-center my-2'>
                 <ShoppingBasket />
-                <h1 className='font-bold text-lg'>Add new category</h1>
+                <h1 className='font-bold text-lg'>Edit new category</h1>
             </div>
             <div>
                 <Form {...form}>
@@ -63,7 +56,6 @@ const CreateCategoryForm = () => {
                         <div className='flex gap-2 justify-end'>
                             <DialogClose asChild>
                                 <Button
-                                    id='closeModal'
                                     type='button'
                                     onClick={() => form.reset()}
                                     variant='ghost'
@@ -80,4 +72,4 @@ const CreateCategoryForm = () => {
     );
 };
 
-export default CreateCategoryForm;
+export default UpdateCategoryForm;
