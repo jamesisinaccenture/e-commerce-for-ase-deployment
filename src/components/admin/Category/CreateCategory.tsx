@@ -21,9 +21,9 @@ const CreateCategoryForm = () => {
             category_name: '',
         },
     });
-    const { createCategory } = useCategoryServices();
+    const { createCategory, isLoading } = useCategoryServices();
 
-    const onSubmit = (data: ICreateCategoryPayload) =>
+    const onSubmit = (data: ICreateCategoryPayload) => {
         createCategory(data, () => {
             toast({
                 title: 'Category created successfully!',
@@ -32,6 +32,7 @@ const CreateCategoryForm = () => {
             });
             closeModal();
         });
+    };
 
     return (
         <div>
@@ -71,7 +72,9 @@ const CreateCategoryForm = () => {
                                     Cancel
                                 </Button>
                             </DialogClose>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit' disabled={isLoading}>
+                                {isLoading ? 'Processing...' : 'Submit'}
+                            </Button>
                         </div>
                     </form>
                 </Form>

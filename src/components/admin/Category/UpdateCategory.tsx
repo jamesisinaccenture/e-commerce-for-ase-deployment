@@ -24,7 +24,7 @@ const UpdateCategoryForm = ({ category }: IUpdateCategoryForm) => {
             category_id: category.category_id,
         },
     });
-    const { updateCategory } = useCategoryServices();
+    const { updateCategory, isLoading } = useCategoryServices();
 
     const onSubmit = (data: any) => updateCategory(data);
     // updateCategory(data, () => {
@@ -72,7 +72,10 @@ const UpdateCategoryForm = ({ category }: IUpdateCategoryForm) => {
                                     Cancel
                                 </Button>
                             </DialogClose>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit' disabled={isLoading}>
+                                {' '}
+                                {isLoading ? 'Processing...' : 'Submit'}
+                            </Button>
                         </div>
                     </form>
                 </Form>
