@@ -6,10 +6,6 @@ import CustomCheckBox from "@/components/reusable/CustomCheckBox";
 import CustomInput from "@/components/reusable/CustomInput";
 import LoadingIcon from "@/components/reusable/LoadingIcon";
 import { Button } from "@/components/ui/button";
-<<<<<<< HEAD
-// import { Checkbox } from "@/components/ui/checkbox";
-=======
->>>>>>> 9f188b39956c6b230056ec858a5af0db5eece4d9
 import {
   Form,
   FormControl,
@@ -235,88 +231,6 @@ const SignupPage = () => {
               Create account {isLoading && <LoadingIcon />}
             </Button>
 
-<<<<<<< HEAD
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <CustomInput label="Password" type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <CustomInput
-                    label="Confirm Password"
-                    type="password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <input
-            type="hidden"
-            value={new Date().toISOString()}
-            {...form.register("dateCreated")}
-          />
-
-          <FormField
-            control={form.control}
-            name="terms"
-            render={({ field }) => (
-              <FormItem className="flex items-center space-x-2">
-                <FormControl>
-                  <input
-                    type="checkbox"
-                    className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"                
-                    checked={field.value}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <span className="text-gray-600">
-                  I agree to all the{" "}
-                  <span className="underline text-black">Terms</span> and{" "}
-                  <span className="underline text-black">Privacy Policies</span>
-                </span>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button
-            type="submit"
-            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
-          >
-            Create account
-          </Button>
-
-          {/* Link to Login Page */}
-          <div className="mt-4 text-center">
-            <span className="text-gray-600">
-              Already have an account?{" "}
-              <button
-                onClick={() => navigate(ROUTES.LOGIN)}
-                className="text-blue-600 hover:underline"
-              >
-                Login
-              </button>
-            </span>
-          </div>
-        </form>
-      </Form>
-=======
             {/* Link to Login Page */}
             <div className="mt-4 text-center">
               <span className="text-gray-600">
@@ -332,7 +246,6 @@ const SignupPage = () => {
           </form>
         </Form>
       </div>
->>>>>>> 9f188b39956c6b230056ec858a5af0db5eece4d9
     </div>
   );
 };

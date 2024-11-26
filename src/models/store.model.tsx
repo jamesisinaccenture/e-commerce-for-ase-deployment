@@ -52,30 +52,10 @@ export interface IProductStore {
   setProducts: (products: IProduct[]) => void;
 }
 
-<<<<<<< HEAD
-export interface IProductData {
-  product_id?: string;
-  product_name?: string;
-  product_img?: string;
-  product_description?: string;
-  category?: string;
-  price?: number;
-  currency?: string;
-  sold?: number;
-  date_created?: string | undefined;
-  created_by?: string | undefined;
-  variants?: string[];
-
-}
-export interface ISampleProductData {
-  store_products: IProductData[];
-  isHome?: boolean;
-=======
 export interface IProductResponse {
   data: {
     products: IProduct[];
   };
->>>>>>> 9f188b39956c6b230056ec858a5af0db5eece4d9
 }
 
 /*Used in the footer only*/
@@ -99,7 +79,7 @@ export interface DropdownAvatarProps {
   handleLogout: () => void;
 }
 
-export interface CartItem{
+export interface CartItem {
   product_id: string;
   product_name: string;
   product_img: string;

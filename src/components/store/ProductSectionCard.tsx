@@ -11,7 +11,14 @@ import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import ProductCardAnimated from "./ProductCardAnimated";
 import { Button } from "../ui/button";
 
-const ProductSectionCard = ({ product_id, product_name, product_img, price, currency, discount }: IProduct) => {
+const ProductSectionCard = ({
+  product_id,
+  product_name,
+  product_img,
+  price,
+  currency,
+  discount,
+}: IProduct) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const handleAddToCart = () => {
@@ -41,7 +48,10 @@ const ProductSectionCard = ({ product_id, product_name, product_img, price, curr
         <Dialog key={product_id}>
           <DialogTrigger asChild>
             <div className="-z-10">
-              <AspectRatio ratio={1 / 1} className="overflow-hidden rounded-t-lg">
+              <AspectRatio
+                ratio={1 / 1}
+                className="overflow-hidden rounded-t-lg"
+              >
                 <div className="rounded-lg overflow-hidden w-full p-4">
                   <img
                     src={product_img || defaultImage}
@@ -84,11 +94,24 @@ const ProductSectionCard = ({ product_id, product_name, product_img, price, curr
               </div>
             </div>
           </DialogTrigger>
-          <ProductModal product={{ product_id, product_name, product_img, price, currency, discount }} />
+          <ProductModal
+            product={{
+              product_id,
+              product_name,
+              product_img,
+              price,
+              currency,
+              discount,
+            }}
+          />
         </Dialog>
 
         <div className="flex flex-row justify-between p-2 mb-2">
-          <Button size="sm" variant="default" className="bg-store-primary hover:bg-store-primary/80">
+          <Button
+            size="sm"
+            variant="default"
+            className="bg-store-primary hover:bg-store-primary/80"
+          >
             <Heart size={16} />
           </Button>
           <Button
@@ -103,7 +126,10 @@ const ProductSectionCard = ({ product_id, product_name, product_img, price, curr
       </motion.div>
       {isAddingToCart && (
         <div className="fixed w-full h-screen z-9999">
-          <ProductCardAnimated product_img={product_img} product_name={product_name} />
+          <ProductCardAnimated
+            product_img={product_img}
+            product_name={product_name}
+          />
         </div>
       )}
     </>
@@ -111,4 +137,3 @@ const ProductSectionCard = ({ product_id, product_name, product_img, price, curr
 };
 
 export default ProductSectionCard;
-
