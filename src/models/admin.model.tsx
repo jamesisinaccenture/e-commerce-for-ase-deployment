@@ -1,7 +1,7 @@
 
 // Products interface
 export interface IProduct {
-    product_id?: string | undefined;
+    product_id: string | undefined;
     product_name: string;
     product_img?: any;
     product_description: string | undefined;
