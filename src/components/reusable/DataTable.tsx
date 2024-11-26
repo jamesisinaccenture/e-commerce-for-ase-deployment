@@ -26,15 +26,13 @@ type DataTableProps<TData> = {
   columns: ColumnDef<TData>[];
   data: TData[];
   filterPlaceholder?: string;
+  loading?: boolean;
 };
 
-export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
+export function DataTable<TData>({ columns, data, loading }: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -56,9 +54,18 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
     },
   });
 
+  // Conditionally render loading or table content
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <span>Loading...</span>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="rounded-md border overflow-auto min-h-96 ">
+      <div className="rounded-md border overflow-auto min-h-96">
         <Table className="admintable">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -79,26 +86,17 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() ? "selected" : undefined}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() ? "selected" : undefined}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -108,12 +106,8 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          <span className="font-bold text-store-heading">{data.length}</span>{" "}
-          total items,{" "}
-          <span className="font-bold text-store-heading">
-            {table.getPageCount()}
-          </span>{" "}
-          pages
+          <span className="font-bold text-store-heading">{data.length}</span> total items,{" "}
+          <span className="font-bold text-store-heading">{table.getPageCount()}</span> pages
         </div>
         <Button
           variant="outline"
