@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { FormField, Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { closeModal } from '@/lib/utils';
-import { ICategory } from '@/models/admin.model';
+import { ICreateCategoryPayload } from '@/models/admin.model';
 import { categoryFormSchema } from '@/schema/adminSchema';
 import { useCategoryServices } from '@/services/admin/categoryServices';
 import { DialogClose } from '@radix-ui/react-dialog';
@@ -23,7 +23,7 @@ const CreateCategoryForm = () => {
     });
     const { createCategory } = useCategoryServices();
 
-    const onSubmit = (data: ICategory) =>
+    const onSubmit = (data: ICreateCategoryPayload) =>
         createCategory(data, () => {
             toast({
                 title: 'Category created successfully!',

@@ -1,4 +1,3 @@
-import { string } from 'zod';
 
 // Products interface
 export interface IProduct {
@@ -32,6 +31,7 @@ export interface ICategoryResponse {
     data: ICategory[];
 }
 
+//delete
 export interface ICreateCategoryResponse {
     data: {
         message: string;
@@ -39,8 +39,24 @@ export interface ICreateCategoryResponse {
     };
 }
 
+export interface IUpdateCategoryResponse {
+    data: {
+        message: 'Category updated successfully';
+        category: ICategory[];
+    };
+}
+
 export interface ICreateCategoryPayload {
+    category_id?: any;
     category_name: string;
+}
+
+export interface IDeleteCategoryPayload {}
+
+export interface IUpdateCategoryPayload {
+    category_id?: string;
+    category_name: string;
+    created_by?: string;
 }
 
 // User interface

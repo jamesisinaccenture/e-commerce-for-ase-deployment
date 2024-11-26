@@ -5,7 +5,6 @@ import CustomFormItem from '@/components/reusable/CustomFormItem';
 import CustomInput from '@/components/reusable/CustomInput';
 import { Button } from '@/components/ui/button';
 import { FormField, Form } from '@/components/ui/form';
-import { closeModal } from '@/lib/utils';
 import { ICategory } from '@/models/admin.model';
 import { categoryFormSchema } from '@/schema/adminSchema';
 import { useCategoryServices } from '@/services/admin/categoryServices';
@@ -13,19 +12,29 @@ import { DialogClose } from '@radix-ui/react-dialog';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const UpdateCategoryForm = () => {
+interface IUpdateCategoryForm {
+    category: ICategory;
+}
+
+const UpdateCategoryForm = ({ category }: IUpdateCategoryForm) => {
     const form = useForm({
         resolver: zodResolver(categoryFormSchema),
         defaultValues: {
-            category_name: '',
+            category_name: category.category_name,
+            category_id: category.category_id,
         },
     });
-    const { createCategory } = useCategoryServices();
+    const { updateCategory } = useCategoryServices();
 
-    const onSubmit = (data: ICategory) => {
-        console.log(data);
-        closeModal();
-    };
+    const onSubmit = (data: any) => updateCategory(data);
+    // updateCategory(data, () => {
+    //     toast({
+    //         title: 'Category created successfully!',
+    //         description: 'The new category has been added to the system.',
+    //         variant: 'success',
+    //     });
+    //     closeModal();
+    // });
     return (
         <div>
             <div className='flex gap-2 items-center my-2'>

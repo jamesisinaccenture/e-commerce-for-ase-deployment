@@ -20,7 +20,8 @@ import { ColumnDef } from '@tanstack/react-table';
 
 const CategoryPage = () => {
     const { search, setSearch } = useAdminGeneralStore();
-    const { getCategory, deleteCategory } = useCategoryServices();
+    const { getCategory, deleteCategory, updateCategory } =
+        useCategoryServices();
     const { category } = useAdminCategoryStore();
 
     const categoryColumns: ColumnDef<ICategory>[] = [
@@ -29,10 +30,8 @@ const CategoryPage = () => {
             accessorKey: 'category_id',
             header: 'ID',
             cell: ({ row }) => (
-                <div className='capitalize w-full h-12 p-1'>
-                    {/* {row.index + 1} */}
-
-                    {row.original.category_id}
+                <div className='capitalize w-full h-12 p-1 flex items-center justify-center'>
+                    {row.index + 1}
                 </div>
             ),
         },
@@ -100,7 +99,7 @@ const CategoryPage = () => {
                             trigger={<Edit />}
                             variant='ghost'
                         >
-                            <UpdateCategoryForm />
+                            <UpdateCategoryForm category={row.original} />
                         </Modal>
                     </div>
                     <div>

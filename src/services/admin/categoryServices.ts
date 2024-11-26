@@ -1,13 +1,15 @@
 import { useState } from 'react';
 
 import { useAdminCategoryStore } from '@/hooks/state/admin/useAdminCategory';
-import { useAdminGeneralStore } from '@/hooks/state/admin/useAdminGeneral';
+import { toast } from '@/hooks/use-toast';
 import { useAxios } from '@/hooks/useAxios';
 import {
     ICategory,
     ICategoryResponse,
     ICreateCategoryPayload,
     ICreateCategoryResponse,
+    IUpdateCategoryPayload,
+    IUpdateCategoryResponse,
 } from '@/models/admin.model';
 import { ENDPOINTS } from '../endpoints';
 
@@ -51,6 +53,7 @@ export const useCategoryServices = () => {
             console.log(response);
             setIsLoading(false);
             if (callback) callback(response.data.category);
+            getCategory();
             return response;
         } catch (error) {
             console.log(error);
@@ -60,16 +63,59 @@ export const useCategoryServices = () => {
 
     const deleteCategory = async (
         category_id?: string,
-        callback?: () => void,
+        callback?: (data: ICategory[]) => void,
     ) => {
         try {
             const response = await api.delete(
                 `${ENDPOINTS.CATEGORY.BASE}/${category_id}`,
             );
-            console.log(response);
-            if (callback) callback();
+            if (callback) callback(response.data.category);
+            getCategory();
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const updateCategory = async (
+        payload: IUpdateCategoryPayload,
+        callback?: (data: ICategory[]) => void,
+    ) => {
+        setIsLoading(true);
+        console.log(payload, 'payload from input');
+        try {
+            const response: IUpdateCategoryResponse = await api.put(
+                `${ENDPOINTS.CATEGORY.BASE}/${payload.category_id}`,
+                payload,
+            );
+            if (!response.data) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Error updating category',
+                    description: 'Please try again.',
+                });
+                throw new Error('Error: Could not update category');
+            }
+
+            if (callback) callback(response.data.category);
+            toast({
+                variant: 'success',
+                title: 'Update Category',
+                description: 'Category updated successfully',
+            });
+            getCategory();
+
+            return response.data.category;
+        } catch (error: any) {
+            console.log(error);
+            setIsLoading(false);
+            toast({
+                variant: 'destructive',
+                title: 'Error updating category',
+                description:
+                    error.message ||
+                    'Error occurred while updating, please try again.',
+            });
+            throw new Error(error);
         }
     };
 
@@ -78,5 +124,6 @@ export const useCategoryServices = () => {
         isLoading,
         createCategory,
         deleteCategory,
+        updateCategory,
     };
 };
