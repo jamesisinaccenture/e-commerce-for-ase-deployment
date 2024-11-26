@@ -18,6 +18,7 @@ const ProductSectionCard = (product: IProduct) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const addToCart = useCartStore(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (state: { addToCart: any }) => state.addToCart
   );
 

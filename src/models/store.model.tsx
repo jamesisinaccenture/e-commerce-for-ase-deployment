@@ -10,7 +10,7 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   isSearch?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
@@ -30,6 +30,7 @@ export interface ICustomInput {
 export interface IProduct {
   product_id?: string | undefined;
   product_name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   product_img?: any;
   product_description: string | undefined;
   category?: string[] | null | undefined;
@@ -40,6 +41,7 @@ export interface IProduct {
   created_by?: string;
   discount?: number;
   variants?: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   other_details: any;
 }
 
