@@ -47,6 +47,26 @@ export interface IUser {
   status?: number; // 0 = disabled, 1 = enabled}
 }
 
+export interface IUserResponse{
+  data: {
+    users: [
+      {
+        first_name: string,
+        last_name: string,
+        contact_number: string,
+        address: string,
+        date_created: string,
+        username: string,
+        access_level: string,
+        user_img: string,
+        position: string,
+        department: string,
+        branch: string
+      }
+    ]
+  }
+}
+
 // store state interfaces
 export interface IAdminProductStore {
   products: IProduct[];
@@ -58,6 +78,12 @@ export interface IAdminCategoryStore {
   category: ICategory[];
   setCategory: (category: ICategory[]) => void;
   clearCategory: () => void;
+}
+
+export interface IAdminUserStore {
+  users: IUser[];
+  setUsers: (users: IUser[]) => void;
+  clearUsers: () => void;
 }
 
 export interface IAdminGeneralStore {

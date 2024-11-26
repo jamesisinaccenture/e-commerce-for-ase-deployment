@@ -9,4 +9,8 @@ export const ENDPOINTS = {
     GETALL: "/categories",
   },
   TRANSACTIONS: "/transactions",
+  USERS: {
+    BASE: "/user",
+    GETALL: "/users"
+  }
 };
