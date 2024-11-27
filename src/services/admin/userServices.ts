@@ -9,7 +9,7 @@ import { ENDPOINTS } from "../endpoints";
 export const useUserServices = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setUsers} = useAdminUserStore();
+  const { setUsers } = useAdminUserStore();
 
   const api = useAxios();
 
@@ -18,7 +18,7 @@ export const useUserServices = () => {
 
     try {
       const response: IUserResponse = await api.get(ENDPOINTS.USERS.GETALL);
-        console.log(response);
+      console.log(response);
       if (!response.data.users) throw new Error("Error: Could not get user");
 
       setIsLoading(false);
@@ -30,13 +30,9 @@ export const useUserServices = () => {
     }
   };
 
-  const createUser = async (
-    payload: IUser,
-    callback?: (data: any) => void
-  ) => {
+  const createUser = async (payload: IUser, callback?: (data: any) => void) => {
     setIsLoading(true);
     try {
-
       const response: IUserResponse = await api.post(
         ENDPOINTS.USERS.BASE,
         payload
@@ -71,10 +67,7 @@ export const useUserServices = () => {
     }
   };
 
-  const updateUser = async (
-    payload: IUser,
-    callback?: (data: any) => void
-  ) => {
+  const updateUser = async (payload: IUser, callback?: (data: any) => void) => {
     setIsLoading(true);
     try {
       const response: IUserResponse = await api.put(
@@ -112,10 +105,7 @@ export const useUserServices = () => {
     }
   };
 
-  const deleteUser = async (
-    payload: IUser,
-    callback?: (data: any) => void
-  ) => {
+  const deleteUser = async (payload: IUser, callback?: (data: any) => void) => {
     setIsLoading(true);
     try {
       const response: IUserResponse = await api.delete(

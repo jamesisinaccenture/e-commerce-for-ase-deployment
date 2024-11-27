@@ -15,7 +15,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 const UsersPage = () => {
   const { search, setSearch } = useAdminGeneralStore();
-  const { getUsers } = useUserServices();
+  const { getUsers, deleteUser } = useUserServices();
   const { users:usersList } = useAdminUserStore();
 
   const usersColumns: ColumnDef<IUser>[] = [
@@ -168,15 +168,15 @@ const UsersPage = () => {
               <h1 className="font-bold text-2xl">Delete User</h1>
               <div>
                 Are you sure you want to delete the user "
-                <span className="font-bold">{row.getValue("username")}</span> "?
-                <br />
+                <span className="font-bold">{row.getValue("username")}</span> "?<br />
                 This action cannot be undone.
               </div>
               <div className="flex justify-end gap-2">
                 <Button
                   variant="destructive"
-                  onClick={() => {
-                    row.toggleSelected(false);
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteUser(row.original);
                   }}
                 >
                   Delete
