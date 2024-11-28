@@ -5,40 +5,41 @@ import CustomFormItem from '@/components/reusable/CustomFormItem';
 import CustomInput from '@/components/reusable/CustomInput';
 import { Button } from '@/components/ui/button';
 import { FormField, Form } from '@/components/ui/form';
-import { toast } from '@/hooks/use-toast';
-import { closeModal } from '@/lib/utils';
-import { ICreateCategoryPayload } from '@/models/admin.model';
+import { ICategory } from '@/models/admin.model';
 import { categoryFormSchema } from '@/schema/adminSchema';
 import { useCategoryServices } from '@/services/admin/categoryServices';
 import { DialogClose } from '@radix-ui/react-dialog';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const CreateCategoryForm = () => {
+interface IUpdateCategoryForm {
+    category: ICategory;
+}
+
+const UpdateCategoryForm = ({ category }: IUpdateCategoryForm) => {
     const form = useForm({
         resolver: zodResolver(categoryFormSchema),
         defaultValues: {
-            category_name: '',
+            category_name: category.category_name,
+            category_id: category.category_id,
         },
     });
-    const { createCategory, isLoading } = useCategoryServices();
+    const { updateCategory, isLoading } = useCategoryServices();
 
-    const onSubmit = (data: ICreateCategoryPayload) => {
-        createCategory(data, () => {
-            toast({
-                title: 'Category created successfully!',
-                description: 'The new category has been added to the system.',
-                variant: 'success',
-            });
-            closeModal();
-        });
-    };
-
+    const onSubmit = (data: any) => updateCategory(data);
+    // updateCategory(data, () => {
+    //     toast({
+    //         title: 'Category created successfully!',
+    //         description: 'The new category has been added to the system.',
+    //         variant: 'success',
+    //     });
+    //     closeModal();
+    // });
     return (
         <div>
             <div className='flex gap-2 items-center my-2'>
                 <ShoppingBasket />
-                <h1 className='font-bold text-lg'>Add new category</h1>
+                <h1 className='font-bold text-lg'>Edit new category</h1>
             </div>
             <div>
                 <Form {...form}>
@@ -64,7 +65,6 @@ const CreateCategoryForm = () => {
                         <div className='flex gap-2 justify-end'>
                             <DialogClose asChild>
                                 <Button
-                                    id='closeModal'
                                     type='button'
                                     onClick={() => form.reset()}
                                     variant='ghost'
@@ -73,6 +73,7 @@ const CreateCategoryForm = () => {
                                 </Button>
                             </DialogClose>
                             <Button type='submit' disabled={isLoading}>
+                                {' '}
                                 {isLoading ? 'Processing...' : 'Submit'}
                             </Button>
                         </div>
@@ -83,4 +84,4 @@ const CreateCategoryForm = () => {
     );
 };
 
-export default CreateCategoryForm;
+export default UpdateCategoryForm;
