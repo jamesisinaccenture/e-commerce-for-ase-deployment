@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useSearchStore } from "@/store/useSearchStore"; 
+
 //import sampleImage from "@/assets/images/wireless airpods.jpg";
 const products = [
   {
@@ -92,7 +94,16 @@ const products = [
 ];
 
 const CategorySection: React.FC = () => {
-  const categories = [...new Set(products.map((product) => product.category))];
+  const { query } = useSearchStore(); // Access global query state
+  const filteredProducts = products.filter(
+    (product) =>
+      product.category.toLowerCase().includes(query) ||
+      product.product_name.toLowerCase().includes(query)
+  );
+
+  const categories = [
+    ...new Set(filteredProducts.map((product) => product.category)),
+  ];
 
   return (
     <>
