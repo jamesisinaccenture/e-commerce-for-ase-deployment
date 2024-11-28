@@ -80,23 +80,57 @@ export interface IUser {
 }
 
 export interface IUserResponse{
-  data: {
-    users: [
-      {
-        first_name: string,
-        last_name: string,
-        contact_number: string,
-        address: string,
-        date_created: string,
-        username: string,
-        access_level: string,
-        user_img: string,
-        position: string,
-        department: string,
-        branch: string
-      }
-    ]
-  }
+    data: {
+        users: IUser[];
+    };
+}
+export interface ICreateUserResponse {
+    data: {
+        message: string;
+        user: IUser[];
+    };
+}
+export interface ICreateUserPayload {
+    first_name: string;
+    last_name: string;
+    username: string;
+    contact_number: string;
+    address: string;
+    date_created?: string;
+    password?: string;
+    access_level: string;
+
+    user_id?: string;
+    user_img: any;
+    position?: string | null;
+    department?: string | null;
+    branch?: string | null;
+    group_tag?: string | null;
+    status?: number; // 0 = disabled, 1 = enabled}
+}
+export interface IUpdateUserResponse {
+    data: {
+        message: 'User updated successfully';
+        user: IUser[];
+    };
+}
+export interface IUpdateUserPayload {
+    first_name: string;
+    last_name: string;
+    username: string;
+    contact_number: string;
+    address: string;
+    date_created?: string;
+    password?: string;
+    access_level: string;
+
+    user_id?: string;
+    user_img: any;
+    position?: string | null;
+    department?: string | null;
+    branch?: string | null;
+    group_tag?: string | null;
+    status?: number; // 0 = disabled, 1 = enabled}
 }
 
 // store state interfaces

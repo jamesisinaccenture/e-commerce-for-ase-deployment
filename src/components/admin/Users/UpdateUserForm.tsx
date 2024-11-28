@@ -9,8 +9,8 @@ import { FormField, Form } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { closeModal } from "@/lib/utils";
-import { ICreateUserPayload } from "@/models/admin.model";
+import { closeModal, imageToBlob } from "@/lib/utils";
+import { IUser } from "@/models/admin.model";
 import { userFormSchema } from "@/schema/adminSchema";
 import { useUserServices } from "@/services/admin/userServices";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -18,22 +18,25 @@ import DropImageInput from "../DropImageInput";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const CreateUserForm = () => {
+interface IUpdateUserForm {
+  user: IUser;
+}
+
+const UpdateUserForm = ({ user }: IUpdateUserForm) => {
   const form = useForm({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      contact_number: "",
-      address: "",
-      date_created: "",
-      username: "",
-      access_level: "user",
-      user_img: "",
-      position: "",
-      department: "",
-      branch: "",
-      status: 1,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      contact_number: user.contact_number,
+      address: user.address,
+      username: user.username,
+      access_level: user.access_level,
+      user_img: user.user_img,
+      position: user.position,
+      department: user.department,
+      branch: user.branch,
+      status: user.status,
     },
   });
 
@@ -42,24 +45,15 @@ const CreateUserForm = () => {
     { label: "Admin", value: "admin" },
   ];
 
-  const { createUser, isLoading } = useUserServices();
+  const { updateUser, isLoading } = useUserServices();
 
-  const onSubmit = (data: ICreateUserPayload) => {
-    createUser(data, () => {
-      toast({
-        title: "User created successfully!",
-        description: "The new user has been added to the system.",
-        variant: "success",
-      });
-      closeModal();
-    });
-  };
+  const onSubmit = async (data: any) => updateUser(data, closeModal);
 
   return (
     <>
       <div className="flex gap-2 items-center my-2">
         <UserPlus />
-        <h1 className="font-bold text-lg">Add new user</h1>
+        <h1 className="font-bold text-lg">Update user</h1>
       </div>
       <div>
         <Form {...form}>
@@ -128,9 +122,7 @@ const CreateUserForm = () => {
                         items={accessLevelList}
                         defaultValue={field.value}
                         placeholder="Access Level"
-                        onChange={(value: string) => {
-                          field.onChange(value);
-                        }}
+                        onChange={(value: string) => field.onChange(value)}
                       />
                     </CustomFormItem>
                   )}
@@ -204,16 +196,32 @@ const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="user_img"
-                render={({ field }) => (
-                  <CustomFormItem label="User image">
-                    <DropImageInput
-                      onImageDrop={(file) => {
-                        field.onChange(file);
-                      }}
-                      value={field.value}
-                    />
-                  </CustomFormItem>
-                )}
+                render={({ field }) => {
+                  const { onChange, value } = field;
+
+                  const imageValue =
+                    typeof value === "string" ? value : undefined;
+
+                  return (
+                    <CustomFormItem label="User image">
+                      <DropImageInput
+                        onImageDrop={async (file) => {
+                          try {
+                            const blob = await imageToBlob(file);
+                            onChange(blob);
+                          } catch (error) {
+                            toast({
+                              variant: "destructive",
+                              title: "Error uploading image",
+                              description: "Please try again.",
+                            });
+                          }
+                        }}
+                        value={imageValue}
+                      />
+                    </CustomFormItem>
+                  );
+                }}
               />
             </div>
             <div className="flex gap-2 justify-end">
@@ -230,7 +238,8 @@ const CreateUserForm = () => {
                 </Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Processing..." : "Submit"}
+                {" "}
+                {isLoading ? "Processing..." : "Edit"}
               </Button>
             </div>
           </form>
@@ -240,4 +249,4 @@ const CreateUserForm = () => {
   );
 };
 
-export default CreateUserForm;
+export default UpdateUserForm;

@@ -3,14 +3,20 @@ import { useState } from "react";
 import { useAdminUserStore } from "@/hooks/state/admin/useAdminUser";
 import { toast } from "@/hooks/use-toast";
 import { useAxios } from "@/hooks/useAxios";
-import { IUser, IUserResponse } from "@/models/admin.model";
+import {
+  IUser,
+  IUserResponse,
+  ICreateUserPayload,
+  ICreateUserResponse,
+  IUpdateUserPayload,
+  IUpdateUserResponse,
+} from "@/models/admin.model";
 import { ENDPOINTS } from "../endpoints";
 
 export const useUserServices = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const { setUsers } = useAdminUserStore();
-
+  
+  const [isLoading, setIsLoading] = useState(false);
   const api = useAxios();
 
   const getUsers = async (callback?: (data: IUser[]) => void) => {
@@ -30,78 +36,24 @@ export const useUserServices = () => {
     }
   };
 
-  const createUser = async (payload: IUser, callback?: (data: any) => void) => {
+  const createUser = async (
+    payload: ICreateUserPayload,
+    callback?: (data: IUser[]) => void
+  ) => {
     setIsLoading(true);
     try {
-      const response: IUserResponse = await api.post(
+      const response: ICreateUserResponse = await api.post(
         ENDPOINTS.USERS.BASE,
-        payload
+        payload,
       );
-
-      if (!response.data.users) {
-        toast({
-          variant: "destructive",
-          title: "Error creating user",
-          description: "Please try again.",
-        });
-        throw new Error("Error: Could not create user");
-      }
-
-      if (callback) callback(response);
-      getUsers();
-      toast({
-        variant: "success",
-        title: "Create User",
-        description: "User created successfully",
-      });
-      return response.data.users;
-    } catch (error: any) {
+      console.log(response);
       setIsLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Error creating user",
-        description:
-          error.message || "Error occurred while creating, please try again.",
-      });
-      throw new Error(error);
-    }
-  };
-
-  const updateUser = async (payload: IUser, callback?: (data: any) => void) => {
-    setIsLoading(true);
-    try {
-      const response: IUserResponse = await api.put(
-        `${ENDPOINTS.USERS.BASE}/${payload.user_id}`,
-        payload
-      );
-
-      if (!response.data.users) {
-        toast({
-          variant: "destructive",
-          title: "Error updating user",
-          description: "Please try again.",
-        });
-        throw new Error("Error: Could not update user");
-      }
-
-      if (callback) callback(response);
+      if (callback) callback(response.data.user);
       getUsers();
-      toast({
-        variant: "success",
-        title: "Update User",
-        description: "User updated successfully",
-      });
-      return response.data.users;
-    } catch (error: any) {
+      return response;
+    } catch (error) {
       console.log(error);
       setIsLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Error updating user",
-        description:
-          error.message || "Error occurred while updating, please try again.",
-      });
-      throw new Error(error);
     }
   };
 
@@ -136,6 +88,48 @@ export const useUserServices = () => {
         title: "Error deleting user",
         description:
           error.message || "Error occurred while deleting, please try again.",
+      });
+      throw new Error(error);
+    }
+  };
+
+  const updateUser = async (
+    payload: IUpdateUserPayload,
+    callback?: (data: IUser[]) => void
+  ) => {
+    setIsLoading(true);
+    console.log(payload, "payload from input");
+    try {
+      const response: IUpdateUserResponse = await api.put(
+        `${ENDPOINTS.USERS.BASE}/${payload.user_id}`,
+        payload,
+      );
+      if (!response.data) {
+        toast({
+          variant: "destructive",
+          title: "Error updating user",
+          description: "Please try again.",
+        });
+        throw new Error("Error: Could not update user");
+      }
+
+      if (callback) callback(response.data.user);
+      toast({
+        variant: "success",
+        title: "Update User",
+        description: "User updated successfully",
+      });
+      getUsers();
+
+      return response.data.user;
+    } catch (error: any) {
+      console.log(error);
+      setIsLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Error updating user",
+        description:
+          error.message || "Error occurred while updating, please try again.",
       });
       throw new Error(error);
     }

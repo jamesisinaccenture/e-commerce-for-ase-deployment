@@ -4,19 +4,22 @@ import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
 import CreateUserForm from "@/components/admin/Users/CreateUserForm";
+import UpdateUserForm from "@/components/admin/Users/UpdateUserForm";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { useAdminUserStore } from "@/hooks/state/admin/useAdminUser";
+import { toast } from "@/hooks/use-toast";
+import { closeModal } from "@/lib/utils";
 import { IUser } from "@/models/admin.model";
 import { useUserServices } from "@/services/admin/userServices";
 import { ColumnDef } from "@tanstack/react-table";
 
 const UsersPage = () => {
   const { search, setSearch } = useAdminGeneralStore();
-  const { getUsers, deleteUser } = useUserServices();
-  const { users:usersList } = useAdminUserStore();
+  const { getUsers, deleteUser, updateUser } = useUserServices();
+  const { users: usersList } = useAdminUserStore();
 
   const usersColumns: ColumnDef<IUser>[] = [
     {
@@ -26,7 +29,7 @@ const UsersPage = () => {
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1 flex items-center">
           <p className=" truncate max-w-10" title={row.getValue("user_id")}>
-            {row.index+1}
+            {row.index + 1}
           </p>
         </div>
       ),
@@ -37,7 +40,6 @@ const UsersPage = () => {
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1">
           <img
-            // src={row.getValue("user_img")}
             src={SampleImg}
             alt={row.getValue("username")}
             className="w-full h-full rounded-lg object-contain"
@@ -52,13 +54,25 @@ const UsersPage = () => {
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name <ChevronsUpDown />
+          First Name <ChevronsUpDown />
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="capitalize pl-4">
-          {row.getValue("first_name")} {row.getValue("last_name")}
-        </div>
+        <div className="capitalize pl-4">{row.getValue("first_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "last_name",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Name <ChevronsUpDown />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="capitalize pl-4">{row.getValue("last_name")}</div>
       ),
     },
     {
@@ -112,14 +126,14 @@ const UsersPage = () => {
     },
     {
       accessorKey: "branch",
-      header: "branch",
+      header: "Branch",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("branch")}</div>
       ),
     },
     {
       accessorKey: "department",
-      header: "department",
+      header: "Department",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("department")}</div>
       ),
@@ -142,7 +156,7 @@ const UsersPage = () => {
     },
     {
       accessorKey: "status",
-      header: "status",
+      header: "Status",
       cell: ({ row }) => (
         <div className="capitalize">
           {row.getValue("status") === 1 ? "active" : "disabled"}
@@ -155,7 +169,7 @@ const UsersPage = () => {
         <div className="capitalize flex gap-2">
           <div>
             <Modal triggerSize="icon" trigger={<Edit />} variant="ghost">
-              <CreateUserForm />
+              <UpdateUserForm user={row.original} />
             </Modal>
           </div>
           <div>
@@ -168,15 +182,23 @@ const UsersPage = () => {
               <h1 className="font-bold text-2xl">Delete User</h1>
               <div>
                 Are you sure you want to delete the user "
-                <span className="font-bold">{row.getValue("username")}</span> "?<br />
+                <span className="font-bold">{row.getValue("username")}</span> "?
                 This action cannot be undone.
               </div>
               <div className="flex justify-end gap-2">
                 <Button
                   variant="destructive"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteUser(row.original);
+                  onClick={() => {
+                    row.toggleSelected(false);
+                    deleteUser(row.original, () => {
+                      closeModal();
+                      toast({
+                        title: "User deleted successfully!",
+                        description:
+                          "The user has been deleted to the system.",
+                        variant: "success",
+                      });
+                    });
                   }}
                 >
                   Delete
