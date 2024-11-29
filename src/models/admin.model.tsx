@@ -109,7 +109,7 @@ export interface IUpdateUserResponse {
     };
 }
 export interface IUpdateUserPayload {
-    user_id: string;
+    user_id?: string;
     user_img?: string | File;
     first_name: string;
     last_name: string;
