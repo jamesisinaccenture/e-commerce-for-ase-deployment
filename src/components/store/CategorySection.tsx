@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useSearchStore } from "@/store/useSearchStore"; 
+import { useSearchStore } from "@/hooks/state/store/useSearchStore";
 
 //import sampleImage from "@/assets/images/wireless airpods.jpg";
 const products = [

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useSearchStore } from "@/store/useSearchStore"; 
+import { useSearchStore } from "@/hooks/state/store/useSearchStore";
 
 const Search = () => {
   const { query, setQuery } = useSearchStore(); // Access global state
@@ -11,7 +11,6 @@ const Search = () => {
 
   return (
     <div className="w-full md:w-96">
-
       <input
         type="text"
         value={query}

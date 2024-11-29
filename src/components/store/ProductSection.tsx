@@ -5,7 +5,7 @@ import ProductSectionCard from "@/components/store/ProductSectionCard";
 import { cn } from "@/lib/utils";
 import { IProductSection } from "@/models/store.model";
 import { ROUTES } from "@/routes/endpoints";
-import { useSearchStore } from "@/store/useSearchStore"; 
+import { useSearchStore } from "@/hooks/state/store/useSearchStore";
 import {
   PaginationItem,
   PaginationLink,

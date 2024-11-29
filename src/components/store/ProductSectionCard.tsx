@@ -7,7 +7,7 @@ import ProductModal from "@/components/store/ProductModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { formatPrice } from "@/lib/utils";
 import { IProduct } from "@/models/store.model";
-import { useCartStore } from "@/store/useCartStore";
+import { useCartStore } from "@/hooks/state/store/useCartStore";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import ProductCardAnimated from "./ProductCardAnimated";
 import { Button } from "../ui/button";
