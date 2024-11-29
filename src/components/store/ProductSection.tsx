@@ -5,6 +5,7 @@ import ProductSectionCard from "@/components/store/ProductSectionCard";
 import { cn } from "@/lib/utils";
 import { IProductSection } from "@/models/store.model";
 import { ROUTES } from "@/routes/endpoints";
+import { useSearchStore } from "@/store/useSearchStore"; 
 import {
   PaginationItem,
   PaginationLink,
@@ -19,7 +20,14 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const PRODUCTS_PER_PAGE = 40;
 
-  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+  const searchQuery = useSearchStore((state) => state.query); // Get the search query from the global state
+
+  // Filter products based on the search query
+  const filteredProducts = products.filter((product) =>
+    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -64,6 +72,12 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
     return pageLinks;
   };
 
+  // Paginate filtered products
+  const displayedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
+
   return (
     <>
       <div className="flex flex-col w-full min-h-96">
@@ -86,15 +100,13 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
         </div>
 
         <div className="grid grid-cols-custom gap-4 w-full">
-          {products.map((products) => {
-            return (
-              <ProductSectionCard {...products} key={products.product_id} />
-            );
-          })}
+          {displayedProducts.map((product) => (
+            <ProductSectionCard {...product} key={product.product_id} />
+          ))}
         </div>
-        {!products.length && (
+        {!displayedProducts.length && (
           <div className="flex justify-center items-center min-h-64">
-            <p>No results.</p>
+            <p>No results found.</p>
           </div>
         )}
       </div>
@@ -122,7 +134,7 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
               aria-disabled={currentPage === totalPages}
               className={cn(
                 "cursor-pointer",
-                (currentPage === totalPages || products.length < 2) &&
+                (currentPage === totalPages || filteredProducts.length < 2) &&
                   "pointer-events-none opacity-50"
               )}
             />

@@ -1,10 +1,10 @@
-import { BadgePercent, MapPinned, Search, Truck } from "lucide-react";
+import { BadgePercent, MapPinned,Truck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "@/assets/images/logo.png";
 import CartDrawer from "@/components/store/CartDrawer";
 import DropdownAvatar from "@/components/store/DropdownAvatar";
-import { Input } from "@/components/ui/input";
+import Search from "@/components/store/Search";
 import { useAuthStore } from "@/hooks/state/auth/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { ROUTES } from "@/routes/endpoints";
@@ -24,6 +24,8 @@ const StoreHeader = () => {
 
       if (response) {
         localStorage.removeItem("session");
+
+
         toast({
           variant: "success",
           title: "Logout successful!",
@@ -104,13 +106,7 @@ const StoreHeader = () => {
 
               {/* Search and Cart Section */}
               <div className="flex flex-row items-center gap-4 justify-end w-full md:w-auto ">
-                <Input
-                  type="search"
-                  icon={<Search size={20} color="#008ECC" />}
-                  isSearch
-                  placeholder="Search mobile, accessories, and more..."
-                  className="w-2/3 md:w-96" // Full width on mobile, fixed width on larger screens
-                />
+                < Search />
                 <DropdownAvatar handleLogout={handleLogout} />
 
                 <span className="hidden md:block text-muted-foreground">|</span>
