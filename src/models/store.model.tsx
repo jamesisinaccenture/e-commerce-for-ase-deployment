@@ -6,11 +6,13 @@ export interface CountInterface {
   increaseCount: () => void;
   removeCount: () => void;
 }
+
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   isSearch?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
   label?: string;
   name?: string;
@@ -28,6 +30,7 @@ export interface ICustomInput {
 export interface IProduct {
   product_id?: string | undefined;
   product_name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   product_img?: any;
   product_description: string | undefined;
   category?: string[] | null | undefined;
@@ -38,6 +41,7 @@ export interface IProduct {
   created_by?: string;
   discount?: number;
   variants?: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   other_details: any;
 }
 
@@ -76,4 +80,22 @@ export interface EndFooterSectionProps {
 
 export interface DropdownAvatarProps {
   handleLogout: () => void;
+}
+
+export interface CartItem {
+  product_id: string;
+  product_name: string;
+  product_img: string;
+  description: string;
+  quantity: number;
+  price: number;
+}
+
+export interface CartState {
+  cartItems: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (product_id: string) => void;
+  increaseQuantity: (product_id: string) => void;
+  decreaseQuantity: (product_id: string) => void;
+  removeAll: () => void;
 }

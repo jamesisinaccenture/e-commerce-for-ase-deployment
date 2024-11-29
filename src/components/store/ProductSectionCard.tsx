@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import defaultImage from "/image 3.png";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
@@ -7,6 +7,7 @@ import ProductModal from "@/components/store/ProductModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { formatPrice } from "@/lib/utils";
 import { IProduct } from "@/models/store.model";
+import { useCartStore } from "@/store/useCartStore";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import ProductCardAnimated from "./ProductCardAnimated";
 import { Button } from "../ui/button";
@@ -16,16 +17,19 @@ const ProductSectionCard = (product: IProduct) => {
   // will result in re-rendering all the cards and will cause to only use the image of the last item in the cart.
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
+  const addToCart = useCartStore(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (state: { addToCart: any }) => state.addToCart
+  );
+
   const handleAddToCart = () => {
     setIsAddingToCart(true);
     setTimeout(() => {
+      addToCart({ ...product, quantity: 1 });
       setIsAddingToCart(false);
     }, 500);
   };
 
-  useEffect(() => {
-    console.log("isAddingToCart", isAddingToCart);
-  }, [isAddingToCart]);
   return (
     <>
       <motion.div
