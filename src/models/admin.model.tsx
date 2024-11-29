@@ -61,22 +61,19 @@ export interface IUpdateCategoryPayload {
 
 // User interface
 export interface IUser {
+    user_id?: string;
+    user_img: string | File;
     first_name: string;
     last_name: string;
     username: string;
     contact_number: string;
     address: string;
-    date_created?: string;
-    password?: string;
     access_level: string;
-
-    user_id?: string;
-    user_img: any;
     position?: string | null;
-    department?: string | null;
     branch?: string | null;
-    group_tag?: string | null;
-    status?: number; // 0 = disabled, 1 = enabled}
+    department?: string | null;
+    date_created?: string;
+    status?: number;
 }
 
 export interface IUserResponse{
@@ -91,22 +88,19 @@ export interface ICreateUserResponse {
     };
 }
 export interface ICreateUserPayload {
+    user_id?: string;
+    user_img: string | File;
     first_name: string;
     last_name: string;
     username: string;
     contact_number: string;
     address: string;
-    date_created?: string;
-    password?: string;
     access_level: string;
-
-    user_id?: string;
-    user_img: any;
     position?: string | null;
-    department?: string | null;
     branch?: string | null;
-    group_tag?: string | null;
-    status?: number; // 0 = disabled, 1 = enabled}
+    department?: string | null;
+    date_created?: string;
+    status?: number;
 }
 export interface IUpdateUserResponse {
     data: {
@@ -115,23 +109,22 @@ export interface IUpdateUserResponse {
     };
 }
 export interface IUpdateUserPayload {
+    user_id: string;
+    user_img?: string | File;
     first_name: string;
     last_name: string;
     username: string;
     contact_number: string;
     address: string;
-    date_created?: string;
-    password?: string;
     access_level: string;
-
-    user_id?: string;
-    user_img: any;
     position?: string | null;
-    department?: string | null;
     branch?: string | null;
-    group_tag?: string | null;
-    status?: number; // 0 = disabled, 1 = enabled}
-}
+    department?: string | null;
+    date_created?: string;
+    status?: number;
+  }
+
+  export interface IDeleteUserPayload {}
 
 // store state interfaces
 export interface IAdminProductStore {

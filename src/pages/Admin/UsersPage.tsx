@@ -12,7 +12,7 @@ import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { useAdminUserStore } from "@/hooks/state/admin/useAdminUser";
 import { toast } from "@/hooks/use-toast";
 import { closeModal } from "@/lib/utils";
-import { IUser } from "@/models/admin.model";
+import { IUpdateUserPayload, IUser } from "@/models/admin.model";
 import { useUserServices } from "@/services/admin/userServices";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -28,7 +28,8 @@ const UsersPage = () => {
       header: "ID",
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1 flex items-center">
-          <p className=" truncate max-w-10" title={row.getValue("user_id")}>
+          <p className="truncate max-w-10" title={row.getValue("user_id")}>
+            {/* Ensure user_id exists */}
             {row.index + 1}
           </p>
         </div>
@@ -169,7 +170,19 @@ const UsersPage = () => {
         <div className="capitalize flex gap-2">
           <div>
             <Modal triggerSize="icon" trigger={<Edit />} variant="ghost">
-              <UpdateUserForm user={row.original} />
+              <UpdateUserForm
+                user={row.original}
+                updateUser={(updatedUser: IUpdateUserPayload) => {
+                  updateUser(updatedUser, () => {
+                    toast({
+                      title: "User updated successfully!",
+                      description: "The user data has been updated.",
+                      variant: "success",
+                    });
+                    closeModal();
+                  });
+                }}
+              />
             </Modal>
           </div>
           <div>
@@ -195,7 +208,7 @@ const UsersPage = () => {
                       toast({
                         title: "User deleted successfully!",
                         description:
-                          "The user has been deleted to the system.",
+                          "The user has been deleted from the system.",
                         variant: "success",
                       });
                     });
@@ -211,19 +224,23 @@ const UsersPage = () => {
     },
   ];
 
-  const users = useMemo(() => {
+  // Ensure no undefined values are accessed
+  const filteredUsers = useMemo(() => {
     return usersList.filter(
       (user) =>
-        user.first_name.toLowerCase().includes(search.toLowerCase()) ||
-        user.last_name.toLowerCase().includes(search.toLowerCase()) ||
-        user.username.toString().toLowerCase().includes(search.toLowerCase()) ||
-        user.user_id?.toLowerCase().includes(search.toLowerCase())
+        (user.first_name &&
+          user.first_name.toLowerCase().includes(search.toLowerCase())) ||
+        (user.last_name &&
+          user.last_name.toLowerCase().includes(search.toLowerCase())) ||
+        (user.username &&
+          user.username.toLowerCase().includes(search.toLowerCase())) ||
+        (user.user_id &&
+          user.user_id.toString().toLowerCase().includes(search.toLowerCase()))
     );
   }, [search, usersList]);
 
   useEffect(() => {
     getUsers();
-    console.log(usersList);
   }, []);
 
   return (
@@ -242,7 +259,7 @@ const UsersPage = () => {
         </div>
       </div>
       <div className="w-full overflow-auto">
-        <DataTable columns={usersColumns} data={users} />
+        <DataTable columns={usersColumns} data={filteredUsers} />
       </div>
     </div>
   );

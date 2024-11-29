@@ -18,6 +18,9 @@ import DropImageInput from "../DropImageInput";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
+const customDate = new Date("2024-11-29T15:45:30");
+const isoCustomDate = customDate.toISOString();
+
 const CreateUserForm = () => {
   const form = useForm({
     resolver: zodResolver(userFormSchema),
@@ -26,7 +29,7 @@ const CreateUserForm = () => {
       last_name: "",
       contact_number: "",
       address: "",
-      date_created: "",
+      date_created: isoCustomDate,
       username: "",
       access_level: "user",
       user_img: "",
@@ -54,6 +57,8 @@ const CreateUserForm = () => {
       closeModal();
     });
   };
+
+  console.log(form.formState.errors);
 
   return (
     <>
@@ -89,6 +94,19 @@ const CreateUserForm = () => {
                     <CustomFormItem label="Last name*">
                       <CustomInput
                         label="Last name"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <CustomFormItem label="Username">
+                      <CustomInput
+                        label="Username"
                         className="w-full"
                         {...field}
                       />

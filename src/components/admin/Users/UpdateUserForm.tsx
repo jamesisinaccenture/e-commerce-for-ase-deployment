@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { closeModal, imageToBlob } from "@/lib/utils";
-import { IUser } from "@/models/admin.model";
+import { IUser, IUpdateUserPayload } from "@/models/admin.model";
 import { userFormSchema } from "@/schema/adminSchema";
 import { useUserServices } from "@/services/admin/userServices";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -19,7 +19,8 @@ import DropImageInput from "../DropImageInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IUpdateUserForm {
-  user: IUser;
+    user: IUser;
+    updateUser: (updatedUser: IUpdateUserPayload) => void;
 }
 
 const UpdateUserForm = ({ user }: IUpdateUserForm) => {
@@ -47,7 +48,7 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
 
   const { updateUser, isLoading } = useUserServices();
 
-  const onSubmit = async (data: any) => updateUser(data, closeModal);
+  const onSubmit = (data: IUpdateUserPayload) => updateUser(data, closeModal);
 
   return (
     <>
@@ -238,7 +239,6 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
                 </Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
-                {" "}
                 {isLoading ? "Processing..." : "Edit"}
               </Button>
             </div>

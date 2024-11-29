@@ -15,7 +15,7 @@ import { ENDPOINTS } from "../endpoints";
 
 export const useUserServices = () => {
   const { setUsers } = useAdminUserStore();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const api = useAxios();
 
@@ -23,9 +23,11 @@ export const useUserServices = () => {
     setIsLoading(true);
 
     try {
-      const response: IUserResponse = await api.get(ENDPOINTS.USERS.GETALL);
+      const response: IUserResponse = await api.get(
+        ENDPOINTS.USERS.GETALL
+      );
       console.log(response);
-      if (!response.data.users) throw new Error("Error: Could not get user");
+      if (!response.data) throw new Error("Error: Could not get user.");
 
       setIsLoading(false);
       if (callback) callback(response.data.users);
@@ -41,10 +43,11 @@ export const useUserServices = () => {
     callback?: (data: IUser[]) => void
   ) => {
     setIsLoading(true);
+
     try {
       const response: ICreateUserResponse = await api.post(
         ENDPOINTS.USERS.BASE,
-        payload,
+        payload
       );
       console.log(response);
       setIsLoading(false);
@@ -57,21 +60,47 @@ export const useUserServices = () => {
     }
   };
 
+  const updateUser = async (
+    payload: IUpdateUserPayload,
+    callback?: (data: IUser[]) => void
+  ) => {
+    setIsLoading(true);
+    console.log(payload, "payload from input");
+    try {
+      const response: IUpdateUserResponse = await api.put(
+        `${ENDPOINTS.USERS.BASE}/${payload.user_id}`,
+        payload
+      );
+      console.log("response", response);
+
+      if (callback) callback(response.data.user);
+      toast({
+        variant: "success",
+        title: "Update User.",
+        description: "User updated successfully.",
+      });
+      getUsers();
+
+      return response.data.user;
+    } catch (error: any) {
+      console.log(error);
+      setIsLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Error updating user",
+        description:
+          error.message || "Error occurred while updating, please try again.",
+      });
+      throw new Error(error);
+    }
+  };
+
   const deleteUser = async (payload: IUser, callback?: (data: any) => void) => {
     setIsLoading(true);
     try {
       const response: IUserResponse = await api.delete(
         `${ENDPOINTS.USERS.BASE}/${payload.user_id}`
       );
-
-      if (!response.data.users) {
-        toast({
-          variant: "destructive",
-          title: "Error deleting user",
-          description: "Please try again.",
-        });
-        throw new Error("Error: Could not delete user");
-      }
 
       if (callback) callback(response);
       getUsers();
@@ -88,48 +117,6 @@ export const useUserServices = () => {
         title: "Error deleting user",
         description:
           error.message || "Error occurred while deleting, please try again.",
-      });
-      throw new Error(error);
-    }
-  };
-
-  const updateUser = async (
-    payload: IUpdateUserPayload,
-    callback?: (data: IUser[]) => void
-  ) => {
-    setIsLoading(true);
-    console.log(payload, "payload from input");
-    try {
-      const response: IUpdateUserResponse = await api.put(
-        `${ENDPOINTS.USERS.BASE}/${payload.user_id}`,
-        payload,
-      );
-      if (!response.data) {
-        toast({
-          variant: "destructive",
-          title: "Error updating user",
-          description: "Please try again.",
-        });
-        throw new Error("Error: Could not update user");
-      }
-
-      if (callback) callback(response.data.user);
-      toast({
-        variant: "success",
-        title: "Update User",
-        description: "User updated successfully",
-      });
-      getUsers();
-
-      return response.data.user;
-    } catch (error: any) {
-      console.log(error);
-      setIsLoading(false);
-      toast({
-        variant: "destructive",
-        title: "Error updating user",
-        description:
-          error.message || "Error occurred while updating, please try again.",
       });
       throw new Error(error);
     }
