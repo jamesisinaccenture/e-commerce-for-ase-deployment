@@ -24,6 +24,7 @@ export const ROUTES = {
     CONTACT_US: "/contact-us",
     PROFILE: "/store/profile",
     PROFILE_SETTINGS: "/store/profile/settings",
-    CHECKOUT_SUCCESS: "/checkout/success",
+    CHECKOUT: "/store/checkout",
+    CHECKOUT_SUCCESS: "/store/checkout/success",
   },
 };

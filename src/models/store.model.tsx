@@ -10,7 +10,7 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
-   
+
   isSearch?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
@@ -98,4 +98,51 @@ export interface CartState {
   increaseQuantity: (product_id: string) => void;
   decreaseQuantity: (product_id: string) => void;
   removeAll: () => void;
+}
+
+export interface ICart {
+  message: string;
+  user_id: string;
+  cart: [
+    {
+      cart_id: "string";
+      items: [
+        {
+          product_name: string;
+          quantity: number;
+          total_price: 0;
+          currency: string;
+        }
+      ];
+      created_at: string;
+    }
+  ];
+}
+
+export interface ICheckoutStore {
+  isLoading: boolean;
+  shippingAddresses: ICheckoutShippingAddress[];
+  shippingAddressInput: {
+    id: string;
+    full_name: string;
+    lot_house_apt: string;
+    street: string;
+    barangay: string;
+    city: string;
+    contact_number: string;
+  };
+  setShippingAddresses: (shippingAddresses: ICheckoutShippingAddress[]) => void;
+  setShippingAddressInput: (
+    shippingAddressInput: ICheckoutShippingAddress
+  ) => void;
+}
+
+export interface ICheckoutShippingAddress {
+  id: string;
+  full_name: string;
+  lot_house_apt: string;
+  street: string;
+  barangay: string;
+  city: string;
+  contact_number: string;
 }

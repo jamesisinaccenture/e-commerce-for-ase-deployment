@@ -10,6 +10,7 @@ import {
   AllProductsPage,
   CartPage,
   CategoryPage,
+  CheckoutPage,
   CheckoutSuccessPage,
   DashboardPage,
   ForgetPasswordPage,
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.STORE.CHECKOUT_SUCCESS,
         element: <CheckoutSuccessPage />,
+      },
+      {
+        path: ROUTES.STORE.CHECKOUT,
+        element: <CheckoutPage />,
       },
       {
         path: ROUTES.STORE.PRODUCTS,
