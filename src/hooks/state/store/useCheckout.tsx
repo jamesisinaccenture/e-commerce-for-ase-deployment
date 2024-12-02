@@ -4,6 +4,7 @@ import { ICheckoutShippingAddress, ICheckoutStore } from "@/models/store.model";
 
 export const useCheckoutStore = create<ICheckoutStore>((set) => ({
   isLoading: false,
+  isCheckoutCartOpen: false,
   shippingAddresses: [],
   shippingAddressInput: {
     id: "",
@@ -18,4 +19,6 @@ export const useCheckoutStore = create<ICheckoutStore>((set) => ({
     set({ shippingAddresses }), // Set the products from fetched data
   setShippingAddressInput: (shippingAddressInput: ICheckoutShippingAddress) =>
     set({ shippingAddressInput }),
+  toggleCheckoutCart: () =>
+    set((state) => ({ isCheckoutCartOpen: !state.isCheckoutCartOpen })),
 }));
