@@ -31,7 +31,7 @@ const CartDrawer = () => {
   const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
   const removeAll = useCartStore((state) => state.removeAll);
 
-  const [itemToRemove, setItemToRemove] = useState<CartItem | null>(null); 
+  const [itemToRemove, setItemToRemove] = useState<CartItem | null>(null);
 
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = cartItems
@@ -49,7 +49,7 @@ const CartDrawer = () => {
   const handleRemove = (productId: string) => {
     if (productId) {
       removeFromCart(productId);
-      setItemToRemove(null); 
+      setItemToRemove(null);
     }
   };
 
@@ -83,13 +83,17 @@ const CartDrawer = () => {
                   <div className="flex items-center justify-between p-4 bg-gray-100 rounded-md space-y-2">
                     <div className="flex items-center space-x-4">
                       <img
-                        src={defaultImage} 
+                        src={defaultImage}
                         alt={item.product_name}
                         className="w-10 h-10 object-cover rounded-md"
                       />
                       <div>
-                        <h3 className="text-sm font-semibold">{item.product_name}</h3>
-                        <p className="text-xs text-gray-500">{item.description}</p>
+                        <h3 className="text-sm font-semibold">
+                          {item.product_name}
+                        </h3>
+                        <p className="text-xs text-gray-500">
+                          {item.description}
+                        </p>
                       </div>
                     </div>
 
@@ -113,7 +117,9 @@ const CartDrawer = () => {
                       </button>
                     </div>
 
-                    <p className="text-sm font-bold">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="text-sm font-bold">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
                   </div>
                 </div>
               ))
@@ -132,10 +138,12 @@ const CartDrawer = () => {
           <DrawerFooter className="mt-6 flex justify-between">
             <div className="flex flex-col">
               <p className="text-sm font-semibold">
-                Total Quantity: <span className="text-store-primary">{totalQuantity}</span>
+                Total Quantity:{" "}
+                <span className="text-store-primary">{totalQuantity}</span>
               </p>
               <p className="text-lg font-bold">
-                Total Price: <span className="text-store-primary">${totalPrice}</span>
+                Total Price:{" "}
+                <span className="text-store-primary">${totalPrice}</span>
               </p>
             </div>
 
@@ -147,16 +155,21 @@ const CartDrawer = () => {
               className="bg-store-primary text-white hover:bg-blue-600 p-2 rounded-md"
               onClick={removeAll}
             >
-              <Link to="/checkout">Checkout</Link>
+              <Link to="/store/checkout">Checkout</Link>
             </Button>
           </DrawerFooter>
         </div>
       </DrawerContent>
       {itemToRemove && (
-        <Dialog open={true} onOpenChange={(open) => !open && setItemToRemove(null)}>
+        <Dialog
+          open={true}
+          onOpenChange={(open) => !open && setItemToRemove(null)}
+        >
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you sure you want to delete this item?</DialogTitle>
+              <DialogTitle>
+                Are you sure you want to delete this item?
+              </DialogTitle>
             </DialogHeader>
             <DialogFooter>
               <Button variant="outline" onClick={() => setItemToRemove(null)}>
