@@ -27,13 +27,12 @@ const AllProductsPage: React.FC = () => {
   const filteredProducts = useMemo(() => {
     return selectedCategory === "All"
       ? products
-      : products.filter(
-          (product) =>
-            product?.category?.filter(
-              (category) => category === selectedCategory
-            )?.length
+      : products.filter((product) =>
+          product?.category?.some((category) =>
+            category.includes(selectedCategory)
+          )
         );
-  }, [products]);
+  }, [products, selectedCategory]);
 
   // Display products for the current page only
   const displayedProducts = filteredProducts.slice(
@@ -48,6 +47,7 @@ const AllProductsPage: React.FC = () => {
 
   useEffect(() => {
     getProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
