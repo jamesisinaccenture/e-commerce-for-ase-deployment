@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import CheckoutCartSection fproduct_id: "";
-    product_name: "";
-    product_img?: "";
-    product_description: undefined;
-    category: null;
-    price: 0;
-    currency: "";
-    sold?: 0;
-    date_created?: "";
-    created_by?: "";rom "@/components/store/checkout/CheckoutCartSection";
 import CheckoutAddAddressModal from "@/components/store/checkout/CheckoutAddAddressModal";
+import CheckoutCartSection from "@/components/store/checkout/CheckoutCartSection";
 import CheckoutDeliveryDateSection from "@/components/store/checkout/CheckoutDeliveryDateSection";
 import CheckPaymentSection from "@/components/store/checkout/CheckoutPaymentSection";
 import CheckoutShippingSection from "@/components/store/checkout/CheckoutShippingSection";
