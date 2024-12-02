@@ -1,38 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useCartServices } from "@/services/store/cartServices";
-import { useCheckoutService } from "@/services/store/checkoutService";
-import { useCheckoutStore } from "@/hooks/state/store/useCheckout";
-
-import { Button } from "@/components/ui/button";
-import CheckoutShippingSection from "@/components/store/checkout/CheckoutShippingSection";
-import CheckoutCartSection from "@/components/store/checkout/CheckoutCartSection";
 import CheckoutAddAddressModal from "@/components/store/checkout/CheckoutAddAddressModal";
-import CheckoutUpdateAddressModal from "@/components/store/checkout/CheckoutUpdateAddressModal";
+import CheckoutCartSection from "@/components/store/checkout/CheckoutCartSection";
 import CheckoutDeliveryDateSection from "@/components/store/checkout/CheckoutDeliveryDateSection";
 import CheckPaymentSection from "@/components/store/checkout/CheckoutPaymentSection";
-
-const sampleShippingAddressData = [
-  {
-    id: "1",
-    name: "Bryan Caranza",
-    address: "Adarna St. Sampaloc Manila, Philippine Airline @ yahoo dot Com",
-    contact_num: "+(63) 0908 123 1233",
-  },
-  {
-    id: "2",
-    name: "2 Bryan Caranza",
-    address: "Adarna St. Sampaloc Manila, Philippine Airline @ yahoo dot Com",
-    contact_num: "+(63) 0908 123 1233",
-  },
-  {
-    id: "3",
-    name: "3 Bryan Caranza",
-    address: "Adarna St. Sampaloc Manila, Philippine Airline @ yahoo dot Com",
-    contact_num: "+(63) 0908 123 1233",
-  },
-];
+import CheckoutShippingSection from "@/components/store/checkout/CheckoutShippingSection";
+import CheckoutUpdateAddressModal from "@/components/store/checkout/CheckoutUpdateAddressModal";
+import { Button } from "@/components/ui/button";
+import { useCheckoutStore } from "@/hooks/state/store/useCheckout";
+import { useCartServices } from "@/services/store/cartServices";
+import { useCheckoutService } from "@/services/store/checkoutService";
 
 const CheckoutPage = () => {
   const { getCart } = useCartServices();
@@ -42,7 +20,6 @@ const CheckoutPage = () => {
   const [displayUpdateAdressModal, setDisplayUpdateAddressModal] =
     useState(false);
   const [selectedShippingId, setSelectedShippingId] = useState("");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("1");
   const [deliveryDate, setDeliveryDates] = useState({
     current: {
       date: "",
