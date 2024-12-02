@@ -15,6 +15,14 @@ const CartPage = lazy(() => {
     setTimeout(() => resolve(import("./Store/CartPage")), storeTimeout);
   });
 });
+const CheckoutPage = lazy(() => {
+  return new Promise((resolve: any) => {
+    setTimeout(
+      () => resolve(import("./Store/CheckoutPage")),
+      storeTimeout
+    );
+  });
+});
 const CheckoutSuccessPage = lazy(() => {
   return new Promise((resolve: any) => {
     setTimeout(
@@ -137,6 +145,7 @@ export {
   UpdateInformationSettingsPage,
   LandingPage,
   Products,
+  CheckoutPage,
   CheckoutSuccessPage,
   ViewProducts,
 };
