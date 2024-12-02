@@ -1,9 +1,9 @@
 "use client";
-
 import * as React from "react";
-import { Drawer as DrawerPrimitive } from "vaul";
 import { cva } from "class-variance-authority";
+import { Drawer as DrawerPrimitive } from "vaul";
 
+import { useCheckoutStore } from "@/hooks/state/store/useCheckout";
 import { cn } from "@/lib/utils";
 
 const DrawerContext = React.createContext<{
@@ -11,7 +11,6 @@ const DrawerContext = React.createContext<{
 }>({
   direction: "right",
 });
-
 const Drawer = ({
   shouldScaleBackground = true,
   direction = "right",
@@ -36,13 +35,20 @@ const DrawerClose = DrawerPrimitive.Close;
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Overlay
-    ref={ref}
-    className={cn("fixed inset-0 z-50 bg-black/80", className)}
-    {...props}
-  />
-));
+>(({ className, ...props }, ref) => {
+  const { toggleCheckoutCart } = useCheckoutStore();
+
+  return (
+    <DrawerPrimitive.Overlay
+      ref={ref}
+      className={cn("fixed inset-0 z-50 bg-black/80", className)}
+      {...props}
+      onClick={() => {
+        toggleCheckoutCart();
+      }}
+    />
+  );
+});
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
 const drawerContentVariants = cva(

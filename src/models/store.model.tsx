@@ -121,6 +121,7 @@ export interface ICart {
 
 export interface ICheckoutStore {
   isLoading: boolean;
+  isCheckoutCartOpen: boolean;
   shippingAddresses: ICheckoutShippingAddress[];
   shippingAddressInput: {
     id: string;
@@ -135,6 +136,7 @@ export interface ICheckoutStore {
   setShippingAddressInput: (
     shippingAddressInput: ICheckoutShippingAddress
   ) => void;
+  toggleCheckoutCart: () => void;
 }
 
 export interface ICheckoutShippingAddress {
