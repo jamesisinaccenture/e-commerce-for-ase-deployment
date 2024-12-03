@@ -26,7 +26,7 @@ const CreateProductForm = () => {
     defaultValues: {
       product_id: "",
       product_name: "",
-      product_img: "",
+      product_img: "", 
       product_description: undefined,
       category: null,
       price: 0,
