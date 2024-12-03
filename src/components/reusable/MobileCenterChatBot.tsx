@@ -1,7 +1,10 @@
 import botAvatar from "/avatar.jpg";
 import ChatBot from "react-chatbotify";
 
+import { useCheckoutStore } from "@/hooks/state/store/useCheckout";
+
 const MobileCenterChatBot = () => {
+  const { isCheckoutCartOpen } = useCheckoutStore();
   const themes = [{ id: "minimal_midnight", version: "0.1.0" }];
   const helpOptions = [
     "Quick Questions",
@@ -139,14 +142,20 @@ const MobileCenterChatBot = () => {
   };
 
   return (
-    <div className="absolute bottom-5 right-5">
-      <ChatBot
-        themes={themes}
-        settings={settings}
-        styles={styles}
-        flow={flow}
-      />
-    </div>
+    <>
+      {!isCheckoutCartOpen ? (
+        <div className="absolute bottom-5">
+          <ChatBot
+            themes={themes}
+            settings={settings}
+            styles={styles}
+            flow={flow}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

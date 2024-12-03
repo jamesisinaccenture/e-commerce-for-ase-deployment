@@ -18,33 +18,27 @@ import { useProductServices } from '@/services/admin/productServices';
 import { DialogClose } from '@radix-ui/react-dialog';
 import DropImageInput from '../DropImageInput';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CreateProductForm = () => {
-    const form = useForm({
-        resolver: zodResolver(productFormSchema),
-        defaultValues: {
-            product_name: '',
-            product_img: '',
-            product_description: '',
-            category: [],
-            price: 0,
-            currency: '',
-        },
-    });
-    const { createProduct, isLoading } = useProductServices();
-    const { category } = useAdminCategoryStore();
-    const { getCategory } = useCategoryServices();
-    const onSubmit = (data: IProduct) => createProduct(data, closeModal);
+  const form = useForm({
+    resolver: zodResolver(productFormSchema),
+    defaultValues: {
+      product_id: "",
+      product_name: "",
+      product_img: "",
+      product_description: undefined,
+      category: null,
+      price: 0,
+      currency: "",
+      sold: 0,
+      date_created: "",
+      created_by: "",
+    },
+  });
+  const { createProduct, isLoading } = useProductServices();
 
-    const categoryItems = category.map((cat) => ({
-        value: String(cat.category_id),
-        label: String(cat.category_name),
-    }));
-
-    useEffect(() => {
-        category && getCategory();
-    }, []);
+  const onSubmit = (data: IProduct) => createProduct(data, closeModal);
 
     return (
         <div>
