@@ -17,17 +17,7 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-
-interface Option {
-    value: string;
-    label: string;
-}
-
-interface CustomComboBoxProps {
-    options: Option[];
-    onChange?: (selectedItems: string[]) => void;
-    selectedOptions?: string[];
-}
+import { CustomComboBoxProps } from '@/models/store.model';
 
 export function CustomCombobox({
     options,
@@ -57,7 +47,7 @@ export function CustomCombobox({
                     variant='outline'
                     role='combobox'
                     aria-expanded={open}
-                    className='w-[200px] justify-between'
+                    className='w-[100%] justify-between'
                 >
                     {selectedValues.length > 0
                         ? selectedValues
@@ -71,29 +61,29 @@ export function CustomCombobox({
                     <ChevronsUpDown className='opacity-50' />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className='w-[200px] p-0'>
+            <PopoverContent className='w-[100%] p-0'>
                 <Command>
                     <CommandInput
                         placeholder='Search categories...'
                         className='h-9'
                     />
                     <CommandList>
-                        <CommandEmpty>No category found.</CommandEmpty>
+                        <CommandEmpty>No option found.</CommandEmpty>
                         <CommandGroup>
-                            {options.map((category) => (
+                            {options.map((option) => (
                                 <CommandItem
-                                    key={category.value}
-                                    value={category.value}
+                                    key={option.value}
+                                    value={option.value}
                                     onSelect={() =>
-                                        toggleSelection(category.value)
+                                        toggleSelection(option.value)
                                     }
                                 >
-                                    {category.label}
+                                    {option.label}
                                     <Check
                                         className={cn(
                                             'ml-auto',
                                             selectedValues.includes(
-                                                category.value,
+                                                option.value,
                                             )
                                                 ? 'opacity-100'
                                                 : 'opacity-0',

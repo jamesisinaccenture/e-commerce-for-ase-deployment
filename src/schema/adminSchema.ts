@@ -19,12 +19,15 @@ export const productFormSchema = z.object({
         .optional(),
     category: z.any().nullable().optional(),
     price: z
-        .number()
-        .min(1, { message: 'Price is required' })
-        .transform((val) => parseFloat(val))
-        .refine((val) => !isNaN(val) && val > 0, {
-            message: 'Price must be a positive number',
-        })
+        .preprocess(
+            (val) => (typeof val === 'string' ? parseFloat(val) : val),
+            z
+                .number()
+                .min(1, { message: 'Price is required' })
+                .refine((val) => !isNaN(val) && val > 0, {
+                    message: 'Price must be a positive number',
+                }),
+        )
         .optional(),
     currency: z
         .string()

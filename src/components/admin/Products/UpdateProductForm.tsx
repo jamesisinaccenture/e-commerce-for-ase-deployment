@@ -107,16 +107,23 @@ const UpdateProductForm = ({ product }: IUpdateProductForm) => {
                                 name='category'
                                 render={({ field }) => (
                                     <CustomFormItem label='Category'>
-                                        <CustomCombobox
-                                            selectedOptions={selectedCategories}
-                                            options={categoryItems}
-                                            onChange={(selectedItems) => {
-                                                field.onChange(selectedItems);
-                                            }}
-                                        />
+                                        <div className='mt-1'>
+                                            <CustomCombobox
+                                                selectedOptions={
+                                                    selectedCategories
+                                                }
+                                                options={categoryItems}
+                                                onChange={(selectedItems) => {
+                                                    field.onChange(
+                                                        selectedItems,
+                                                    );
+                                                }}
+                                            />
+                                        </div>
                                     </CustomFormItem>
                                 )}
                             />
+
                             <div className='flex justify-between gap-2'>
                                 <FormField
                                     control={form.control}
