@@ -31,8 +31,8 @@ export const useCategoryServices = () => {
                 throw new Error('Error: Could not get category');
 
             setIsLoading(false);
-            if (callback) callback(response.data);
-            setCategory(response.data);
+            if (callback) callback(response.data.categories);
+            setCategory(response.data.categories);
             return response;
         } catch (error) {
             setIsLoading(false);
@@ -50,14 +50,34 @@ export const useCategoryServices = () => {
                 ENDPOINTS.CATEGORY.BASE,
                 payload,
             );
-            console.log(response);
+            if (!response.data) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Error creating category',
+                    description: 'Please try again.',
+                });
+                throw new Error('Error: Could not create category');
+            }
+
             setIsLoading(false);
             if (callback) callback(response.data.category);
             getCategory();
+            toast({
+                variant: 'success',
+                title: 'Create Category',
+                description: 'Category created successfully',
+            });
             return response;
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
+            toast({
+                variant: 'destructive',
+                title: 'Error creating category',
+                description:
+                    error.message ||
+                    'Error occurred while creating, please try again.',
+            });
+            throw new Error(error);
         }
     };
 
@@ -69,10 +89,31 @@ export const useCategoryServices = () => {
             const response = await api.delete(
                 `${ENDPOINTS.CATEGORY.BASE}/${category_id}`,
             );
+            if (!response.data) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Error deleting category',
+                    description: 'Please try again.',
+                });
+                throw new Error('Error: Could not delete category');
+            }
             if (callback) callback(response.data.category);
             getCategory();
+            toast({
+                variant: 'success',
+                title: 'Delete Category',
+                description: 'Category deleted successfully',
+            });
         } catch (error) {
-            console.log(error);
+            setIsLoading(false);
+            toast({
+                variant: 'destructive',
+                title: 'Error deleting category',
+                description:
+                    error.message ||
+                    'Error occurred while deleting, please try again.',
+            });
+            throw new Error(error);
         }
     };
 
@@ -81,7 +122,7 @@ export const useCategoryServices = () => {
         callback?: (data: ICategory[]) => void,
     ) => {
         setIsLoading(true);
-        console.log(payload, 'payload from input');
+
         try {
             const response: IUpdateCategoryResponse = await api.put(
                 `${ENDPOINTS.CATEGORY.BASE}/${payload.category_id}`,
@@ -106,7 +147,6 @@ export const useCategoryServices = () => {
 
             return response.data.category;
         } catch (error: any) {
-            console.log(error);
             setIsLoading(false);
             toast({
                 variant: 'destructive',
@@ -121,9 +161,9 @@ export const useCategoryServices = () => {
 
     return {
         getCategory,
-        isLoading,
         createCategory,
         deleteCategory,
         updateCategory,
+        isLoading,
     };
 };

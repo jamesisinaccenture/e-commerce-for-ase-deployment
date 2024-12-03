@@ -20,9 +20,10 @@ import { ColumnDef } from '@tanstack/react-table';
 
 const CategoryPage = () => {
     const { search, setSearch } = useAdminGeneralStore();
-    const { getCategory, deleteCategory, updateCategory } =
-        useCategoryServices();
+    const { getCategory, deleteCategory, isLoading } = useCategoryServices();
     const { category } = useAdminCategoryStore();
+
+    console.log(category);
 
     const categoryColumns: ColumnDef<ICategory>[] = [
         {
@@ -139,17 +140,12 @@ const CategoryPage = () => {
                                             row.original.category_id,
                                             () => {
                                                 closeModal();
-                                                toast({
-                                                    title: 'Category deleted successfully!',
-                                                    description:
-                                                        'The category has been deleted to the system.',
-                                                    variant: 'success',
-                                                });
                                             },
                                         );
                                     }}
+                                    disabled={isLoading}
                                 >
-                                    Delete
+                                    {isLoading ? 'Deleting...' : 'Delete'}
                                 </Button>
                             </div>
                         </Modal>

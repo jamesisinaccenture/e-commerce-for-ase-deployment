@@ -5,12 +5,14 @@ export interface IProduct {
     product_name: string;
     product_img?: any;
     product_description: string | undefined;
-    category: string | null | undefined;
+    category: ICategory[] | null | undefined;
     price: number;
     currency: string;
     sold?: number;
     date_created?: string;
     created_by?: string;
+    other_details?: string | null;
+    status?: string;
 }
 export interface IProductResponse {
     data: {
@@ -25,10 +27,11 @@ export interface ICategory {
     category_img?: string;
     date_created?: string;
     create_by?: string;
+    status: string;
 }
 
 export interface ICategoryResponse {
-    data: ICategory[];
+    data: { categories: ICategory[] };
 }
 
 //delete
