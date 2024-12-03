@@ -108,3 +108,13 @@ export interface IDropImageInput {
     onImageDrop?: (file: File) => void;
     value?: string;
 }
+export interface CustomComboBoxProps {
+    options: Option[];
+    onChange?: (selectedItems: string[]) => void;
+    selectedOptions?: string[];
+}
+
+export interface Option {
+    value: string;
+    label: string;
+}

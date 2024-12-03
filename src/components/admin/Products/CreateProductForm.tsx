@@ -51,12 +51,12 @@ const CreateProductForm = ({
 
     const categoryItems =
         category?.map((cat) => ({
-            value: String(cat?.category_name),
+            value: String(cat?.category_id),
             label: String(cat?.category_name),
         })) || [];
 
     const selectedCategories =
-        product.category?.map((cat) => cat.category_name) || [];
+        product.category?.map((cat) => cat.category_id || '') || [];
 
     useEffect(() => {
         category && getCategory();

@@ -17,7 +17,7 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CustomComboBoxProps } from '@/models/store.model';
+import { CustomComboBoxProps } from '@/models/admin.model';
 
 export function CustomCombobox({
     options,

@@ -150,14 +150,3 @@ export interface ICheckoutShippingAddress {
     city: string;
     contact_number: string;
 }
-
-export interface CustomComboBoxProps {
-    options: Option[];
-    onChange?: (selectedItems: string[]) => void;
-    selectedOptions?: string[];
-}
-
-export interface Option {
-    value: string;
-    label: string;
-}
