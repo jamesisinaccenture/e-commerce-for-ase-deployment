@@ -19,8 +19,8 @@ import DropImageInput from "../DropImageInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IUpdateUserForm {
-    user: IUser;
-    updateUser: (updatedUser: IUpdateUserPayload) => void;
+  user: IUser;
+  updateUser: (updatedUser: IUpdateUserPayload) => void;
 }
 
 const UpdateUserForm = ({ user }: IUpdateUserForm) => {
@@ -32,8 +32,10 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
       contact_number: user.contact_number,
       address: user.address,
       username: user.username,
+      password: user.password,
       access_level: user.access_level,
       user_img: user.user_img,
+      user_id: user.user_id,
       position: user.position,
       department: user.department,
       branch: user.branch,
@@ -62,6 +64,21 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="user_id"
+                render={({ field }) => (
+                  <CustomFormItem label="User ID">
+                    <CustomInput
+                      className="w-full"
+                      value={field.value}
+                      disabled
+                    />
+                  </CustomFormItem>
+                )}
+              />
+            </div>
             <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
               <div className="flex justify-between gap-2">
                 <FormField
@@ -84,6 +101,35 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
                     <CustomFormItem label="Last name*">
                       <CustomInput
                         label="Last name"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <CustomFormItem label="Username*">
+                      <CustomInput
+                        label="Username"
+                        className="w-full"
+                        value={field.value}
+                        disabled
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <CustomFormItem label="Password*">
+                      <CustomInput
+                        type="password"
+                        label="Password"
+                        isRequired
                         className="w-full"
                         {...field}
                       />

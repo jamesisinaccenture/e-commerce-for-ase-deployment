@@ -18,9 +18,6 @@ import DropImageInput from "../DropImageInput";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const customDate = new Date("2024-11-29T15:45:30");
-const isoCustomDate = customDate.toISOString();
-
 const CreateUserForm = () => {
   const form = useForm({
     resolver: zodResolver(userFormSchema),
@@ -29,14 +26,14 @@ const CreateUserForm = () => {
       last_name: "",
       contact_number: "",
       address: "",
-      date_created: isoCustomDate,
       username: "",
+      password: "",
       access_level: "user",
       user_img: "",
       position: "",
       department: "",
       branch: "",
-      status: 1,
+      status: "ACTIVE",
     },
   });
 
@@ -107,6 +104,20 @@ const CreateUserForm = () => {
                     <CustomFormItem label="Username">
                       <CustomInput
                         label="Username"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <CustomFormItem label="Password">
+                      <CustomInput
+                        type="password"
+                        label="Password"
                         className="w-full"
                         {...field}
                       />
@@ -210,7 +221,7 @@ const CreateUserForm = () => {
                         <div className="w-fit py-2">
                           <Switch
                             onCheckedChange={(checked) =>
-                              field.onChange(checked ? 1 : 0)
+                              field.onChange(checked ? "ACTIVE" : "INACTIVE")
                             }
                           />
                         </div>

@@ -23,9 +23,7 @@ export const useUserServices = () => {
     setIsLoading(true);
 
     try {
-      const response: IUserResponse = await api.get(
-        ENDPOINTS.USERS.GETALL
-      );
+      const response: IUserResponse = await api.get(ENDPOINTS.USERS.GETALL);
       console.log(response);
       if (!response.data) throw new Error("Error: Could not get user.");
 
@@ -71,13 +69,11 @@ export const useUserServices = () => {
         `${ENDPOINTS.USERS.BASE}/${payload.user_id}`,
         payload
       );
-      console.log("response", response);
-
       if (callback) callback(response.data.user);
       toast({
         variant: "success",
-        title: "Update User.",
-        description: "User updated successfully.",
+        title: "Update User",
+        description: "User updated successfully",
       });
       getUsers();
 
@@ -87,7 +83,7 @@ export const useUserServices = () => {
       setIsLoading(false);
       toast({
         variant: "destructive",
-        title: "Error updating user",
+        title: "Error updating category",
         description:
           error.message || "Error occurred while updating, please try again.",
       });
