@@ -7,7 +7,6 @@ import { CustomSelect } from "@/components/reusable/CustomSelect";
 import { Button } from "@/components/ui/button";
 import { FormField, Form } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { closeModal } from "@/lib/utils";
 import { ICreateUserPayload } from "@/models/admin.model";
@@ -55,22 +54,20 @@ const CreateUserForm = () => {
     });
   };
 
-  console.log(form.formState.errors);
-
   return (
-    <>
-      <div className="flex gap-2 items-center my-2">
+    <div className="relative max-h-[90vh] flex flex-col">
+      <div className="flex gap-2 items-center my-2 sticky top-0 bg-white z-10 p-4 shadow-sm">
         <UserPlus />
         <h1 className="font-bold text-lg">Add new user</h1>
       </div>
-      <div>
+      <div className="overflow-auto flex-grow px-4 pb-4 max-h-[calc(100vh-10rem)]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
-              <div className="flex justify-between gap-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2">
                 <FormField
                   control={form.control}
                   name="first_name"
@@ -97,6 +94,8 @@ const CreateUserForm = () => {
                     </CustomFormItem>
                   )}
                 />
+              </div>
+              <div className="flex gap-2">
                 <FormField
                   control={form.control}
                   name="username"
@@ -130,7 +129,7 @@ const CreateUserForm = () => {
                 name="address"
                 render={({ field }) => (
                   <CustomFormItem label="Address*">
-                    <Textarea placeholder="Address" {...field} />
+                    <CustomInput label="Address" {...field} />
                   </CustomFormItem>
                 )}
               />
@@ -165,7 +164,7 @@ const CreateUserForm = () => {
                   )}
                 />
               </div>
-              <div className="flex justify-between gap-2">
+              <div className="flex gap-2">
                 <FormField
                   control={form.control}
                   name="department"
@@ -245,7 +244,7 @@ const CreateUserForm = () => {
                 )}
               />
             </div>
-            <div className="flex gap-2 justify-end">
+            <div className="flex gap-2 justify-end mt-4">
               <DialogClose asChild>
                 <Button
                   id="closeModal"
@@ -265,7 +264,7 @@ const CreateUserForm = () => {
           </form>
         </Form>
       </div>
-    </>
+    </div>
   );
 };
 
