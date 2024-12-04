@@ -5,7 +5,8 @@ export const productFormSchema = z.object({
     product_name: z
         .string()
         .min(1, { message: 'Product name is required' })
-        .max(100, { message: 'Product name cannot exceed 100 characters' }),
+        .max(100, { message: 'Product name cannot exceed 100 characters' })
+        .optional(),
     product_img: z.any().optional(),
     product_description: z
         .string()
@@ -14,15 +15,20 @@ export const productFormSchema = z.object({
         })
         .max(500, {
             message: 'Product description cannot exceed 500 characters',
-        }),
+        })
+        .optional(),
     category: z.any().nullable().optional(),
     price: z
-        .string()
-        .min(1, { message: 'Price is required' })
-        .transform((val) => parseFloat(val))
-        .refine((val) => !isNaN(val) && val > 0, {
-            message: 'Price must be a positive number',
-        }),
+        .preprocess(
+            (val) => (typeof val === 'string' ? parseFloat(val) : val),
+            z
+                .number()
+                .min(1, { message: 'Price is required' })
+                .refine((val) => !isNaN(val) && val > 0, {
+                    message: 'Price must be a positive number',
+                }),
+        )
+        .optional(),
     currency: z
         .string()
         .length(3, { message: 'Currency must be a 3-letter code' })
@@ -86,7 +92,7 @@ export const userFormSchema = z.object({
         .nullable()
         .optional(),
     group_tag: z.string().optional(),
-    status: z.number(),
+    status: z.number().optional(),
     date_created: z
         .string()
         .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/, {

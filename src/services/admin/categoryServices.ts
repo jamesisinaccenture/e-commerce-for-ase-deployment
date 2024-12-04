@@ -19,22 +19,37 @@ export const useCategoryServices = () => {
     const [isLoading, setIsLoading] = useState(false);
     const api = useAxios();
 
+    const handleApiError = (error: unknown, defaultMessage: string) => {
+        const errorMessage =
+            (error as any)?.response?.data?.message ||
+            (error as Error)?.message ||
+            defaultMessage;
+
+        toast({
+            variant: 'destructive',
+            title: 'Error',
+            description: errorMessage,
+        });
+
+        console.error(error);
+        setIsLoading(false);
+        throw new Error(errorMessage);
+    };
+
     const getCategory = async (callback?: (data: ICategory[]) => void) => {
         setIsLoading(true);
-
         try {
             const response: ICategoryResponse = await api.get(
                 ENDPOINTS.CATEGORY.GETALL,
             );
-            console.log(response);
-            if (!response.data)
-                throw new Error('Error: Could not get category');
+            if (!response.data) throw new Error('Could not fetch categories');
 
-            setIsLoading(false);
-            if (callback) callback(response.data);
-            setCategory(response.data);
-            return response;
+            setCategory(response.data.categories);
+            if (callback) callback(response.data.categories);
+            return response.data.categories;
         } catch (error) {
+            handleApiError(error, 'Failed to fetch categories');
+        } finally {
             setIsLoading(false);
         }
     };
@@ -44,19 +59,26 @@ export const useCategoryServices = () => {
         callback?: (data: ICategory[]) => void,
     ) => {
         setIsLoading(true);
-
         try {
             const response: ICreateCategoryResponse = await api.post(
                 ENDPOINTS.CATEGORY.BASE,
                 payload,
             );
-            console.log(response);
-            setIsLoading(false);
-            if (callback) callback(response.data.category);
+            if (!response.data) throw new Error('Could not create category');
+
             getCategory();
-            return response;
+            if (callback) callback(response.data.category);
+
+            toast({
+                variant: 'success',
+                title: 'Create Category',
+                description: 'Category created successfully',
+            });
+
+            return response.data.category;
         } catch (error) {
-            console.log(error);
+            handleApiError(error, 'Failed to create category');
+        } finally {
             setIsLoading(false);
         }
     };
@@ -65,14 +87,25 @@ export const useCategoryServices = () => {
         category_id?: string,
         callback?: (data: ICategory[]) => void,
     ) => {
+        setIsLoading(true);
         try {
             const response = await api.delete(
                 `${ENDPOINTS.CATEGORY.BASE}/${category_id}`,
             );
-            if (callback) callback(response.data.category);
+            if (!response.data) throw new Error('Could not delete category');
+
             getCategory();
+            if (callback) callback(response.data.category);
+
+            toast({
+                variant: 'success',
+                title: 'Delete Category',
+                description: 'Category deleted successfully',
+            });
         } catch (error) {
-            console.log(error);
+            handleApiError(error, 'Failed to delete category');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -81,49 +114,35 @@ export const useCategoryServices = () => {
         callback?: (data: ICategory[]) => void,
     ) => {
         setIsLoading(true);
-        console.log(payload, 'payload from input');
         try {
             const response: IUpdateCategoryResponse = await api.put(
                 `${ENDPOINTS.CATEGORY.BASE}/${payload.category_id}`,
                 payload,
             );
-            if (!response.data) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Error updating category',
-                    description: 'Please try again.',
-                });
-                throw new Error('Error: Could not update category');
-            }
+            if (!response.data) throw new Error('Could not update category');
 
+            getCategory();
             if (callback) callback(response.data.category);
+
             toast({
                 variant: 'success',
                 title: 'Update Category',
                 description: 'Category updated successfully',
             });
-            getCategory();
 
             return response.data.category;
-        } catch (error: any) {
-            console.log(error);
+        } catch (error) {
+            handleApiError(error, 'Failed to update category');
+        } finally {
             setIsLoading(false);
-            toast({
-                variant: 'destructive',
-                title: 'Error updating category',
-                description:
-                    error.message ||
-                    'Error occurred while updating, please try again.',
-            });
-            throw new Error(error);
         }
     };
 
     return {
         getCategory,
-        isLoading,
         createCategory,
         deleteCategory,
         updateCategory,
+        isLoading,
     };
 };
