@@ -42,7 +42,7 @@ export const useProductServices = () => {
         try {
             const productPayloads = {
                 ...payload,
-                category: [],
+                category: payload.category,
                 created_by: user.username,
             };
 

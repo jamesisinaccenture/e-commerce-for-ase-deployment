@@ -1,36 +1,66 @@
+import { useEffect } from 'react';
 import { ShoppingBasket } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
+import { CustomCombobox } from '@/components/reusable/CustomComboBox';
 import CustomFormItem from '@/components/reusable/CustomFormItem';
 import CustomInput from '@/components/reusable/CustomInput';
 import { Button } from '@/components/ui/button';
 import { FormField, Form } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
+import { useAdminCategoryStore } from '@/hooks/state/admin/useAdminCategory';
 import { toast } from '@/hooks/use-toast';
 import { closeModal, imageToBlob } from '@/lib/utils';
 import { IProduct } from '@/models/admin.model';
 import { productFormSchema } from '@/schema/adminSchema';
+import { useCategoryServices } from '@/services/admin/categoryServices';
 import { useProductServices } from '@/services/admin/productServices';
 import { DialogClose } from '@radix-ui/react-dialog';
 import DropImageInput from '../DropImageInput';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const CreateProductForm = () => {
+interface ICreateProductForm {
+    product?: IProduct;
+}
+
+const CreateProductForm = ({
+    product = {} as IProduct,
+}: ICreateProductForm) => {
     const form = useForm({
         resolver: zodResolver(productFormSchema),
         defaultValues: {
+            product_id: '',
             product_name: '',
             product_img: '',
-            product_description: '',
-            category: null,
+            product_description: undefined,
+            category: [],
             price: 0,
             currency: '',
+            sold: 0,
+            date_created: '',
+            created_by: '',
         },
     });
+
     const { createProduct, isLoading } = useProductServices();
+    const { getCategory } = useCategoryServices();
+    const { category } = useAdminCategoryStore();
 
     const onSubmit = (data: IProduct) => createProduct(data, closeModal);
+
+    const categoryItems =
+        category?.map((cat) => ({
+            value: String(cat?.category_id),
+            label: String(cat?.category_name),
+        })) || [];
+
+    const selectedCategories =
+        product.category?.map((cat) => cat.category_id || '') || [];
+
+    useEffect(() => {
+        category && getCategory();
+    }, []);
 
     return (
         <div>
@@ -58,6 +88,7 @@ const CreateProductForm = () => {
                                     </CustomFormItem>
                                 )}
                             />
+
                             <FormField
                                 control={form.control}
                                 name='product_description'
@@ -70,19 +101,31 @@ const CreateProductForm = () => {
                                     </CustomFormItem>
                                 )}
                             />
+
                             <FormField
                                 control={form.control}
                                 name='category'
                                 render={({ field }) => (
                                     <CustomFormItem label='Category'>
-                                        <CustomInput
-                                            label='Category'
-                                            className='w-full'
-                                            {...field}
-                                        />
+                                        <div className='mt-1'>
+                                            <CustomCombobox
+                                                options={categoryItems}
+                                                selectedOptions={
+                                                    selectedCategories
+                                                }
+                                                onChange={(
+                                                    selectedItems: any,
+                                                ) =>
+                                                    field.onChange(
+                                                        selectedItems,
+                                                    )
+                                                }
+                                            />
+                                        </div>
                                     </CustomFormItem>
                                 )}
                             />
+
                             <div className='flex justify-between gap-2'>
                                 <FormField
                                     control={form.control}
@@ -111,6 +154,7 @@ const CreateProductForm = () => {
                                     )}
                                 />
                             </div>
+
                             <FormField
                                 control={form.control}
                                 name='product_img'
@@ -143,6 +187,7 @@ const CreateProductForm = () => {
                                 }}
                             />
                         </div>
+
                         <div className='flex gap-2 justify-end'>
                             <DialogClose asChild>
                                 <Button

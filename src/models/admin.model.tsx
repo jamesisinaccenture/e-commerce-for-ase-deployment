@@ -1,16 +1,18 @@
 
 // Products interface
 export interface IProduct {
-  product_id: string | undefined;
-  product_name: string;
-  product_img?: any;
-  product_description: string | undefined;
-  category: string | null | undefined;
-  price: number;
-  currency: string;
-  sold?: number;
-  date_created?: string;
-  created_by?: string;
+    product_id: string | undefined;
+    product_name: string;
+    product_img?: any;
+    product_description: string | undefined;
+    category: ICategory[] | null | undefined;
+    price: number;
+    currency: string;
+    sold?: number;
+    date_created?: string;
+    created_by?: string;
+    other_details?: string | null;
+    status?: string;
 }
 export interface IProductResponse {
   data: {
@@ -20,15 +22,16 @@ export interface IProductResponse {
 
 // Categories interface
 export interface ICategory {
-  category_id?: string;
-  category_name: string;
-  category_img?: string;
-  date_created?: string;
-  create_by?: string;
+    category_id?: string;
+    category_name: string;
+    category_img?: string;
+    date_created?: string;
+    create_by?: string;
+    status: string;
 }
 
 export interface ICategoryResponse {
-  data: ICategory[];
+    data: { categories: ICategory[] };
 }
 
 //delete
@@ -157,4 +160,14 @@ export interface IAdminGeneralStore {
 export interface IDropImageInput {
   onImageDrop?: (file: File) => void;
   value?: string;
+}
+export interface CustomComboBoxProps {
+    options: Option[];
+    onChange?: (selectedItems: string[]) => void;
+    selectedOptions?: string[];
+}
+
+export interface Option {
+    value: string;
+    label: string;
 }

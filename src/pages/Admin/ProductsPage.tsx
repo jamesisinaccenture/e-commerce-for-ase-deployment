@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { useAdminGeneralStore } from '@/hooks/state/admin/useAdminGeneral';
 import { useAdminProductStore } from '@/hooks/state/admin/useAdminProduct';
 import { closeModal, formatDate, formatPrice } from '@/lib/utils';
-import { IProduct } from '@/models/admin.model';
+import { ICategory, IProduct } from '@/models/admin.model';
 import { useProductServices } from '@/services/admin/productServices';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { ColumnDef } from '@tanstack/react-table';
@@ -78,11 +78,22 @@ const ProductsPage = () => {
                     Category <ChevronsUpDown />
                 </Button>
             ),
-            cell: ({ row }) => (
-                <div className='capitalize px-4'>
-                    {row.getValue('category')}
-                </div>
-            ),
+            cell: ({ row }) => {
+                const categories: ICategory[] = row.getValue('category');
+
+                return (
+                    <div className='capitalize px-4 flex flex-wrap gap-1'>
+                        {categories.map((category) => (
+                            <div
+                                key={category.category_id}
+                                className='border p-2 rounded'
+                            >
+                                {category.category_name}
+                            </div>
+                        ))}
+                    </div>
+                );
+            },
         },
         {
             accessorKey: 'price',
@@ -98,6 +109,13 @@ const ProductsPage = () => {
             header: 'Currency',
             cell: ({ row }) => (
                 <div className='uppercase'>{row.getValue('currency')}</div>
+            ),
+        },
+        {
+            accessorKey: 'status',
+            header: 'Status',
+            cell: ({ row }) => (
+                <div className='uppercase'>{row.getValue('status')}</div>
             ),
         },
         {
