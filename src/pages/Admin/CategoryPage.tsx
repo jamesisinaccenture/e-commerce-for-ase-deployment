@@ -12,7 +12,6 @@ import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useAdminCategoryStore } from "@/hooks/state/admin/useAdminCategory";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
-import { toast } from "@/hooks/use-toast";
 import { closeModal, formatDate } from "@/lib/utils";
 import { ICategory } from "@/models/admin.model";
 import { useCategoryServices } from "@/services/admin/categoryServices";
@@ -20,8 +19,10 @@ import { ColumnDef } from "@tanstack/react-table";
 
 const CategoryPage = () => {
   const { search, setSearch } = useAdminGeneralStore();
-  const { getCategory, deleteCategory } = useCategoryServices();
+  const { getCategory, deleteCategory, isLoading } = useCategoryServices();
   const { category } = useAdminCategoryStore();
+
+  console.log(category);
 
   const categoryColumns: ColumnDef<ICategory>[] = [
     {
@@ -116,16 +117,11 @@ const CategoryPage = () => {
                     row.toggleSelected(false);
                     deleteCategory(row.original.category_id, () => {
                       closeModal();
-                      toast({
-                        title: "Category deleted successfully!",
-                        description:
-                          "The category has been deleted to the system.",
-                        variant: "success",
-                      });
                     });
                   }}
+                  disabled={isLoading}
                 >
-                  Delete
+                  {isLoading ? "Deleting..." : "Delete"}
                 </Button>
               </div>
             </Modal>
