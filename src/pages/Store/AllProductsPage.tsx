@@ -18,21 +18,31 @@ const categories = [
 const PRODUCTS_PER_PAGE = 40;
 
 const AllProductsPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(["All"]);
   const { products } = useProductStore();
 
   const { getProducts } = useProductSevices();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const filteredProducts = useMemo(() => {
-    return selectedCategory === "All"
-      ? products
-      : products.filter((product) =>
-          product?.category?.some((category) =>
-            category.includes(selectedCategory)
-          )
+    if (selectedCategories.includes("All")) {
+      return products; // Show all products if "All" is selected
+    }
+
+    return products.filter((product) => {
+      const productCategories = Array.isArray(product?.category)
+        ? product.category
+        : [];
+
+      return productCategories.some((cat: string) => {
+        // Ensure cat is always a string before calling toLowerCase
+        const categoryString = String(cat).toLowerCase();
+        return selectedCategories.some(
+          (selectedCat) => categoryString === selectedCat.toLowerCase()
         );
-  }, [products, selectedCategory]);
+      });
+    });
+  }, [products, selectedCategories]);
 
   // Display products for the current page only
   const displayedProducts = filteredProducts.slice(
@@ -41,13 +51,30 @@ const AllProductsPage: React.FC = () => {
   );
 
   const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
     setCurrentPage(1); // Reset to first page on category change
+
+    if (category === "All") {
+      setSelectedCategories(["All"]); // Selecting "All" resets all filters
+      return;
+    }
+
+    setSelectedCategories((prevCategories) => {
+      // Remove "All" if selecting a specific category
+      const updatedCategories = prevCategories.filter((cat) => cat !== "All");
+
+      if (updatedCategories.includes(category)) {
+        // If the category is already selected, deselect it
+        return updatedCategories.filter((cat) => cat !== category);
+      } else {
+        // Otherwise, add the category
+        return [...updatedCategories, category];
+      }
+    });
   };
 
   useEffect(() => {
-    getProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    getProducts(); // Fetch the products initially
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -60,7 +87,7 @@ const AllProductsPage: React.FC = () => {
               onClick={() => handleCategoryChange(category)}
               className={cn(
                 "w-30 px-4 py-2 rounded-full font-medium transition",
-                selectedCategory === category
+                selectedCategories.includes(category)
                   ? "bg-store-primary text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-store-primary hover:text-white"
               )}
@@ -78,3 +105,4 @@ const AllProductsPage: React.FC = () => {
 };
 
 export default AllProductsPage;
+
