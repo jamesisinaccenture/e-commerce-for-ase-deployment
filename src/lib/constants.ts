@@ -318,11 +318,11 @@ export const usersList: IUser[] = [
     date_created: "2024-11-11T08:56:05.937",
     username: "boss!?ikawnanamanyan",
     access_level: "user",
-    user_img: null,
+    user_img: "",
     position: null,
     department: null,
     branch: null,
-    group_tag: "group2-malakas",
+    password: "",
   },
 ];
 
