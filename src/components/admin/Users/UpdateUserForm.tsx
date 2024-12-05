@@ -54,13 +54,11 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
   };
 
   return (
-    <div className="relative max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="relative max-h-[90vh] flex flex-col">
       <div className="flex gap-2 items-center my-2 sticky top-0 bg-white z-10 p-4 shadow-sm">
         <UserPlus />
         <h1 className="font-bold text-lg">Update User</h1>
       </div>
-      
-      {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 pb-4">
         <Form {...form}>
           <form
@@ -133,7 +131,6 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
                     <CustomInput
                       type="password"
                       label="Password"
-                      isRequired
                       className="w-full"
                       {...field}
                     />
@@ -270,27 +267,25 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
                 );
               }}
             />
+            <div className="flex justify-end gap-2 mt-4">
+              <DialogClose asChild>
+                <Button
+                  id="closeModal"
+                  type="button"
+                  onClick={() => {
+                    form.reset();
+                  }}
+                  variant="ghost"
+                >
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Processing..." : "Edit"}
+              </Button>
+            </div>
           </form>
         </Form>
-      </div>
-
-      {/* Sticky footer with Cancel and Edit buttons */}
-      <div className="sticky bottom-0 flex gap-2 justify-end p-4 bg-white z-10 shadow-sm">
-        <DialogClose asChild>
-          <Button
-            id="closeModal"
-            type="button"
-            onClick={() => {
-              form.reset();
-            }}
-            variant="ghost"
-          >
-            Cancel
-          </Button>
-        </DialogClose>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Processing..." : "Edit"}
-        </Button>
       </div>
     </div>
   );

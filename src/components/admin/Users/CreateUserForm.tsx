@@ -55,13 +55,11 @@ const CreateUserForm = () => {
   };
 
   return (
-    <div className="relative max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="relative max-h-[90vh] flex flex-col">
       <div className="flex gap-2 items-center my-2 sticky top-0 bg-white z-10 p-4 shadow-sm">
         <UserPlus />
         <h1 className="font-bold text-lg">Add new user</h1>
       </div>
-
-      {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto px-4 pb-4">
         <Form {...form}>
           <form
@@ -97,7 +95,6 @@ const CreateUserForm = () => {
                   )}
                 />
               </div>
-
               <div className="flex gap-2">
                 <FormField
                   control={form.control}
@@ -127,7 +124,6 @@ const CreateUserForm = () => {
                   )}
                 />
               </div>
-
               <FormField
                 control={form.control}
                 name="address"
@@ -137,7 +133,6 @@ const CreateUserForm = () => {
                   </CustomFormItem>
                 )}
               />
-
               <div className="flex gap-2">
                 <FormField
                   control={form.control}
@@ -167,7 +162,6 @@ const CreateUserForm = () => {
                   )}
                 />
               </div>
-
               <div className="flex gap-4">
                 <div className="flex-1">
                   <FormField
@@ -202,8 +196,6 @@ const CreateUserForm = () => {
                   />
                 </div>
               </div>
-
-              {/* User Image Section (Similar to UpdateUserForm) */}
               <FormField
                 control={form.control}
                 name="user_img"
@@ -233,27 +225,25 @@ const CreateUserForm = () => {
                 }}
               />
             </div>
+            <div className="flex justify-end gap-2 mt-4">
+              <DialogClose asChild>
+                <Button
+                  id="closeModal"
+                  type="button"
+                  onClick={() => {
+                    form.reset();
+                  }}
+                  variant="ghost"
+                >
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Processing..." : "Submit"}
+              </Button>
+            </div>
           </form>
         </Form>
-      </div>
-
-      {/* Sticky Footer with Cancel and Submit Buttons */}
-      <div className="sticky bottom-0 flex gap-2 justify-end p-4 bg-white z-10 shadow-sm">
-        <DialogClose asChild>
-          <Button
-            id="closeModal"
-            type="button"
-            onClick={() => {
-              form.reset();
-            }}
-            variant="ghost"
-          >
-            Cancel
-          </Button>
-        </DialogClose>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Processing..." : "Submit"}
-        </Button>
       </div>
     </div>
   );

@@ -1,18 +1,18 @@
 
 // Products interface
 export interface IProduct {
-    product_id: string | undefined;
-    product_name: string;
-    product_img?: any;
-    product_description: string | undefined;
-    category: ICategory[] | null | undefined;
-    price: number;
-    currency: string;
-    sold?: number;
-    date_created?: string;
-    created_by?: string;
-    other_details?: string | null;
-    status?: string;
+  product_id: string | undefined;
+  product_name: string;
+  product_img?: any;
+  product_description: string | undefined;
+  category: ICategory[] | null | undefined;
+  price: number;
+  currency: string;
+  sold?: number;
+  date_created?: string;
+  created_by?: string;
+  other_details?: string | null;
+  status?: string;
 }
 export interface IProductResponse {
   data: {
@@ -22,16 +22,16 @@ export interface IProductResponse {
 
 // Categories interface
 export interface ICategory {
-    category_id?: string;
-    category_name: string;
-    category_img?: string;
-    date_created?: string;
-    create_by?: string;
-    status: string;
+  category_id?: string;
+  category_name: string;
+  category_img?: string;
+  date_created?: string;
+  create_by?: string;
+  status: string;
 }
 
 export interface ICategoryResponse {
-    data: { categories: ICategory[] };
+  data: { categories: ICategory[] };
 }
 
 //delete
@@ -103,7 +103,7 @@ export interface ICreateUserPayload {
   position: string;
   department: string;
   branch: string;
-  status: string;
+  status?: string;
 }
 export interface IUpdateUserResponse {
   data: {
@@ -112,18 +112,18 @@ export interface IUpdateUserResponse {
   };
 }
 export interface IUpdateUserPayload {
+  user_id?: string;
   first_name: string;
   last_name: string;
   contact_number: string;
   address: string;
-  username?: string;
-  password?: string;
+  username: string;
+  password: string;
   access_level: string;
-  user_img?: string | File | undefined;
-  position?: string;
-  department?: string;
-  branch?: string;
-  user_id: string;
+  user_img?: string | File;
+  position?: string | null;
+  department?: string | null;
+  branch?: string | null;
   status?: string;
 }
 
@@ -162,12 +162,12 @@ export interface IDropImageInput {
   value?: string;
 }
 export interface CustomComboBoxProps {
-    options: Option[];
-    onChange?: (selectedItems: string[]) => void;
-    selectedOptions?: string[];
+  options: Option[];
+  onChange?: (selectedItems: string[]) => void;
+  selectedOptions?: string[];
 }
 
 export interface Option {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 }
