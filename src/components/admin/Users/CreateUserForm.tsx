@@ -7,9 +7,11 @@ import { CustomSelect } from "@/components/reusable/CustomSelect";
 import { Button } from "@/components/ui/button";
 import { FormField, Form } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { IUser } from "@/models/admin.model";
+import { toast } from "@/hooks/use-toast";
+import { closeModal, imageToBlob } from "@/lib/utils";
+import { ICreateUserPayload } from "@/models/admin.model";
 import { userFormSchema } from "@/schema/adminSchema";
+import { useUserServices } from "@/services/admin/userServices";
 import { DialogClose } from "@radix-ui/react-dialog";
 import DropImageInput from "../DropImageInput";
 
@@ -23,46 +25,49 @@ const CreateUserForm = () => {
       last_name: "",
       contact_number: "",
       address: "",
-      date_created: "",
       username: "",
+      password: "",
       access_level: "user",
       user_img: "",
       position: "",
       department: "",
       branch: "",
-      status: 1,
+      status: "ACTIVE",
     },
   });
 
   const accessLevelList = [
-    {
-      label: "User",
-      value: "user",
-    },
-    {
-      label: "Admin",
-      value: "admin",
-    },
+    { label: "User", value: "user" },
+    { label: "Admin", value: "admin" },
   ];
 
-  const onSubmit = (data: IUser) => {
-    console.log(data);
+  const { createUser, isLoading } = useUserServices();
+
+  const onSubmit = (data: ICreateUserPayload) => {
+    createUser(data, () => {
+      toast({
+        title: "User created successfully!",
+        description: "The new user has been added to the system.",
+        variant: "success",
+      });
+      closeModal();
+    });
   };
 
   return (
-    <>
-      <div className="flex gap-2 items-center my-2">
+    <div className="relative max-h-[90vh] flex flex-col">
+      <div className="flex gap-2 items-center my-2 sticky top-0 bg-white z-10 p-4 shadow-sm">
         <UserPlus />
         <h1 className="font-bold text-lg">Add new user</h1>
       </div>
-      <div>
+      <div className="flex-1 overflow-y-auto px-4 pb-4">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            <div className="flex flex-col gap-4 overflow-auto max-h-[30rem]">
-              <div className="flex justify-between gap-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2">
                 <FormField
                   control={form.control}
                   name="first_name"
@@ -90,12 +95,41 @@ const CreateUserForm = () => {
                   )}
                 />
               </div>
+              <div className="flex gap-2">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <CustomFormItem label="Username*">
+                      <CustomInput
+                        label="Username"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <CustomFormItem label="Password*">
+                      <CustomInput
+                        type="password"
+                        label="Password"
+                        className="w-full"
+                        {...field}
+                      />
+                    </CustomFormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="address"
                 render={({ field }) => (
                   <CustomFormItem label="Address*">
-                    <Textarea placeholder="Address" {...field} />
+                    <CustomInput label="Address" {...field} />
                   </CustomFormItem>
                 )}
               />
@@ -119,41 +153,10 @@ const CreateUserForm = () => {
                   render={({ field }) => (
                     <CustomFormItem label="Access level" className="w-full">
                       <CustomSelect
-                        triggerClassName="w-full"
                         items={accessLevelList}
                         defaultValue={field.value}
                         placeholder="Access Level"
-                        onChange={(value: string) => {
-                          field.onChange(value);
-                        }}
-                      />
-                    </CustomFormItem>
-                  )}
-                />
-              </div>
-              <div className="flex justify-between gap-2">
-                <FormField
-                  control={form.control}
-                  name="department"
-                  render={({ field }) => (
-                    <CustomFormItem label="Department">
-                      <CustomInput
-                        label="Department"
-                        className="w-full"
-                        {...field}
-                      />
-                    </CustomFormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="branch"
-                  render={({ field }) => (
-                    <CustomFormItem label="Branch">
-                      <CustomInput
-                        label="Branch"
-                        className="w-full"
-                        {...field}
+                        onChange={(value: string) => field.onChange(value)}
                       />
                     </CustomFormItem>
                   )}
@@ -180,14 +183,11 @@ const CreateUserForm = () => {
                     control={form.control}
                     name="status"
                     render={({ field }) => (
-                      <CustomFormItem
-                        label="Status"
-                        className="flex items-center"
-                      >
+                      <CustomFormItem label="Status" className="flex items-center">
                         <div className="w-fit py-2">
                           <Switch
                             onCheckedChange={(checked) =>
-                              field.onChange(checked ? 1 : 0)
+                              field.onChange(checked ? "ACTIVE" : "INACTIVE")
                             }
                           />
                         </div>
@@ -199,34 +199,53 @@ const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="user_img"
-                render={({ field }) => (
-                  <CustomFormItem label="Product image">
-                    <DropImageInput
-                      onImageDrop={(file) => {
-                        field.onChange(file);
-                      }}
-                      value={field.value}
-                    />
-                  </CustomFormItem>
-                )}
+                render={({ field }) => {
+                  const { onChange, value } = field;
+                  const imageValue = typeof value === "string" ? value : undefined;
+
+                  return (
+                    <CustomFormItem label="User image">
+                      <DropImageInput
+                        onImageDrop={async (file) => {
+                          try {
+                            const blob = await imageToBlob(file);
+                            onChange(blob);
+                          } catch (error) {
+                            toast({
+                              variant: "destructive",
+                              title: "Error uploading image",
+                              description: "Please try again.",
+                            });
+                          }
+                        }}
+                        value={imageValue}
+                      />
+                    </CustomFormItem>
+                  );
+                }}
               />
             </div>
-            <div className="flex gap-2 justify-end">
+            <div className="flex justify-end gap-2 mt-4">
               <DialogClose asChild>
                 <Button
+                  id="closeModal"
                   type="button"
-                  onClick={() => form.reset()}
+                  onClick={() => {
+                    form.reset();
+                  }}
                   variant="ghost"
                 >
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Processing..." : "Submit"}
+              </Button>
             </div>
           </form>
         </Form>
       </div>
-    </>
+    </div>
   );
 };
 

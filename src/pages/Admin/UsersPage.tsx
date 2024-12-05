@@ -1,21 +1,25 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { ChevronsUpDown, DeleteIcon, Edit } from "lucide-react";
 
 import SampleImg from "@/assets/images/image 3.png";
 import { Modal } from "@/components/admin/Modal";
 import CreateUserForm from "@/components/admin/Users/CreateUserForm";
-import { CustomSelect } from "@/components/reusable/CustomSelect";
+import UpdateUserForm from "@/components/admin/Users/UpdateUserForm";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
-import { usersList } from "@/lib/constants";
-import { formatDate } from "@/lib/utils";
-import { IUser } from "@/models/admin.model";
+import { useAdminUserStore } from "@/hooks/state/admin/useAdminUser";
+import { toast } from "@/hooks/use-toast";
+import { closeModal } from "@/lib/utils";
+import { IUpdateUserPayload, IUser } from "@/models/admin.model";
+import { useUserServices } from "@/services/admin/userServices";
 import { ColumnDef } from "@tanstack/react-table";
 
 const UsersPage = () => {
   const { search, setSearch } = useAdminGeneralStore();
+  const { getUsers, deleteUser, updateUser } = useUserServices();
+  const { users: usersList } = useAdminUserStore();
 
   const usersColumns: ColumnDef<IUser>[] = [
     {
@@ -24,7 +28,10 @@ const UsersPage = () => {
       header: "ID",
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1 flex items-center">
-          <p title={row.getValue("user_id")}>{row.index + 1}</p>
+          <p className="truncate max-w-10" title={row.getValue("user_id")}>
+            {/* Ensure user_id exists */}
+            {row.index + 1}
+          </p>
         </div>
       ),
     },
@@ -34,7 +41,6 @@ const UsersPage = () => {
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1">
           <img
-            // src={row.getValue("user_img")}
             src={SampleImg}
             alt={row.getValue("username")}
             className="w-full h-full rounded-lg object-contain"
@@ -121,14 +127,14 @@ const UsersPage = () => {
     },
     {
       accessorKey: "branch",
-      header: "branch",
+      header: "Branch",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("branch")}</div>
       ),
     },
     {
       accessorKey: "department",
-      header: "department",
+      header: "Department",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("department")}</div>
       ),
@@ -145,13 +151,13 @@ const UsersPage = () => {
       ),
       cell: ({ row }) => (
         <div className="capitalize text-center">
-          {formatDate(row.getValue("date_created"))}
+          {row.getValue("date_created")}
         </div>
       ),
     },
     {
       accessorKey: "status",
-      header: "status",
+      header: "Status",
       cell: ({ row }) => (
         <div className="capitalize">
           {row.getValue("status") === 1 ? "active" : "disabled"}
@@ -164,7 +170,19 @@ const UsersPage = () => {
         <div className="capitalize flex gap-2">
           <div>
             <Modal triggerSize="icon" trigger={<Edit />} variant="ghost">
-              <CreateUserForm />
+              <UpdateUserForm
+                user={row.original}
+                updateUser={(updatedUser: IUpdateUserPayload) => {
+                  updateUser(updatedUser, () => {
+                    toast({
+                      title: "User updated successfully!",
+                      description: "The user data has been updated.",
+                      variant: "success",
+                    });
+                    closeModal();
+                  });
+                }}
+              />
             </Modal>
           </div>
           <div>
@@ -178,7 +196,6 @@ const UsersPage = () => {
               <div>
                 Are you sure you want to delete the user "
                 <span className="font-bold">{row.getValue("username")}</span> "?
-                <br />
                 This action cannot be undone.
               </div>
               <div className="flex justify-end gap-2">
@@ -186,6 +203,15 @@ const UsersPage = () => {
                   variant="destructive"
                   onClick={() => {
                     row.toggleSelected(false);
+                    deleteUser(row.original, () => {
+                      closeModal();
+                      toast({
+                        title: "User deleted successfully!",
+                        description:
+                          "The user has been deleted from the system.",
+                        variant: "success",
+                      });
+                    });
                   }}
                 >
                   Delete
@@ -198,62 +224,42 @@ const UsersPage = () => {
     },
   ];
 
-  const users = useMemo(() => {
+  // Ensure no undefined values are accessed
+  const filteredUsers = useMemo(() => {
     return usersList.filter(
       (user) =>
-        user.first_name.toLowerCase().includes(search.toLowerCase()) ||
-        user.last_name.toLowerCase().includes(search.toLowerCase()) ||
-        user.username.toString().toLowerCase().includes(search.toLowerCase()) ||
-        user.user_id?.toLowerCase().includes(search.toLowerCase())
+        (user.first_name &&
+          user.first_name.toLowerCase().includes(search.toLowerCase())) ||
+        (user.last_name &&
+          user.last_name.toLowerCase().includes(search.toLowerCase())) ||
+        (user.username &&
+          user.username.toLowerCase().includes(search.toLowerCase())) ||
+        (user.user_id &&
+          user.user_id.toString().toLowerCase().includes(search.toLowerCase()))
     );
-  }, [search]);
+  }, [search, usersList]);
 
-  const searchByList = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "ID",
-      value: "user_id",
-    },
-    {
-      label: "Username",
-      value: "username",
-    },
-    {
-      label: "Name",
-      value: "name",
-    },
-  ];
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-3xl">Users</h1>
+      <h1 className="text-3xl">Users Page</h1>
       <div className="flex items-center justify-between w-full">
-        <div className="flex gap-2">
-          <Input
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <CustomSelect
-            items={searchByList}
-            defaultValue={"all"}
-            placeholder="Search by"
-            onChange={(value: string) => {
-              console.log(value);
-            }}
-          />
-        </div>
+        <Input
+          placeholder="Search users..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <div>
-          <Modal trigger="Add user">
+          <Modal trigger="Add new user">
             <CreateUserForm />
           </Modal>
         </div>
       </div>
       <div className="w-full overflow-auto">
-        <DataTable columns={usersColumns} data={users} />
+        <DataTable columns={usersColumns} data={filteredUsers} />
       </div>
     </div>
   );
