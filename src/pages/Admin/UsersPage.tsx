@@ -178,14 +178,14 @@ const UsersPage = () => {
               row.getValue("status") === "ACTIVE"
                 ? "bg-green-500"
                 : "bg-gray-300"
-            } relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out`}
+            } relative inline-flex h-6 w-10 items-center rounded-full transition-colors duration-200 ease-in-out`}
           >
             <span
               className={`${
                 row.getValue("status") === "ACTIVE"
                   ? "translate-x-5"
                   : "translate-x-0"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out`}
+              } inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-200 ease-in-out`}
             />
           </Switch>
         </div>
