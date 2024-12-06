@@ -12,148 +12,124 @@ import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useAdminCategoryStore } from "@/hooks/state/admin/useAdminCategory";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
-import { toast } from "@/hooks/use-toast";
 import { closeModal, formatDate } from "@/lib/utils";
 import { ICategory } from "@/models/admin.model";
 import { useCategoryServices } from "@/services/admin/categoryServices";
 import { ColumnDef } from "@tanstack/react-table";
 
 const CategoryPage = () => {
-    const { search, setSearch } = useAdminGeneralStore();
-    const { getCategory, deleteCategory, isLoading } = useCategoryServices();
-    const { category } = useAdminCategoryStore();
+  const { search, setSearch } = useAdminGeneralStore();
+  const { getCategory, deleteCategory, isLoading } = useCategoryServices();
+  const { category } = useAdminCategoryStore();
 
-    console.log(category);
+  console.log(category);
 
-    const categoryColumns: ColumnDef<ICategory>[] = [
-        {
-            id: 'category_id',
-            accessorKey: 'category_id',
-            header: 'ID',
-            cell: ({ row }) => (
-                <div className='capitalize w-full h-12 p-1 flex items-center justify-center'>
-                    {row.index + 1}
-                </div>
-            ),
-        },
-        {
-            accessorKey: 'category_name',
-            header: ({ column }) => (
+  const categoryColumns: ColumnDef<ICategory>[] = [
+    {
+      id: "category_id",
+      accessorKey: "category_id",
+      header: "ID",
+      cell: ({ row }) => (
+        <div className="capitalize w-full h-12 p-1 flex items-center justify-center">
+          {row.index + 1}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "category_name",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Category Name <ChevronsUpDown />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="capitalize px-4">{row.getValue("category_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "created_by",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created by <ChevronsUpDown />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="capitalize px-4">{row.getValue("created_by")}</div>
+      ),
+    },
+    {
+      accessorKey: "date_created",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Created <ChevronsUpDown />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="capitalize px-4">
+          {formatDate(row.getValue("date_created"))}
+        </div>
+      ),
+    },
+    {
+      header: "Actions",
+      cell: ({ row }) => (
+        <div className="capitalize flex gap-2">
+          <div>
+            <Modal triggerSize="icon" trigger={<Edit />} variant="ghost">
+              <UpdateCategoryForm category={row.original} />
+            </Modal>
+          </div>
+          <div>
+            <Modal
+              triggerClassName="hover:bg-destructive hover:text-destructive-foreground"
+              triggerSize="icon"
+              trigger={<DeleteIcon />}
+              variant="ghost"
+            >
+              <h1 className="font-bold text-2xl">Delete Product</h1>
+              <div>
+                Are you sure you want to delete the category "
+                <span className="font-bold">
+                  {row.getValue("category_name")}
+                </span>{" "}
+                "?
+                <br />
+                This action cannot be undone.
+              </div>
+              <div className="flex justify-end gap-2">
+                <DialogClose asChild>
+                  <Button type="button" id="closeModal" variant="ghost">
+                    Cancel
+                  </Button>
+                </DialogClose>
                 <Button
-                    variant='ghost'
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
+                  variant="destructive"
+                  onClick={() => {
+                    row.toggleSelected(false);
+                    deleteCategory(row.original.category_id, () => {
+                      closeModal();
+                    });
+                  }}
+                  disabled={isLoading}
                 >
-                    Category Name <ChevronsUpDown />
+                  {isLoading ? "Deleting..." : "Delete"}
                 </Button>
-            ),
-            cell: ({ row }) => (
-                <div className='capitalize px-4'>
-                    {row.getValue('category_name')}
-                </div>
-            ),
-        },
-        {
-            accessorKey: 'created_by',
-            header: ({ column }) => (
-                <Button
-                    variant='ghost'
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Created by <ChevronsUpDown />
-                </Button>
-            ),
-            cell: ({ row }) => (
-                <div className='capitalize px-4'>
-                    {row.getValue('created_by')}
-                </div>
-            ),
-        },
-        {
-            accessorKey: 'date_created',
-            header: ({ column }) => (
-                <Button
-                    variant='ghost'
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Date Created <ChevronsUpDown />
-                </Button>
-            ),
-            cell: ({ row }) => (
-                <div className='capitalize px-4'>
-                    {formatDate(row.getValue('date_created'))}
-                </div>
-            ),
-        },
-        {
-            header: 'Actions',
-            cell: ({ row }) => (
-                <div className='capitalize flex gap-2'>
-                    <div>
-                        <Modal
-                            triggerSize='icon'
-                            trigger={<Edit />}
-                            variant='ghost'
-                        >
-                            <UpdateCategoryForm category={row.original} />
-                        </Modal>
-                    </div>
-                    <div>
-                        <Modal
-                            triggerClassName='hover:bg-destructive hover:text-destructive-foreground'
-                            triggerSize='icon'
-                            trigger={<DeleteIcon />}
-                            variant='ghost'
-                        >
-                            <h1 className='font-bold text-2xl'>
-                                Delete Product
-                            </h1>
-                            <div>
-                                Are you sure you want to delete the category "
-                                <span className='font-bold'>
-                                    {row.getValue('category_name')}
-                                </span>{' '}
-                                "?
-                                <br />
-                                This action cannot be undone.
-                            </div>
-                            <div className='flex justify-end gap-2'>
-                                <DialogClose asChild>
-                                    <Button
-                                        type='button'
-                                        id='closeModal'
-                                        variant='ghost'
-                                    >
-                                        Cancel
-                                    </Button>
-                                </DialogClose>
-                                <Button
-                                    variant='destructive'
-                                    onClick={() => {
-                                        row.toggleSelected(false);
-                                        deleteCategory(
-                                            row.original.category_id,
-                                            () => {
-                                                closeModal();
-                                            },
-                                        );
-                                    }}
-                                    disabled={isLoading}
-                                >
-                                    {isLoading ? 'Deleting...' : 'Delete'}
-                                </Button>
-                            </div>
-                        </Modal>
-                    </div>
-                </div>
-            ),
-        },
-    ];
+              </div>
+            </Modal>
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   const categories = useMemo(() => {
     return category?.filter(

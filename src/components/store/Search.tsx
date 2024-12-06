@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useSearchStore } from "@/store/useSearchStore"; 
+import { useGeneralStore } from "@/hooks/state/store/useGeneralStore";
 
 const Search = () => {
-  const { query, setQuery } = useSearchStore(); // Access global state
+  const { query, setQuery } = useGeneralStore(); // Access global state
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value.toLowerCase()); // Update global search query
