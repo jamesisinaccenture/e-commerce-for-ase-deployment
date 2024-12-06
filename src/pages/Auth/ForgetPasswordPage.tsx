@@ -1,18 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import z from "zod";
 
 import forget from "@/assets/images/forget.png";
 import verify from "@/assets/images/verify.png";
 import CustomInput from "@/components/reusable/CustomInput";
+import { Button } from "@/components/ui/button";
 import { FormField, FormItem, FormMessage, Form } from "@/components/ui/form";
+import { ROUTES } from "@/routes/endpoints";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-
-import z from "zod";
-import { ROUTES } from "@/routes/endpoints";
 
 const ForgetPasswordPage: React.FC = () => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);

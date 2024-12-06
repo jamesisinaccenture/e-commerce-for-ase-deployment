@@ -5,9 +5,9 @@ import { Heart } from "lucide-react";
 
 import ProductModal from "@/components/store/ProductModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useCartStore } from "@/hooks/state/store/useCartStore";
 import { formatPrice } from "@/lib/utils";
 import { IProduct } from "@/models/store.model";
-import { useCartStore } from "@/store/useCartStore";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import ProductCardAnimated from "./ProductCardAnimated";
 import { Button } from "../ui/button";
@@ -116,16 +116,15 @@ const ProductSectionCard = (product: IProduct) => {
         </div>
         {/*  Add To Cart Animation */}
       </motion.div>
-      <div className="fixed w-full h-screen z-9999">
-        {isAddingToCart && (
+      {isAddingToCart && (
+        <div className="fixed w-full h-screen z-9999">
           <ProductCardAnimated
             product_img={product.product_img}
             product_name={product.product_name}
           />
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
-
 export default ProductSectionCard;

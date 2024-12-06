@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import ProductSectionCard from "@/components/store/ProductSectionCard";
+import { useGeneralStore } from "@/hooks/state/store/useGeneralStore";
 import { cn } from "@/lib/utils";
 import { IProductSection } from "@/models/store.model";
 import { ROUTES } from "@/routes/endpoints";
-import { useSearchStore } from "@/store/useSearchStore"; 
 import {
   PaginationItem,
   PaginationLink,
@@ -20,18 +20,39 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const PRODUCTS_PER_PAGE = 40;
 
-  const searchQuery = useSearchStore((state) => state.query); // Get the search query from the global state
+  const searchQuery = useGeneralStore((state) => state.query);
+  const selectedCategory = useGeneralStore((state) => state.selectedCategory);
 
-  // Filter products based on the search query
-  const filteredProducts = products.filter((product) =>
-    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter products based on search query and selected category
+  const filteredProducts = products.filter((product) => {
+    const matchesQuery = product.product_name
+      ?.toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    const matchesCategory =
+      !selectedCategory ||
+      (Array.isArray(product.category) 
+        ? product.category.some(
+            (cat) =>
+              typeof cat === "string" &&
+              cat.toLowerCase() === selectedCategory.toLowerCase() 
+          ) // Compare each category in the array
+        : typeof product.category === "string" &&
+          product.category.toLowerCase() === selectedCategory.toLowerCase()); 
+
+    return matchesQuery && matchesCategory;
+  });
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const displayedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
 
   const renderPaginationItems = () => {
     const pageLinks = [];
@@ -71,12 +92,6 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
 
     return pageLinks;
   };
-
-  // Paginate filtered products
-  const displayedProducts = filteredProducts.slice(
-    (currentPage - 1) * PRODUCTS_PER_PAGE,
-    currentPage * PRODUCTS_PER_PAGE
-  );
 
   return (
     <>
