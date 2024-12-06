@@ -21,6 +21,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useCheckoutStore } from "@/hooks/state/store/useCheckout";
 import { CartItem } from "@/models/store.model";
 import { useCartStore } from "@/hooks/state/store/useCartStore";
 
@@ -30,6 +31,7 @@ const CartDrawer = () => {
   const increaseQuantity = useCartStore((state) => state.increaseQuantity);
   const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
   const removeAll = useCartStore((state) => state.removeAll);
+  const { toggleCheckoutCart } = useCheckoutStore();
 
   const [itemToRemove, setItemToRemove] = useState<CartItem | null>(null);
 
@@ -56,7 +58,10 @@ const CartDrawer = () => {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <div className="flex flex-row items-center gap-2 hover:cursor-pointer hover:bg-gray-300/80 p-2 rounded">
+        <div
+          className="flex flex-row items-center gap-2 hover:cursor-pointer hover:bg-gray-300/80 p-2 rounded"
+          onClick={toggleCheckoutCart}
+        >
           <ShoppingCart
             size={18}
             color="#008ECC"
@@ -66,7 +71,10 @@ const CartDrawer = () => {
         </div>
       </DrawerTrigger>
 
-      <DrawerContent className="w-[400px] h-screen flex flex-col">
+      <DrawerContent
+        className="w-[400px] h-screen flex flex-col"
+        onClick={toggleCheckoutCart}
+      >
         <div className="mx-auto w-full flex-1 flex flex-col">
           <DrawerHeader>
             <DrawerTitle className="text-xl font-bold">
@@ -155,7 +163,7 @@ const CartDrawer = () => {
               className="bg-store-primary text-white hover:bg-blue-600 p-2 rounded-md"
               onClick={removeAll}
             >
-              <Link to="/checkout">Checkout</Link>
+              <Link to="/store/checkout">Checkout</Link>
             </Button>
           </DrawerFooter>
         </div>

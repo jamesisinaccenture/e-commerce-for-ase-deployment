@@ -1,3 +1,4 @@
+import defaultImage from "/image 3.png";
 import { motion } from "framer-motion";
 
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
@@ -37,7 +38,7 @@ const ProductCardAnimated = ({
         >
           <AspectRatio ratio={1 / 1}>
             <img
-              src={product_img}
+              src={product_img || defaultImage}
               alt={product_name}
               className="rounded-3xl object-contain bg-cover w-full h-full"
             />
