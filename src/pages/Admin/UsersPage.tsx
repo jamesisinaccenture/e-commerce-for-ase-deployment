@@ -8,6 +8,7 @@ import UpdateUserForm from "@/components/admin/Users/UpdateUserForm";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { useAdminUserStore } from "@/hooks/state/admin/useAdminUser";
 import { toast } from "@/hooks/use-toast";
@@ -29,7 +30,6 @@ const UsersPage = () => {
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1 flex items-center">
           <p className="truncate max-w-10" title={row.getValue("user_id")}>
-            {/* Ensure user_id exists */}
             {row.index + 1}
           </p>
         </div>
@@ -159,8 +159,23 @@ const UsersPage = () => {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => (
-        <div className="capitalize">
-          {row.getValue("status") === 1 ? "active" : "disabled"}
+        <div className="capitalize flex items-center justify-center">
+          <Switch
+            checked={row.getValue("status") === "1"}
+            onCheckedChange={(checked) => {
+              const updatedStatus = checked ? "1" : "0";
+              updateUser(
+                { ...row.original, status: updatedStatus },
+                () => {
+                  toast({
+                    title: `User ${checked ? "activated" : "disabled"} successfully!`,
+                    description: `The user's status has been updated.`,
+                    variant: "success",
+                  });
+                }
+              );
+            }}
+          />
         </div>
       ),
     },
@@ -195,8 +210,7 @@ const UsersPage = () => {
               <h1 className="font-bold text-2xl">Delete User</h1>
               <div>
                 Are you sure you want to delete the user "
-                <span className="font-bold">{row.getValue("username")}</span> "?
-                This action cannot be undone.
+                <span className="font-bold">{row.getValue("username")}</span> "? This action cannot be undone.
               </div>
               <div className="flex justify-end gap-2">
                 <Button
@@ -207,8 +221,7 @@ const UsersPage = () => {
                       closeModal();
                       toast({
                         title: "User deleted successfully!",
-                        description:
-                          "The user has been deleted from the system.",
+                        description: "The user has been deleted from the system.",
                         variant: "success",
                       });
                     });
@@ -224,7 +237,6 @@ const UsersPage = () => {
     },
   ];
 
-  // Ensure no undefined values are accessed
   const filteredUsers = useMemo(() => {
     return usersList.filter(
       (user) =>

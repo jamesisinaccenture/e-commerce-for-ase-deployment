@@ -83,7 +83,7 @@ export const useUserServices = () => {
       setIsLoading(false);
       toast({
         variant: "destructive",
-        title: "Error updating category",
+        title: "Error updating user",
         description:
           error.message || "Error occurred while updating, please try again.",
       });
