@@ -64,6 +64,7 @@ export const useUserServices = () => {
   ) => {
     setIsLoading(true);
     console.log(payload, "payload from input");
+
     try {
       const response: IUpdateUserResponse = await api.put(
         `${ENDPOINTS.USERS.BASE}/${payload.user_id}`,
@@ -75,8 +76,7 @@ export const useUserServices = () => {
         title: "Update User",
         description: "User updated successfully",
       });
-      getUsers();
-
+      await getUsers();
       return response.data.user;
     } catch (error: any) {
       console.log(error);
@@ -87,6 +87,7 @@ export const useUserServices = () => {
         description:
           error.message || "Error occurred while updating, please try again.",
       });
+
       throw new Error(error);
     }
   };

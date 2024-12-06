@@ -77,7 +77,7 @@ export interface IUser {
   branch?: string | null;
   department?: string | null;
   date_created?: string;
-  status?: string;
+  status: string;
 }
 
 export interface IUserResponse {
@@ -85,12 +85,14 @@ export interface IUserResponse {
     users: IUser[];
   };
 }
+
 export interface ICreateUserResponse {
   data: {
     message: string;
     user: IUser[];
   };
 }
+
 export interface ICreateUserPayload {
   first_name: string;
   last_name: string;
@@ -103,14 +105,16 @@ export interface ICreateUserPayload {
   position: string;
   department: string;
   branch: string;
-  status?: string;
+  status: string;
 }
+
 export interface IUpdateUserResponse {
   data: {
-    message: "User updated successfully";
+    message: string;
     user: IUser[];
   };
 }
+
 export interface IUpdateUserPayload {
   user_id?: string;
   first_name: string;
@@ -124,12 +128,12 @@ export interface IUpdateUserPayload {
   position?: string | null;
   department?: string | null;
   branch?: string | null;
-  status?: string;
+  status: string;
 }
 
 export interface IDeleteUserPayload {}
 
-// store state interfaces
+// Store state interfaces
 export interface IAdminProductStore {
   products: IProduct[];
   setProducts: (products: IProduct[]) => void;
@@ -161,6 +165,7 @@ export interface IDropImageInput {
   onImageDrop?: (file: File) => void;
   value?: string;
 }
+
 export interface CustomComboBoxProps {
   options: Option[];
   onChange?: (selectedItems: string[]) => void;

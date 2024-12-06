@@ -161,21 +161,33 @@ const UsersPage = () => {
       cell: ({ row }) => (
         <div className="capitalize flex items-center justify-center">
           <Switch
-            checked={row.getValue("status") === "1"}
+            checked={row.getValue("status") === "ACTIVE"}
             onCheckedChange={(checked) => {
-              const updatedStatus = checked ? "1" : "0";
-              updateUser(
-                { ...row.original, status: updatedStatus },
-                () => {
-                  toast({
-                    title: `User ${checked ? "activated" : "disabled"} successfully!`,
-                    description: `The user's status has been updated.`,
-                    variant: "success",
-                  });
-                }
-              );
+              const updatedStatus = checked ? "ACTIVE" : "INACTIVE";
+              updateUser({ ...row.original, status: updatedStatus }, () => {
+                toast({
+                  title: `User ${
+                    checked ? "activated" : "disabled"
+                  } successfully!`,
+                  description: `The user's status has been updated.`,
+                  variant: "success",
+                });
+              });
             }}
-          />
+            className={`${
+              row.getValue("status") === "ACTIVE"
+                ? "bg-green-500"
+                : "bg-gray-300"
+            } relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out`}
+          >
+            <span
+              className={`${
+                row.getValue("status") === "ACTIVE"
+                  ? "translate-x-5"
+                  : "translate-x-0"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out`}
+            />
+          </Switch>
         </div>
       ),
     },
@@ -210,7 +222,8 @@ const UsersPage = () => {
               <h1 className="font-bold text-2xl">Delete User</h1>
               <div>
                 Are you sure you want to delete the user "
-                <span className="font-bold">{row.getValue("username")}</span> "? This action cannot be undone.
+                <span className="font-bold">{row.getValue("username")}</span> "?
+                This action cannot be undone.
               </div>
               <div className="flex justify-end gap-2">
                 <Button
@@ -221,7 +234,8 @@ const UsersPage = () => {
                       closeModal();
                       toast({
                         title: "User deleted successfully!",
-                        description: "The user has been deleted from the system.",
+                        description:
+                          "The user has been deleted from the system.",
                         variant: "success",
                       });
                     });

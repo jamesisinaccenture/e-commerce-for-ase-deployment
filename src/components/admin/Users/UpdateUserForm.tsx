@@ -228,7 +228,7 @@ const UpdateUserForm = ({ user }: IUpdateUserForm) => {
                       <div className="w-fit py-2">
                         <Switch
                           onCheckedChange={(checked) =>
-                            field.onChange(checked ? 1 : 0)
+                            field.onChange(checked ? "ACTIVE" : "INACTIVE")
                           }
                         />
                       </div>
