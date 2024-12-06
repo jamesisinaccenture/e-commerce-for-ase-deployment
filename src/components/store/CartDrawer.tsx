@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/drawer";
 import { useCheckoutStore } from "@/hooks/state/store/useCheckout";
 import { CartItem } from "@/models/store.model";
-import { useCartStore } from "@/store/useCartStore";
+import { useCartStore } from "@/hooks/state/store/useCartStore";
 
 const CartDrawer = () => {
   const cartItems = useCartStore((state) => state.cartItems);
