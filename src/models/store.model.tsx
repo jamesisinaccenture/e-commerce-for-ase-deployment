@@ -10,7 +10,7 @@ export interface CountInterface {
 // Define the shape of the states here, remember to export them
 export interface ICustomInput {
   ref: React.RefObject<HTMLInputElement>;
-   
+
   isSearch?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
@@ -99,3 +99,5 @@ export interface CartState {
   decreaseQuantity: (product_id: string) => void;
   removeAll: () => void;
 }
+
+

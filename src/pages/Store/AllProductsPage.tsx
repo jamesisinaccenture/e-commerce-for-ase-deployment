@@ -18,7 +18,9 @@ const categories = [
 const PRODUCTS_PER_PAGE = 40;
 
 const AllProductsPage: React.FC = () => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(["All"]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    "All",
+  ]);
   const { products } = useProductStore();
 
   const { getProducts } = useProductSevices();
@@ -26,7 +28,7 @@ const AllProductsPage: React.FC = () => {
 
   const filteredProducts = useMemo(() => {
     if (selectedCategories.includes("All")) {
-      return products; // Show all products if "All" is selected
+      return products;
     }
 
     return products.filter((product) => {
@@ -35,7 +37,6 @@ const AllProductsPage: React.FC = () => {
         : [];
 
       return productCategories.some((cat: string) => {
-        // Ensure cat is always a string before calling toLowerCase
         const categoryString = String(cat).toLowerCase();
         return selectedCategories.some(
           (selectedCat) => categoryString === selectedCat.toLowerCase()
@@ -44,36 +45,32 @@ const AllProductsPage: React.FC = () => {
     });
   }, [products, selectedCategories]);
 
-  // Display products for the current page only
   const displayedProducts = filteredProducts.slice(
     (currentPage - 1) * PRODUCTS_PER_PAGE,
     currentPage * PRODUCTS_PER_PAGE
   );
 
   const handleCategoryChange = (category: string) => {
-    setCurrentPage(1); // Reset to first page on category change
+    setCurrentPage(1);
 
     if (category === "All") {
-      setSelectedCategories(["All"]); // Selecting "All" resets all filters
+      setSelectedCategories(["All"]);
       return;
     }
 
     setSelectedCategories((prevCategories) => {
-      // Remove "All" if selecting a specific category
       const updatedCategories = prevCategories.filter((cat) => cat !== "All");
-
       if (updatedCategories.includes(category)) {
         // If the category is already selected, deselect it
         return updatedCategories.filter((cat) => cat !== category);
       } else {
-        // Otherwise, add the category
         return [...updatedCategories, category];
       }
     });
   };
 
   useEffect(() => {
-    getProducts(); // Fetch the products initially
+    getProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -97,12 +94,9 @@ const AllProductsPage: React.FC = () => {
           ))}
         </div>
       </header>
-
-      {/* Display products in 10 rows, each with 4 products */}
       <ProductSection products={displayedProducts} />
     </div>
   );
 };
 
 export default AllProductsPage;
-
