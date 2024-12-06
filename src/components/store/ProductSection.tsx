@@ -29,16 +29,14 @@ const ProductSection = ({ products, isHome }: IProductSection) => {
       ?.toLowerCase()
       .includes(searchQuery.toLowerCase());
 
+    const normalizedCategory = product.category ?? [];
     const matchesCategory =
       !selectedCategory ||
-      (Array.isArray(product.category) 
-        ? product.category.some(
-            (cat) =>
-              typeof cat === "string" &&
-              cat.toLowerCase() === selectedCategory.toLowerCase() 
-          ) // Compare each category in the array
-        : typeof product.category === "string" &&
-          product.category.toLowerCase() === selectedCategory.toLowerCase()); 
+      normalizedCategory.some(
+        (cat) =>
+          typeof cat === "string" &&
+          cat.toLowerCase() === selectedCategory.toLowerCase()
+      );
 
     return matchesQuery && matchesCategory;
   });
