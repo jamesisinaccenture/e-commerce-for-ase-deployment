@@ -8,6 +8,7 @@ import UpdateUserForm from "@/components/admin/Users/UpdateUserForm";
 import { DataTable } from "@/components/reusable/DataTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { useAdminGeneralStore } from "@/hooks/state/admin/useAdminGeneral";
 import { useAdminUserStore } from "@/hooks/state/admin/useAdminUser";
 import { toast } from "@/hooks/use-toast";
@@ -29,7 +30,6 @@ const UsersPage = () => {
       cell: ({ row }) => (
         <div className="capitalize w-full h-12 p-1 flex items-center">
           <p className="truncate max-w-10" title={row.getValue("user_id")}>
-            {/* Ensure user_id exists */}
             {row.index + 1}
           </p>
         </div>
@@ -159,8 +159,35 @@ const UsersPage = () => {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => (
-        <div className="capitalize">
-          {row.getValue("status") === 1 ? "active" : "disabled"}
+        <div className="capitalize flex items-center justify-center">
+          <Switch
+            checked={row.getValue("status") === "ACTIVE"}
+            onCheckedChange={(checked) => {
+              const updatedStatus = checked ? "ACTIVE" : "INACTIVE";
+              updateUser({ ...row.original, status: updatedStatus }, () => {
+                toast({
+                  title: `User ${
+                    checked ? "activated" : "disabled"
+                  } successfully!`,
+                  description: `The user's status has been updated.`,
+                  variant: "success",
+                });
+              });
+            }}
+            className={`${
+              row.getValue("status") === "ACTIVE"
+                ? "bg-green-500"
+                : "bg-gray-300"
+            } relative inline-flex h-6 w-10 items-center rounded-full transition-colors duration-200 ease-in-out`}
+          >
+            <span
+              className={`${
+                row.getValue("status") === "ACTIVE"
+                  ? "translate-x-5"
+                  : "translate-x-0"
+              } inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-200 ease-in-out`}
+            />
+          </Switch>
         </div>
       ),
     },
@@ -224,7 +251,6 @@ const UsersPage = () => {
     },
   ];
 
-  // Ensure no undefined values are accessed
   const filteredUsers = useMemo(() => {
     return usersList.filter(
       (user) =>

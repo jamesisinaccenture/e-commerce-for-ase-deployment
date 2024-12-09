@@ -323,6 +323,7 @@ export const usersList: IUser[] = [
     department: null,
     branch: null,
     password: "",
+    status: "",
   },
 ];
 
